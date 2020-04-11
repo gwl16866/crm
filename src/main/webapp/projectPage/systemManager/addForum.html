@@ -39,15 +39,6 @@
         $("body").on("click",'.refresh-btn', function () {
             window.location.reload();
         });
-        // 重置事件
-        $("body").on("click",'#clean', function () {
-            $("#service").val("");
-            $(".title").val("");
-            $("#hidd").val("");
-            //$("#demo").setText("");
-            document.getElementById("#demo").value="";
-            form.render();
-        })
     });
 </script>
 <script>
@@ -141,7 +132,6 @@
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button type="submit" class="layui-btn" lay-submit="" lay-filter="formDemo">提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary" id="clean">重置</button>
         </div>
     </div>
 </form>

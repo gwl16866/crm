@@ -23,8 +23,6 @@ public class Forum implements Serializable {
 
     private String title;
 
-    private Integer counts;
-
     //回复ID
     @TableId(value = "tid", type = IdType.AUTO)
     private Integer tid;
@@ -135,14 +133,6 @@ public class Forum implements Serializable {
         this.stime = stime;
     }
 
-    public Integer getCounts() {
-        return counts;
-    }
-
-    public void setCounts(Integer counts) {
-        this.counts = counts;
-    }
-
     public String getBname() {
         return bname;
     }
@@ -231,7 +221,6 @@ public class Forum implements Serializable {
                 ", articleTag='" + articleTag + '\'' +
                 ", ofBid=" + ofBid +
                 ", title='" + title + '\'' +
-                ", counts=" + counts +
                 ", tid=" + tid +
                 ", sid='" + sid + '\'' +
                 ", bsid='" + bsid + '\'' +

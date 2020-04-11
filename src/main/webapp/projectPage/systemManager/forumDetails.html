@@ -112,8 +112,8 @@
     </button>
 </div>
 <hr id="hr" class="layui-bg-black">
-点击(<span th:text="${of.getClickCount()}"></span>)
-回复(<span th:text="${counts.intValue()}"></span>)
+<font size="4">点击(<span th:text="${of.getClickCount()}"></span>)</font>
+<font size="4">回复(<span th:text="${counts.intValue()}"></span>)</font>
 <input type="hidden" th:value="${of.getId()}" id="ID">
 <input type="hidden" th:value="${of.getUsername()}" id="byName">
 <form class="layui-form">

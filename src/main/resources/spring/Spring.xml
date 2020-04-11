@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+
+       xsi:schemaLocation= "http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/tx
+                            http://www.springframework.org/schema/tx/spring-tx.xsd
+                            http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context.xsd
+                            http://www.springframework.org/schema/aop
+                            http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <!--导入 shiro 主配置-->
+    <import resource="spring-shiro.xml"></import>
+
+    <!--开启  业务bean 扫描-->
+    <context:component-scan base-package="com.hy.crmsystem"></context:component-scan>
+
+    <!--事务注解扫描-->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"></tx:annotation-driven>
+
+    <!--加载jdbc.properties-->
+    <context:property-placeholder location="classpath:properties/jdbc.properties"></context:property-placeholder>
+
+    <!--数据源 druid-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driverName}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.user}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+
+    <!--session工厂-->
+    <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
+        <!--数据源-->
+        <property name="dataSource" ref="dataSource"></property>
+        <!--mybatis 主配置-->
+        <property name="configLocation" value="classpath:myBatis/MyBatis.xml"></property>
+        <!--别名-->
+        <property name="typeAliasesPackage" value="com.hy.crmsystem.mapper"></property>
+        <!--mybatis plus分页-->
+        <property name="plugins">
+            <array>
+                <!--   <bean class="com.github.pagehelper.PageInterceptor">
+                        <property name="properties">
+                            <props>
+                                <prop key="helperDialect">mysql</prop>
+                                <prop key="reasonable">true</prop>
+                            </props>
+                        </property>
+                     </bean>-->
+                <bean id="interceptor" class="com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor"></bean>
+            </array>
+        </property>
+
+    </bean>
+
+    <!--sqlsession 事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!--批量加载 mapper-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.hy.crmsystem.mapper"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+
+
+
+
+
+
+
+
+
+
+</beans>

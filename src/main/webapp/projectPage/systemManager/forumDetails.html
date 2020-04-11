@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath()}+'/'">
+    <meta charset="utf-8">
+    <title>论坛</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="css/public.css" media="all">
+    <style type="text/css">
+        .layui-form {
+            position: absolute;
+            top: 100px;
+            width: 95%;
+        }
+        .delete-btn {
+            position: absolute;
+            top: 20px;
+            left: 1400px;
+        }
+    </style>
+</head>
+<script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<body>
+<script type="text/javascript">
+    $(function () {
+        //返回上一个页面
+        $("body").on("click",".data-add-btn", function () {
+            window.location.href = "projectPage/systemManager/forum.html";
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+            parent.location.reload();
+        });
+        //刷新页面
+        $("body").on("click", '.refresh-btn', function () {
+            window.location.reload();
+        });
+        //删除帖子
+        $("body").on("click", '.delete-btn', function () {
+            window.location.href = "forum/deleteReply.do?id=" + $("#ID").val();
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+            parent.location.reload();
+        });
+    });
+</script>
+<script>
+    layui.use(['form', 'layedit', 'upload'], function () {
+        var form = layui.form;
+        var layedit = layui.layedit,
+            $ = layui.jquery;
+        form.render();
+        //建立富文本编辑器
+        var index = layedit.build('demo');
+        form.verify({
+            content: function (value) {
+                return layedit.sync(index);
+            }
+        });
+        //提交回复
+        form.on('submit(formSubmit)', function (data) {
+            $.ajax({
+                url: 'forum/addReply.do?id=' + $("#ID").val() + '&bsid=' + $("#byName").val(),
+                type: 'POST',
+                dataType: 'json',
+                data: data.field,
+                success: function (msg) {
+                    if (msg == 1) {
+                        layer.msg("回复成功", {icon: 6});
+                        window.location.reload();
+                    } else {
+                        layer.msg("回复失败", {icon: 6});
+                    }
+                }
+            });
+            return false;
+        });
+        //回复 回复
+        $(".layui-btn-primary").click(function (obj) {
+            //建立富文本编辑器
+            var index = layedit.build('reply');
+            form.verify({
+                content: function (value) {
+                    return layedit.sync(index);
+                }
+            });
+            var data=$("#replyName").val();
+            console.log(data);
+            layer.open({
+                title:'回复'+data,
+                type: 1,
+                skin:"layui-layer-molv",
+                content: $("#talk"),
+                area: ['60%', '90%'],
+            })
+        })
+    });
+</script>
+<div class="layui-btn-container">
+    <button type="button" class="layui-btn data-add-btn">
+        <i class="layui-icon layui-icon-left"></i>返回
+    </button>
+    <button type="button" class="layui-btn refresh-btn">
+        <i class="layui-icon layui-icon-refresh"></i>刷新
+    </button>
+    <button type="button" class="layui-btn delete-btn">
+        <i class="layui-icon layui-icon-delete"></i>删除
+    </button>
+</div>
+<hr id="hr" class="layui-bg-black">
+点击(<span th:text="${of.getClickCount()}"></span>)
+回复(<span th:text="${counts.intValue()}"></span>)
+<input type="hidden" th:value="${of.getId()}" id="ID">
+<input type="hidden" th:value="${of.getUsername()}" id="byName">
+<form class="layui-form">
+    <!--帖子-->
+    <table class="layui-table" lay-skin="line">
+        <colgroup>
+            <col width="120">
+            <col width="270">
+            <col width="90">
+            <col width="90">
+        </colgroup>
+        <tr th:height="70">
+            <td th:text="${of.getUsername()}" class="layui-icon layui-icon-friends" style="font-size:30px"></td>
+            <td th:value="${of.getId()}" th:text="${of.getArticleText()}" style="font-size:30px"></td>
+            <td th:text="${#dates.format(of.getSendTime(),'yyyy/MM/dd HH:mm')}"></td>
+            <td></td>
+        </tr>
+    </table>
+    <!--回复-->
+    <table class="layui-table" lay-skin="line">
+        <colgroup>
+            <col width="120">
+            <col width="270">
+            <col width="90">
+            <col width="90">
+        </colgroup>
+        <tr th:each="li:${list}" th:if="${li.getSid()} != null">
+            <td th:value="${li.getUid()}" th:text="${li.getSid()}" class="layui-icon layui-icon-friends" style="font-size:20px"></td>
+            <td th:value="${li.getId()}" th:text="${li.getText()}"></td>
+            <td th:text="${#dates.format(li.getStime(),'yyyy/MM/dd HH:mm')}" style="font-size:12px"></td>
+            <td>
+                <button type="button" class="layui-btn layui-btn-xs layui-btn-radius layui-btn-primary">回复</button>
+                 <input type="hidden" id="replyName" th:value="${li.getSid()}">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">回复</label>
+        <textarea name="text" id="demo" placeholder="请输入内容" class="layui-textarea" lay-verify="content"></textarea>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">提交</button>
+        </div>
+    </div>
+</form>
+<!--回复 回复-->
+<div id="talk" style="display: none">
+    <form class="layui-form">
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">回复</label>
+            <textarea style="width: 0px" name="text" id="reply" placeholder="请输入内容" class="layui-textarea" lay-verify="content"></textarea>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">回复</button>
+                <button type="reset" class="layui-btn">取消</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

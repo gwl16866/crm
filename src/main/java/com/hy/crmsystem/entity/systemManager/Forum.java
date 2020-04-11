@@ -59,6 +59,26 @@ public class Forum implements Serializable {
     @TableField("reply_time")
     private Date replyTime;
 
+    private Integer count;
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    private String keyword;
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
     public Date getReplyTime() {
         return replyTime;
     }
@@ -205,15 +225,27 @@ public class Forum implements Serializable {
 
     @Override
     public String toString() {
-        return "Article{" +
-                "uid=" + uid +
+        return "Forum{" +
+                "id=" + id +
+                ", uid=" + uid +
                 ", articleTag='" + articleTag + '\'' +
                 ", ofBid=" + ofBid +
                 ", title='" + title + '\'' +
+                ", counts=" + counts +
+                ", tid=" + tid +
+                ", sid='" + sid + '\'' +
+                ", bsid='" + bsid + '\'' +
+                ", text='" + text + '\'' +
+                ", stime=" + stime +
                 ", articleText='" + articleText + '\'' +
                 ", sendTime=" + sendTime +
                 ", fileName='" + fileName + '\'' +
                 ", clickCount=" + clickCount +
+                ", username='" + username + '\'' +
+                ", bname='" + bname + '\'' +
+                ", replyTime=" + replyTime +
+                ", count=" + count +
+                ", keyword='" + keyword + '\'' +
                 '}';
     }
 }

@@ -14,25 +14,21 @@
             position: absolute;
             top: 100px;
         }
-
         #search {
             position: absolute;
             top: 40px;
             left: 290px
         }
-
         #f {
             position: absolute;
             top: 37px;
             left: 80px;
         }
-
         #img {
             position: absolute;
             top: 30px;
             left: 10px;
         }
-
         .layui-form-select {
             width: 190px;
         }
@@ -49,9 +45,9 @@
     <div class="layui-form-item" id="search">
         <div class="layui-inline">
             <div class="layui-input-inline">
-                <select name="modules" lay-verify="required" class="layui-form-select">
-                    <option value="1">按主题</option>
-                    <option value="2">按作者</option>
+                <select name="condition" lay-verify="required" class="layui-form-select">
+                    <option value=1>按主题</option>
+                    <option value=2>按作者</option>
                 </select>
             </div>
         </div>
@@ -60,8 +56,7 @@
                    autocomplete="off" class="layui-input" style="width: 400px">
         </div>
         <div class="layui-inline">
-            <button type="submit" class="layui-btn layui-btn-primary" lay-submit
-                    lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索
+            <button type="submit" id="dimSearch" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索
             </button>
         </div>
     </div>
@@ -80,18 +75,19 @@
     </div>
 </script>
 <div id="tab">
-    <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+    <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
 </div>
 <script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script>
-    layui.use(['form', 'table'], function () {
+    layui.use(['form', 'table'], function (obj) {
+        var data = obj.data;
         var $ = layui.jquery,
             form = layui.form,
             table = layui.table,
             layuimini = layui.layuimini;
         //表格
         table.render({
-            elem: '#currentTableId',
+            elem: '#currentTable',
             url: '../../forum/selectForum.do',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print', {
@@ -115,10 +111,22 @@
             limit: 3,
             page: true
         });
+        //   监听submit并改同步提交为异步提交并重新渲染表格
+        form.on('submit(data-search-btn)', function (data) {
+            table.reload("currentTable", {
+                where: data.field
+            });
+            return false; //阻止表单跳转。
+        });
         //监听行单击事件
-        table.on('row(currentTableFilter)', function (obj) {
+        table.on('row(currentTable)', function (obj) {
             var data = obj.data;
             console.log(data);
+            $.ajax({
+                type: 'post',
+                url: '../../forum/updateClick.do?id='+data.id,
+                contentType: 'application/json',
+            });
             var index = layer.open({
                 title: data.title,
                 type: 2,
@@ -150,7 +158,6 @@
         $("body").on("click",'.refresh-btn', function () {
             window.location.reload();
         });
-
     });
 </script>
 </body>

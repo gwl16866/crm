@@ -25,8 +25,8 @@ public class ForumServiceImpl extends ServiceImpl<ForumMapper, Article> {
     private LoginMapper loginMapper;
 
     //查询所有帖子
-    public List<Article> selectForum(Article article) {
-        return forumMapper.selectForum(article);
+    public List<Forum> selectForum(Forum forum, Integer condition, List<User> userList) {
+        return forumMapper.selectForum(forum,condition,userList);
     }
 
     //添加帖子——所属商机
@@ -83,4 +83,9 @@ public class ForumServiceImpl extends ServiceImpl<ForumMapper, Article> {
     public void updateReplyTime(Integer id){
         forumMapper.updateReplyTime(id);
     };
+
+    //点击数
+    public void updateClick(Integer id) {
+        forumMapper.updateClick(id);
+    }
 }

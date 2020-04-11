@@ -16,7 +16,7 @@ public interface ForumMapper extends BaseMapper<Article> {
 
     //查询所有商机
     @SelectProvider(type = ForumDao.class, method = "selectForum")
-    public List<Article> selectForum(Article article);
+    public List<Forum> selectForum(Forum forum, Integer condition, List<User> userList);
 
     //查询回复时间
     @Select("select max(t.stime),count(t.id) counts,a.id from article a ,talk t where a.id=t.id group by a.id having a.id=#{value}")
@@ -59,4 +59,8 @@ public interface ForumMapper extends BaseMapper<Article> {
     //回复 回复
     @Insert("")
     public void replyReply(Talk talk);
+
+    //点击数
+    @Update("update article set click_count=click_count+1 where id=#{id}")
+    public void updateClick(Integer id);
 }

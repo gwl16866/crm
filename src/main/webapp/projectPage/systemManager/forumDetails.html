@@ -146,8 +146,9 @@
             <col width="270">
             <col width="90">
             <col width="90">
+            <col width="90">
         </colgroup>
-        <tr><td>发帖人</td><td>内容</td><td>时间</td></tr>
+        <tr><td>发帖人</td><td>内容</td><td>时间</td><td></td></tr>
         <tr th:height="70">
             <td th:text="${of.getUsername()}" class="layui-icon layui-icon-friends" style="font-size:30px"></td>
             <td th:value="${of.getId()}" th:text="${of.getArticleText()}" style="font-size:30px"></td>
@@ -163,8 +164,9 @@
             <col width="270">
             <col width="90">
             <col width="90">
+            <col width="90">
         </colgroup>
-        <tr><td>评论人</td><td>被评论人</td><td>内容</td><td>时间</td></tr>
+        <tr><td>评论人</td><td>被评论人</td><td>内容</td><td>时间</td><td></td></tr>
         <tr th:each="li:${list}" th:if="${li.getSid()} != null">
             <td th:value="${li.getUid()}" th:text="${li.getSid()}" class="layui-icon layui-icon-friends" style="font-size:20px"></td>
             <td th:text="${li.getSid()}"></td>

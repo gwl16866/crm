@@ -56,7 +56,7 @@
                    autocomplete="off" class="layui-input" style="width: 400px">
         </div>
         <div class="layui-inline">
-            <button type="submit" id="dimSearch" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索
+            <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索
             </button>
         </div>
     </div>
@@ -111,7 +111,7 @@
             limit: 6,
             page: true
         });
-        //   监听submit并改同步提交为异步提交并重新渲染表格
+        // 监听submit并改同步提交为异步提交并重新渲染表格
         form.on('submit(data-search-btn)', function (data) {
             table.reload("currentTable", {
                 where: data.field

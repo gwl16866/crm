@@ -16,26 +16,29 @@ import java.util.Date;
  */
 public class Contract implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @TableId(value = "cid", type = IdType.AUTO)
     private Integer cid;
 
     @TableField("customer_id")
     private Integer customerId;
 
+    //合同名称
     @TableField("contract_name")
     private String contractName;
 
+    //合同编号
     @TableField("contract_num")
     private String contractNum;
 
+    //合同金额
     @TableField("contract_money")
     private String contractMoney;
 
+    //签约日期
     @TableField("signed_time")
     private Date signedTime;
 
+    //生效日期
     @TableField("star_time")
     private Date starTime;
 
@@ -56,8 +59,10 @@ public class Contract implements Serializable {
 
     private String file;
 
+    //所属部门
     private Integer ofdept;
 
+    //关联人员
     private String ofpeople;
 
     @TableField("contract_status")
@@ -66,6 +71,17 @@ public class Contract implements Serializable {
     private String priority;
 
     private String process;
+
+    //关键字
+    private String keyword;
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
 
     public Integer getCid() {
         return cid;

@@ -1,8 +1,5 @@
 package com.hy.crmsystem.entity.systemManager;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,16 +12,13 @@ public class Forum implements Serializable {
 
     private Integer uid;
 
-    @TableField("article_tag")
     private String articleTag;
 
-    @TableField("of_bid")
     private Integer ofBid;
 
     private String title;
 
     //回复ID
-    @TableId(value = "tid", type = IdType.AUTO)
     private Integer tid;
 
     //评论人
@@ -37,24 +31,18 @@ public class Forum implements Serializable {
 
     private Date stime;
 
-    @TableField("article_text")
     private String articleText;
 
-    @TableField("send_time")
     private Date sendTime;
 
-    @TableField("file")
     private String fileName;
 
-    @TableField("click_count")
     private int clickCount;
 
-    @TableField("user_name")
     private String username;
 
     private String bname;
 
-    @TableField("reply_time")
     private Date replyTime;
 
     private Integer count;

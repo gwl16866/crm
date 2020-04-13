@@ -134,11 +134,15 @@ public class AftersellController {
         //根据客户id查询姓名
         List<Customer> customer = aftersellService.selectCustomerById(afterSellBoTwo.getCustomerId());
 
+        String themeName = customer.get(0).getCname()+num;
+
+        Integer count = aftersellService.selectThemeExist(themeName);
+        if(count == 0){
             Theme t=new Theme();
-            t.setTheme(customer.get(0).getCname()+num);
+            t.setTheme(themeName);
             t.setCid(Integer.valueOf(afterSellBoTwo.getCid()));
             aftersellService.saveTheme(t);
-
+        }
             afterSellBoTwo.setThemeNo(Integer.valueOf(aftersellService.selectMaxId()));
             System.out.println(afterSellBoTwo);
             aftersellService.saveAfterSell(afterSellBoTwo);
@@ -192,5 +196,15 @@ public class AftersellController {
     public String selectCount(String type){
         return   aftersellService.selectCount(type);
     }
+
+    @ResponseBody
+    @RequestMapping("/selectNewCount.do")
+    public Integer selectNewCount(String type){
+        return  aftersellService.selectNewCount(type);
+    }
+
+
+
+
 
 }

@@ -1,8 +1,5 @@
 package com.hy.crmsystem.entity.systemManager;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,18 +12,13 @@ public class Forum implements Serializable {
 
     private Integer uid;
 
-    @TableField("article_tag")
     private String articleTag;
 
-    @TableField("of_bid")
     private Integer ofBid;
 
     private String title;
 
-    private Integer counts;
-
     //回复ID
-    @TableId(value = "tid", type = IdType.AUTO)
     private Integer tid;
 
     //评论人
@@ -39,25 +31,39 @@ public class Forum implements Serializable {
 
     private Date stime;
 
-    @TableField("article_text")
     private String articleText;
 
-    @TableField("send_time")
     private Date sendTime;
 
-    @TableField("file")
     private String fileName;
 
-    @TableField("click_count")
     private int clickCount;
 
-    @TableField("user_name")
     private String username;
 
     private String bname;
 
-    @TableField("reply_time")
     private Date replyTime;
+
+    private Integer count;
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    private String keyword;
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
 
     public Date getReplyTime() {
         return replyTime;
@@ -113,14 +119,6 @@ public class Forum implements Serializable {
 
     public void setStime(Date stime) {
         this.stime = stime;
-    }
-
-    public Integer getCounts() {
-        return counts;
-    }
-
-    public void setCounts(Integer counts) {
-        this.counts = counts;
     }
 
     public String getBname() {
@@ -205,15 +203,26 @@ public class Forum implements Serializable {
 
     @Override
     public String toString() {
-        return "Article{" +
-                "uid=" + uid +
+        return "Forum{" +
+                "id=" + id +
+                ", uid=" + uid +
                 ", articleTag='" + articleTag + '\'' +
                 ", ofBid=" + ofBid +
                 ", title='" + title + '\'' +
+                ", tid=" + tid +
+                ", sid='" + sid + '\'' +
+                ", bsid='" + bsid + '\'' +
+                ", text='" + text + '\'' +
+                ", stime=" + stime +
                 ", articleText='" + articleText + '\'' +
                 ", sendTime=" + sendTime +
                 ", fileName='" + fileName + '\'' +
                 ", clickCount=" + clickCount +
+                ", username='" + username + '\'' +
+                ", bname='" + bname + '\'' +
+                ", replyTime=" + replyTime +
+                ", count=" + count +
+                ", keyword='" + keyword + '\'' +
                 '}';
     }
 }

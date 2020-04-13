@@ -35,7 +35,6 @@ public class AftersellServiceImpl extends ServiceImpl<AftersellMapper, Aftersell
     /*查询全部售后信息*/
     @Override
     public IPage<AftersellBo> selectAftersellBo(@Param("ip") Page ip, @Param("aftersellBo") AftersellBo aftersellBo,@Param("types")int types) {
-
         return aftersellMapper.selectAftersellBo(ip,aftersellBo,types);
     }
 
@@ -113,6 +112,18 @@ public class AftersellServiceImpl extends ServiceImpl<AftersellMapper, Aftersell
         }
         Integer c=aftersellMapper.selectCount(qr);
         return String.valueOf(c);
+    }
+
+    @Override
+    public Integer selectNewCount(String type) {
+        return aftersellMapper.selectNewCount(type);
+    }
+
+    @Override
+    public Integer selectThemeExist(String theme) {
+        QueryWrapper qr=new QueryWrapper();
+        qr.eq("theme",theme);
+        return aftersellMapper.selectCount(qr);
     }
 
 

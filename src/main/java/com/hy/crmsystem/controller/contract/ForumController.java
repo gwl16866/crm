@@ -31,9 +31,8 @@ public class ForumController {
     //主页面——查询所有
     @RequestMapping("/selectForum.do")
     @ResponseBody
-    public LayuiData selectForum(Article article) {
-        List<Article> list = forumService.selectForum(article);
-
+    public LayuiData selectForum(Article article,String modules,String keyword) {
+        List<Article> list = forumService.selectForum(article,modules,keyword);
         for (Article a:list){
             a.setCount(forumService.selectCountReply(a.getId()));
         }
@@ -50,7 +49,6 @@ public class ForumController {
     @ResponseBody
     @RequestMapping("/addForum.do")
     public String addForum(Article article) {
-
             forumService.addForum(article);
 
         return "1";

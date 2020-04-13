@@ -41,7 +41,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">客户名称:</label>
             <div class="layui-input-inline">
-                <select class="layui-form-select" id="customerId" name="customerId" lay-filter="customerId"></select>
+                <select class="layui-form-select" lay-verify="required" id="customerId" name="customerId" lay-filter="customerId"></select>
             </div>
         </div>
         <div class="layui-inline">
@@ -54,7 +54,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">合同要点</label>
         <div class="layui-input-block">
-            <input type="text" name="contractInfor"  autocomplete="off" placeholder="主要信息" class="layui-input">
+            <input type="text" name="contractInfor" lay-verify="required"  autocomplete="off" placeholder="主要信息" class="layui-input">
         </div>
     </div>
 
@@ -62,13 +62,13 @@
         <div class="layui-inline">
             <label class="layui-form-label">对方联系人:</label>
             <div class="layui-input-inline">
-                <input type="text" name="linkman"  autocomplete="off" placeholder="对方联系人" class="layui-input">
+                <input type="text" name="linkman" lay-verify="required"  autocomplete="off" placeholder="对方联系人" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">固定电话:</label>
             <div class="layui-input-inline">
-                <input type="text" name="officeno"  autocomplete="off" placeholder="固定电话" class="layui-input">
+                <input type="text" name="officeno" lay-verify="required|number"  autocomplete="off" placeholder="固定电话" class="layui-input">
             </div>
         </div>
     </div>
@@ -77,13 +77,13 @@
         <div class="layui-inline">
             <label class="layui-form-label">移动电话:</label>
             <div class="layui-input-inline">
-                <input type="text" name="phoneno"  autocomplete="off" placeholder="移动电话" class="layui-input">
+                <input type="text" name="phoneno" lay-verify="required|number"  autocomplete="off" placeholder="移动电话" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">邮件/QQ:</label>
             <div class="layui-input-inline">
-                <input type="text" name="emails"  autocomplete="off" placeholder="主要信息" class="layui-input">
+                <input type="text" name="emails" lay-verify="required|emails"  autocomplete="off" placeholder="主要信息" class="layui-input">
             </div>
         </div>
     </div>
@@ -144,14 +144,14 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">服务内容</label>
         <div class="layui-input-block">
-            <textarea name="serviceText" placeholder="服务内容" class="layui-textarea"></textarea>
+            <textarea name="serviceText" lay-verify="required" placeholder="服务内容" class="layui-textarea"></textarea>
         </div>
     </div>
 
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">客户反馈</label>
         <div class="layui-input-block">
-            <textarea name="customerReturn" placeholder="客户反馈" class="layui-textarea"></textarea>
+            <textarea name="customerReturn" lay-verify="required" placeholder="客户反馈" class="layui-textarea"></textarea>
         </div>
     </div>
 
@@ -175,7 +175,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">附件</label>
         <div class="layui-upload">
-            <button type="button" class="layui-btn layui-btn-normal" id="uploadFile">选择文件</button>
+            <button type="button"  class="layui-btn layui-btn-normal" id="uploadFile">选择文件</button>
             <button type="button" class="layui-btn" id="test9">开始上传</button>
         </div>
         <input type="hidden" id="hidd" name="file">

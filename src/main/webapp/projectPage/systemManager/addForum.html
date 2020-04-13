@@ -30,13 +30,13 @@
             }
         });
         //返回上一个页面
-        $(".data-add-btn").on("click", function () {
+        $("body").on("click",'.data-add-btn', function () {
             window.location.href = "../../projectPage/systemManager/forum.html";
             var index = parent.layer.getFrameIndex(window.name);
             parent.layer.close(index);
         });
         //刷新页面
-        $(".refresh-btn").on("click", function () {
+        $("body").on("click",'.refresh-btn', function () {
             window.location.reload();
         });
     });
@@ -132,7 +132,6 @@
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button type="submit" class="layui-btn" lay-submit="" lay-filter="formDemo">提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
 </form>

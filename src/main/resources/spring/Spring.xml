@@ -5,7 +5,7 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
 
-       xsi:schemaLocation= "http://www.springframework.org/schema/beans
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
                             http://www.springframework.org/schema/beans/spring-beans.xsd
                             http://www.springframework.org/schema/tx
                             http://www.springframework.org/schema/tx/spring-tx.xsd
@@ -35,7 +35,6 @@
         <property name="password" value="${jdbc.password}"></property>
     </bean>
 
-
     <!--session工厂-->
     <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
         <!--数据源-->
@@ -47,18 +46,18 @@
         <!--mybatis plus分页-->
         <property name="plugins">
             <array>
-                <!--   <bean class="com.github.pagehelper.PageInterceptor">
-                        <property name="properties">
-                            <props>
-                                <prop key="helperDialect">mysql</prop>
-                                <prop key="reasonable">true</prop>
-                            </props>
-                        </property>
-                     </bean>-->
                 <bean id="interceptor" class="com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor"></bean>
+
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <value>
+                            helperDialect=postgresql
+                            reasonable=true
+                        </value>
+                    </property>
+                </bean>
             </array>
         </property>
-
     </bean>
 
     <!--sqlsession 事务管理器-->
@@ -71,15 +70,4 @@
         <property name="basePackage" value="com.hy.crmsystem.mapper"></property>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
-
-
-
-
-
-
-
-
-
-
-
 </beans>

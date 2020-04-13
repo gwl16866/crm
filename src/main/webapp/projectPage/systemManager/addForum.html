@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>论坛</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+</head>
+<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<body>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type: 'post',
+            url: '../../forum/selectBussiness.do',
+            contentType: 'application/json',
+            success: function (data) {
+                var str = "<option value='0'>请选择商机</option>";
+                for (var i = 0; i < data.length; i++) {
+                    str += "<option value='" + data[i].bid + "'>" + data[i].bname + "</option>"
+                }
+                $("#service").html(str);
+                //重新渲染
+                layui.form.render("select");
+            }
+        });
+        //返回上一个页面
+        $("body").on("click",'.data-add-btn', function () {
+            window.location.href = "../../projectPage/systemManager/forum.html";
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        });
+        //刷新页面
+        $("body").on("click",'.refresh-btn', function () {
+            window.location.reload();
+        });
+    });
+</script>
+<script>
+    layui.use(['form', 'layedit', 'upload'], function () {
+        var form = layui.form;//只有执行了这一步，部分表单元素才会自动修饰成功
+        var layedit = layui.layedit,
+            $ = layui.jquery;
+        var upload = layui.upload;
+        form.render();
+        //建立编辑
+        var index = layedit.build('demo');
+        form.verify({
+            content: function (value) {
+                return layedit.sync(index);
+            }
+        });
+        //添加文件
+        upload.render({
+            elem: '#uploadFile'
+            , url: '../../forum/uploadFile.do'
+            , accept: 'file'
+            , done: function (res) {
+                var va = res.filename;
+                $("#hidd").val(va);
+                layer.msg("上传成功");
+            }
+            , error: function () {
+                layer.msg("失败");
+            }
+        });
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            $.ajax({
+                url: '../../forum/addForum.do',
+                type: 'POST',
+                dataType: 'json',
+                data: data.field,
+                success: function (msg) {
+                    if (msg == 1) {
+                        layer.msg("添加成功", {icon: 6});
+                        //关闭当前页面并打开主页面
+                        window.location.href = "../../projectPage/systemManager/forum.html";
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        parent.location.reload();
+                    } else {
+                        layer.msg("添加失败", {icon: 6});
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>
+<div class="layui-btn-container">
+    <button type="button" class="layui-btn data-add-btn">
+        <i class="layui-icon layui-icon-left"></i> 返回
+    </button>
+    <button type="button" class="layui-btn refresh-btn">
+        <i class="layui-icon layui-icon-refresh"></i> 刷新
+    </button>
+</div>
+<hr class="layui-bg-black">
+<form class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">商机</label>
+        <div class="layui-input-inline">
+            <select id="service" name="ofBid" lay-verify="required" class="select">
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">主题</label>
+        <input type="text" name="title" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 400px">
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">附件</label>
+        <div class="layui-input-block" type="text">
+            <input type="file" name="file" id="uploadFile">
+            <input type="hidden" id="hidd" name="fileName">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">内容</label>
+        <div class="layui-input-block">
+            <textarea name="articleText" id="demo" placeholder="请输入内容" class="layui-textarea" lay-verify="content"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="formDemo">提交</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

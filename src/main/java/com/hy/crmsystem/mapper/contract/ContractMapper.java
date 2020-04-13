@@ -1,7 +1,7 @@
 package com.hy.crmsystem.mapper.contract;
 
-import com.hy.crmsystem.entity.contract.Contract;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.hy.crmsystem.entity.contract.Contract;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

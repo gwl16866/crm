@@ -3,9 +3,12 @@ package com.hy.crmsystem.mapper.contract;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hy.crmsystem.controller.contract.ContractDao;
 import com.hy.crmsystem.entity.contract.Contract;
+import com.hy.crmsystem.entity.customerManager.Customer;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -23,4 +26,19 @@ public interface ContractMapper extends BaseMapper<Contract> {
     @SelectProvider(type = ContractDao.class, method = "selectAllCont")
     public List<Contract> selectAllCont(Contract contract, Integer condition);
 
+    //查询回款额
+    @Select("select sum(return_money) returnMoney from returnmoneydetails where cid=#{cid}")
+    public BigDecimal selectReturnMoney(Integer cid);
+
+    //查询客户
+    @Select("select * from customer where cname=#{cname}")
+    public Customer selectCustomer(String cname);
+
+    //帖子详情
+    @Select("select c.*,r.* from contract c,customer r where c.customer_id=r.cid and c.contract_num=#{contractNum}")
+    public Contract contractDetails(String contractNum);
+
+  /*  //添加合同
+    @Select("insert into contract values()")
+    public void addContract(Contract contract);*/
 }

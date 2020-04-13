@@ -43,7 +43,7 @@
         <!--mybatis 主配置-->
         <property name="configLocation" value="classpath:myBatis/MyBatis.xml"></property>
         <!--别名-->
-        <property name="typeAliasesPackage" value="com.hy.crmsystem.mapper"></property>
+        <property name="typeAliasesPackage" value="com.hy.crmsystem.entity"></property>
         <!--mybatis plus分页-->
         <property name="plugins">
             <array>

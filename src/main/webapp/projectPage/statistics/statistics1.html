@@ -1,0 +1,886 @@
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>统计</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/serv.css"  media="all">
+    <style type="text/css">
+        #card{
+            position: absolute;
+            width: 250px;
+            height: 500px;
+            top: 100px;
+        }
+        #div1{
+            position: absolute;
+            width: 900px;
+            height: 500px;
+            top: 100px;
+            left: 280px;
+        }
+        #div2{
+            position: absolute;
+            top: 100px;
+            left: 280px;
+        }
+        #div3{
+            position: absolute;
+            top: 100px;
+            left: 280px;
+        }
+        #div4{
+            position: absolute;
+            top: 100px;
+            left: 280px;
+        }
+        #div5{
+            position: absolute;
+            top: 100px;
+            left: 280px;
+        }
+        #f{
+            position: absolute;
+            top: 37px;
+            left:80px;
+        }
+        #img{
+            position: absolute;
+            top: 30px;
+            left:10px;
+        }
+    </style>
+</head>
+<body>
+<div id="img">
+    <img src="../../imgs/wx.png" style="height: 60px;width: 60px">
+</div>
+<div id="f">
+    <font size="6">统计分析</font>
+</div>
+
+<div class="layui-row layui-form-pane">
+
+        <div class="layui-card" id="card">
+            <div class="layui-card-header"><i class="layui-icon ">&#xe629;</i>分类</div>
+            <div class="layui-card-body layui-text">
+                <div class="layuimini-notice">
+                    <div class="layuimini-notice-title"><a href="javascript:;" id="on1"><i class="layui-icon">&#xe629;我的统计</i></a> </div>
+                </div>
+                <div class="layuimini-notice">
+                    <div class="layuimini-notice-title"><a href="javascript:;" id="on2"><i class="layui-icon">&#xe629;本周统计</i></a> </div>
+                </div>
+                <div class="layuimini-notice">
+                    <div class="layuimini-notice-title"><a href="javascript:;" id="on3"><i class="layui-icon">&#xe629;本月统计</i></a> </div>
+                </div>
+                <div class="layuimini-notice">
+                    <div class="layuimini-notice-title"><a href="javascript:;" id="on4"><i class="layui-icon">&#xe629;本季度统计</i></a> </div>
+                </div>
+                <div class="layuimini-notice">
+                    <div class="layuimini-notice-title"><a href="javascript:;" id="on5"><i class="layui-icon">&#xe629;本年统计</i></a> </div>
+                </div>
+                </div>
+            </div>
+
+
+
+<!--    我的统计-->
+    <div class="layui-col-xs9" id="div1" style="display: block">
+        <div class="layui-col-md12">
+
+            <div class="layui-inline">
+
+                <div class="layui-row">
+                    <div class="layui-col-xs3">
+                        <div class="layui-inline">
+                            <div class="layui-card" id="cards">
+                                <div class="layui-card-header"><i class="layui-icon ">&#xe60a;</i>商机数</div>
+                                <div class="layui-card-body layui-text">
+                                    <div class="layuimini-notice">
+                                        <div class="layui-row">
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;本周</i> </div>
+                                                    <div id="sjbz">0.0万</div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;上周</i> </div>
+                                                    <div id="sjsz">0.0万</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-xs3">
+                        <div class="layui-inline">
+                            <div class="layui-card" >
+                                <div class="layui-card-header"><i class="layui-icon ">&#xe60a;</i>成交数</div>
+                                <div class="layui-card-body layui-text">
+                                    <div class="layuimini-notice">
+
+                                        <div class="layui-row">
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;本周|</i> </div>
+                                                    <div id="bzcj">0.0万</div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;上周</i> </div>
+                                                    <div id="szcj">0.0万</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="layui-col-xs3">
+                        <div class="layui-inline">
+                            <div class="layui-card" >
+                                <div class="layui-card-header"><i class="layui-icon ">&#xe60a;</i>跟单数</div>
+                                <div class="layui-card-body layui-text">
+                                    <div class="layuimini-notice">
+
+                                        <div class="layui-row">
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;本周|</i> </div>
+                                                    <div id="bzgd">0.0万</div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;上周</i> </div>
+                                                    <div id="szgd">0.0万</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-xs3">
+                        <div class="layui-inline">
+                            <div class="layui-card" >
+                                <div class="layui-card-header"><i class="layui-icon ">&#xe60a;</i>合同数</div>
+                                <div class="layui-card-body layui-text">
+                                    <div class="layuimini-notice">
+
+                                        <div class="layui-row">
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;本周|</i> </div>
+                                                    <div id="bzht">0.0万</div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;上周</i> </div>
+                                                    <div id="szht">0.0万</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+        </div>
+
+            <div class="layui-row">
+            <div class="layui-col-xs3">
+                <div class="layui-inline">
+                    <div class="layui-card" >
+                        <div class="layui-card-header"><i class="layui-icon ">&#xe60a;</i>商机数</div>
+                        <div class="layui-card-body layui-text">
+                            <div class="layuimini-notice">
+                                <div class="layui-row">
+                                    <div class="layui-col-xs6">
+                                        <div class="layui-inline">
+                                            <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;本月|</i> </div>
+                                            <div id="sjby">0.0万</div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs6">
+                                        <div class="layui-inline">
+                                            <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;上月</i> </div>
+                                            <div id="sjsy">0.0万</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-xs3">
+                <div class="layui-inline">
+                    <div class="layui-card" >
+                        <div class="layui-card-header"><i class="layui-icon ">&#xe60a;</i>成交数</div>
+                        <div class="layui-card-body layui-text">
+                            <div class="layuimini-notice">
+
+                                <div class="layui-row">
+                                    <div class="layui-col-xs6">
+                                        <div class="layui-inline">
+                                            <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;本月|</i> </div>
+                                            <div id="byid11">0.0万</div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs6">
+                                        <div class="layui-inline">
+                                            <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;上月</i> </div>
+                                            <div id="byid12">0.0万</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="layui-col-xs3">
+                <div class="layui-inline">
+                    <div class="layui-card" >
+                        <div class="layui-card-header"><i class="layui-icon ">&#xe60a;</i>跟单数</div>
+                        <div class="layui-card-body layui-text">
+                            <div class="layuimini-notice">
+
+                                <div class="layui-row">
+                                    <div class="layui-col-xs6">
+                                        <div class="layui-inline">
+                                            <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;本月|</i> </div>
+                                            <div id="byid13">0.0万</div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs6">
+                                        <div class="layui-inline">
+                                            <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;上月</i> </div>
+                                            <div id="byid14">0.0万</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-xs3">
+                <div class="layui-inline">
+                    <div class="layui-card" >
+                        <div class="layui-card-header"><i class="layui-icon ">&#xe60a;</i>合同数</div>
+                        <div class="layui-card-body layui-text">
+                            <div class="layuimini-notice">
+
+                                <div class="layui-row">
+                                    <div class="layui-col-xs6">
+                                        <div class="layui-inline">
+                                            <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;本月|</i> </div>
+                                            <div id="byid15">0.0万</div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs6">
+                                        <div class="layui-inline">
+                                            <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;上月</i> </div>
+                                            <div id="byid16">0.0万</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+           <div class="layui-row">
+                    <div class="layui-col-xs3">
+                        <div class="layui-inline">
+                            <div class="layui-card" >
+                                <div class="layui-card-header"><i class="layui-icon ">&#xe60a;</i>商机数</div>
+                                <div class="layui-card-body layui-text">
+                                    <div class="layuimini-notice">
+                                        <div class="layui-row">
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;本季度|</i> </div>
+                                                    <div id="sjbj">0.0万</div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;上季度</i> </div>
+                                                    <div id="sjsj">0.0万</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-xs3">
+                        <div class="layui-inline">
+                            <div class="layui-card" >
+                                <div class="layui-card-header"><i class="layui-icon ">&#xe60a;</i>成交数</div>
+                                <div class="layui-card-body layui-text">
+                                    <div class="layuimini-notice">
+
+                                        <div class="layui-row">
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;本季度|</i> </div>
+                                                    <div id="byid19">0.0万</div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;上季度</i> </div>
+                                                    <div id="byid20">0.0万</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-xs3">
+                        <div class="layui-inline">
+                            <div class="layui-card" >
+                                <div class="layui-card-header"><i class="layui-icon ">&#xe60a;</i>跟单数</div>
+                                <div class="layui-card-body layui-text">
+                                    <div class="layuimini-notice">
+
+                                        <div class="layui-row">
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;本季度|</i> </div>
+                                                    <div id="byid21">0.0万</div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;上季度</i> </div>
+                                                    <div id="byid22">0.0万</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-xs3">
+                        <div class="layui-inline">
+                            <div class="layui-card" >
+                                <div class="layui-card-header"><i class="layui-icon ">&#xe60a;</i>合同数</div>
+                                <div class="layui-card-body layui-text">
+                                    <div class="layuimini-notice">
+
+                                        <div class="layui-row">
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;本季度|</i> </div>
+                                                    <div id="byid23">0.0万</div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;上季度</i> </div>
+                                                    <div id="byid24">0.0万</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="layui-row">
+                    <div class="layui-col-xs3">
+                        <div class="layui-inline">
+                            <div class="layui-card" >
+                                <div class="layui-card-header"><i class="layui-icon ">&#xe60a;</i>商机数</div>
+                                <div class="layui-card-body layui-text">
+                                    <div class="layuimini-notice">
+                                        <div class="layui-row">
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;本年|</i> </div>
+                                                    <div id="sjbn">0.0万</div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;上年</i> </div>
+                                                    <div id="sjsn">0.0万</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-xs3">
+                        <div class="layui-inline">
+                            <div class="layui-card" >
+                                <div class="layui-card-header"><i class="layui-icon ">&#xe60a;</i>成交数</div>
+                                <div class="layui-card-body layui-text">
+                                    <div class="layuimini-notice">
+
+                                        <div class="layui-row">
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;本年|</i> </div>
+                                                    <div id="byid27">0.0万</div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;上年</i> </div>
+                                                    <div id="byid28">0.0万</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="layui-col-xs3">
+                        <div class="layui-inline">
+                            <div class="layui-card" >
+                                <div class="layui-card-header"><i class="layui-icon ">&#xe60a;</i>跟单数</div>
+                                <div class="layui-card-body layui-text">
+                                    <div class="layuimini-notice">
+
+                                        <div class="layui-row">
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;本年|</i> </div>
+                                                    <div id="byid29">0.0万</div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;上年</i> </div>
+                                                    <div id="byid30">0.0万</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-xs3">
+                        <div class="layui-inline">
+                            <div class="layui-card" >
+                                <div class="layui-card-header"><i class="layui-icon ">&#xe60a;</i>合同数</div>
+                                <div class="layui-card-body layui-text">
+                                    <div class="layuimini-notice">
+
+                                        <div class="layui-row">
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;本年|</i> </div>
+                                                    <div id="byid31">0.0万</div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-col-xs6">
+                                                <div class="layui-inline">
+                                                    <div class="layuimini-notice-title"><i class="layui-icon">&#xe621;上年</i> </div>
+                                                    <div id="byid32">0.0万</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+<!--    周表/-->
+    <div class="layui-col-xs9" id="div2" style="display: none">
+        <table class="layui-table" lay-data="{width:1100, url:'', page: true, limit: 6, limits:[6]}">
+            <thead>
+            <tr>
+<!--                <th lay-data="{checkbox:true, fixed:'left'}" rowspan="2"></th>-->
+                <th lay-data="{field:'username', width:150}" rowspan="2">用户名</th>
+                <th lay-data="{align:'center'}" colspan="2">商机数</th>
+                <th lay-data="{align:'center'}" colspan="2">成交数</th>
+                <th lay-data="{align:'center'}" colspan="2">跟单数</th>
+                <th lay-data="{align:'center'}" colspan="2">合同数</th>
+            </tr>
+            <tr>
+                <th lay-data="{field:'province', width:120}">本周</th>
+                <th lay-data="{field:'city', width:120}">上周</th>
+                <th lay-data="{field:'province', width:120}">本周</th>
+                <th lay-data="{field:'city', width:120}">上周</th>
+                <th lay-data="{field:'province', width:120}">本周</th>
+                <th lay-data="{field:'city', width:120}">上周</th>
+                <th lay-data="{field:'province', width:120}">本周</th>
+                <th lay-data="{field:'city', width:120}">上周</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+<!--    月表-->
+    <div class="layui-col-xs9" id="div3" style="display: none">
+        <table class="layui-table" lay-data="{width:1100, url:'', page: true, limit: 6, limits:[6]}">
+            <thead>
+            <tr>
+                <!--                <th lay-data="{checkbox:true, fixed:'left'}" rowspan="2"></th>-->
+                <th lay-data="{field:'username', width:150}" rowspan="2">用户名</th>
+                <th lay-data="{align:'center'}" colspan="2">商机数</th>
+                <th lay-data="{align:'center'}" colspan="2">成交数</th>
+                <th lay-data="{align:'center'}" colspan="2">跟单数</th>
+                <th lay-data="{align:'center'}" colspan="2">合同数</th>
+            </tr>
+            <tr>
+                <th lay-data="{field:'province', width:120}">本月</th>
+                <th lay-data="{field:'city', width:120}">上月</th>
+                <th lay-data="{field:'province', width:120}">本月</th>
+                <th lay-data="{field:'city', width:120}">上月</th>
+                <th lay-data="{field:'province', width:120}">本月</th>
+                <th lay-data="{field:'city', width:120}">上月</th>
+                <th lay-data="{field:'province', width:120}">本月</th>
+                <th lay-data="{field:'city', width:120}">上月</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+<!--    季度表-->
+    <div class="layui-col-xs9" id="div4" style="display: none">
+        <table class="layui-table" lay-data="{width:1100, url:'', page: true, limit: 6, limits:[6]}">
+            <thead>
+            <tr>
+                <!--                <th lay-data="{checkbox:true, fixed:'left'}" rowspan="2"></th>-->
+                <th lay-data="{field:'username', width:150}" rowspan="2">用户名</th>
+                <th lay-data="{align:'center'}" colspan="2">商机数</th>
+                <th lay-data="{align:'center'}" colspan="2">成交数</th>
+                <th lay-data="{align:'center'}" colspan="2">跟单数</th>
+                <th lay-data="{align:'center'}" colspan="2">合同数</th>
+            </tr>
+            <tr>
+                <th lay-data="{field:'province', width:120}">本季度</th>
+                <th lay-data="{field:'city', width:120}">上季度</th>
+                <th lay-data="{field:'province', width:120}">本季度</th>
+                <th lay-data="{field:'city', width:120}">上季度</th>
+                <th lay-data="{field:'province', width:120}">本季度</th>
+                <th lay-data="{field:'city', width:120}">上季度</th>
+                <th lay-data="{field:'province', width:120}">本季度</th>
+                <th lay-data="{field:'city', width:120}">上季度</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+<!--    年表-->
+    <div class="layui-col-xs9" id="div5" style="display: none">
+        <table class="layui-table" lay-data="{width:1100, url:'', page: true, limit: 6, limits:[6]}">
+            <thead>
+            <tr>
+                <!--                <th lay-data="{checkbox:true, fixed:'left'}" rowspan="2"></th>-->
+                <th lay-data="{field:'username', width:150}" rowspan="2">用户名</th>
+                <th lay-data="{align:'center'}" colspan="2">商机数</th>
+                <th lay-data="{align:'center'}" colspan="2">成交数</th>
+                <th lay-data="{align:'center'}" colspan="2">跟单数</th>
+                <th lay-data="{align:'center'}" colspan="2">合同数</th>
+            </tr>
+            <tr>
+                <th lay-data="{field:'province', width:120}">本年</th>
+                <th lay-data="{field:'city', width:120}">上年</th>
+                <th lay-data="{field:'province', width:120}">本年</th>
+                <th lay-data="{field:'city', width:120}">上年</th>
+                <th lay-data="{field:'province', width:120}">本年</th>
+                <th lay-data="{field:'city', width:120}">上年</th>
+                <th lay-data="{field:'province', width:120}">本年</th>
+                <th lay-data="{field:'city', width:120}">上年</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+</div>
+
+</body>
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['table'], function() {
+            var $ = layui.jquery;
+            var table = layui.table;
+
+        $("#on1").click(function () {
+            $("#div2").hide();
+            $("#div3").hide();
+            $("#div4").hide();
+            $("#div5").hide();
+            $("#div1").show();
+
+        });
+
+        $("#on2").click(function () {
+            $("#div1").hide();
+            $("#div3").hide();
+            $("#div4").hide();
+            $("#div5").hide();
+            $("#div2").show();
+        });
+        $("#on3").click(function () {
+            $("#div1").hide();
+            $("#div2").hide();
+            $("#div4").hide();
+            $("#div5").hide();
+            $("#div3").show();
+        });
+        $("#on4").click(function () {
+            $("#div1").hide();
+            $("#div3").hide();
+            $("#div2").hide();
+            $("#div5").hide();
+            $("#div4").show();
+        });
+        $("#on5").click(function () {
+            $("#div1").hide();
+            $("#div3").hide();
+            $("#div4").hide();
+            $("#div2").hide();
+            $("#div5").show();
+        });
+
+
+
+////获取本周新增商机可获得多少钱
+        $.ajax({
+            type: "post",
+            url: "../../statistics/sumWeek.do?type=bz",
+            contentType:"application/json",
+            success: function (data) {
+                $("#sjbz").empty();
+                $("#sjbz").append((data==""?0:data)+"万");
+            },
+
+        });
+////获取上周新增商机可获得多少钱
+        $.ajax({
+            type: "post",
+            url: "../../statistics/sumWeek.do?type=sz",
+            contentType:"application/json",
+                success: function (data) {
+                $("#sjsz").empty();
+                $("#sjsz").append((data==""?0:data)+"万");
+            },
+
+        });
+////获取本月新增商机可获得多少钱
+         $.ajax({
+             type: "post",
+             url: "../../statistics/sumMonth.do?type=by",
+             contentType:"application/json",
+             success: function (data) {
+                 $("#sjby").empty();
+                 $("#sjby").append((data==""?0:data)+"万");
+             },
+
+         });
+ ////获取上月新增商机可获得多少钱
+         $.ajax({
+             type: "post",
+             url: "../../statistics/sumMonth.do?type=sy",
+             contentType:"application/json",
+             success: function (data) {
+                 $("#sjsy").empty();
+                 $("#sjsy").append((data==""?0:data)+"万");
+             },
+
+         });
+ ////获取本季度新增商机可获得多少钱
+         $.ajax({
+             type: "post",
+             url: "../../statistics/sumQuarter.do?type=bj",
+             // dataType: "json",
+             success: function (data) {
+                 $("#sjbj").empty();
+                 $("#sjbj").append((data==""?0:data)+"万");
+             },
+
+         });
+ ////获取上季度新增商机可获得多少钱
+         $.ajax({
+             type: "post",
+             url: "../../statistics/sumQuarter.do?type=sj",
+             // dataType: "json",
+             success: function (data) {
+                 $("#sjsj").empty();
+                 $("#sjsj").append((data==""?0:data)+"万");
+             },
+
+         });
+ ////获取本年新增商机可获得多少钱
+         $.ajax({
+             type: "post",
+             url: "../../statistics/sumYear.do?type=bn",
+             // dataType: "json",
+             success: function (data) {
+                 $("#sjbn").empty();
+                 $("#sjbn").append((data==""?0:data)+"万");
+             },
+
+         });
+ ////获取上年新增商机可获得多少钱
+           $.ajax({
+                type: "post",
+                url: "../../statistics/sumYear.do?type=sn",
+                // dataType: "json",
+                success: function (data) {
+                    $("#sjsn").empty();
+                    $("#sjsn").append((data==""?0:data)+"万");
+                },
+
+            });
+
+
+
+    ////获取本周新增合同可获得多少钱
+        /*     $.ajax({
+                type: "post",
+                url: "/crm/contracts/sumMonkey.do",
+                // dataType: "json",
+                success: function (data) {
+                    $("#byid7").empty();
+                    $("#byid7").append((data==""?0:data)+"万");
+                },
+
+            });
+    ////获取上周新增合同可获得多少钱
+            $.ajax({
+                type: "post",
+                url: "/crm/contracts/sumSMonkey.do",
+                // dataType: "json",
+                success: function (data) {
+                    $("#byid8").empty();
+                    $("#byid8").append((data==""?0:data)+"万");
+                },
+
+            });
+    ////获取本月新增合同可获得多少钱
+            $.ajax({
+                type: "post",
+                url: "/crm/contracts/sumYMeonkey.do",
+                // dataType: "json",
+                success: function (data) {
+                    $("#byid15").empty();
+                    $("#byid15").append((data==""?0:data)+"万");
+                },
+
+            });
+    ////获取上月新增合同可获得多少钱
+            $.ajax({
+                type: "post",
+                url: "/crm/contracts/sumSYMeonkey.do",
+                // dataType: "json",
+                success: function (data) {
+                    $("#byid16").empty();
+                    $("#byid16").append((data==""?0:data)+"万");
+                },
+
+            });
+    ////获取本季度新增合同可获得多少钱
+            $.ajax({
+                type: "post",
+                url: "/crm/contracts/sumJdMeonkey.do",
+                // dataType: "json",
+                success: function (data) {
+                    $("#byid23").empty();
+                    $("#byid23").append((data==""?0:data)+"万");
+                },
+
+            });
+    ////获取上季度新增合同可获得多少钱
+            $.ajax({
+                type: "post",
+                url: "/crm/contracts/sumSJdMeonkey.do",
+                // dataType: "json",
+                success: function (data) {
+                    $("#byid24").empty();
+                    $("#byid24").append((data==""?0:data)+"万");
+                },
+
+            });
+    ////获取本年新增合同可获得多少钱
+            $.ajax({
+                type: "post",
+                url: "/crm/contracts/sumNMeonkey.do",
+                // dataType: "json",
+                success: function (data) {
+                    $("#byid31").empty();
+                    $("#byid31").append((data==""?0:data)+"万");
+                },
+
+            });
+    ////获取上年新增商合同可获得多少钱
+            $.ajax({
+                type: "post",
+                url: "/crm/contracts/sumSNMeonkey.do",
+                // dataType: "json",
+                success: function (data) {
+                    $("#byid32").empty();
+                    $("#byid32").append((data==""?0:data)+"万");
+                },
+
+            });*/
+
+
+
+    })
+</script>
+</html>

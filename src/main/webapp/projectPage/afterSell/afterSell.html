@@ -89,24 +89,21 @@
 
             <div class="layuimini-notice">
                 <div class="layuimini-notice-title" id="clz">
-                    <a href="">处理中</a>
+                    <a href="javascript:void(0)">处理中</a>
                     <span class="layui-badge layui-bg-cyan" id="span1"></span>
                 </div>
             </div>
 
-
-
-
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title">
-                <a href="">已结束</a>
+            <div class="layuimini-notice-title" id="yjs">
+                <a href="javascript:void(0)">已结束</a>
                 <span class="layui-badge layui-bg-cyan" id="span2"></span>
                 </div>
         </div>
 
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title">
-                <a href="">已撤除</a>
+            <div class="layuimini-notice-title" id="ycc">
+                <a href="javascript:void(0)">已撤除</a>
                 <span class="layui-badge layui-bg-cyan" id="span3"></span>
             </div>
         </div>
@@ -114,16 +111,28 @@
 
         <hr>
 
-        <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="">本周新增</a>   <span class="layui-badge layui-bg-cyan">青</span></div>
+        <div class="layuimini-notice" id="bzxz">
+            <div class="layuimini-notice-title"><a href="javascript:void(0)">本周新增</a>   <span class="layui-badge layui-bg-cyan" id="span4"></span></div>
         </div>
 
-        <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="">本月新增</a>   <span class="layui-badge layui-bg-cyan">青</span></div>
+        <div class="layuimini-notice" id="szxz">
+            <div class="layuimini-notice-title"><a href="javascript:void(0)">上周新增</a>   <span class="layui-badge layui-bg-cyan" id="span5"></span></div>
         </div>
 
-        <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="">本季度新增</a>   <span class="layui-badge layui-bg-cyan">青</span></div>
+        <div class="layuimini-notice" id="byxz">
+            <div class="layuimini-notice-title"><a href="javascript:void(0)">本月新增</a>   <span class="layui-badge layui-bg-cyan" id="span6"></span></div>
+        </div>
+
+        <div class="layuimini-notice" id="syxz">
+            <div class="layuimini-notice-title"><a href="javascript:void(0)">上月新增</a>   <span class="layui-badge layui-bg-cyan" id="span7"></span></div>
+        </div>
+
+        <div class="layuimini-notice" id="bjdxz">
+            <div class="layuimini-notice-title"><a href="javascript:void(0)">本季度新增</a>   <span class="layui-badge layui-bg-cyan" id="span8"></span></div>
+        </div>
+
+        <div class="layuimini-notice" id="sjdxz">
+            <div class="layuimini-notice-title"><a href="javascript:void(0)">上季度新增</a>   <span class="layui-badge layui-bg-cyan" id="span9"></span></div>
         </div>
 
 
@@ -225,12 +234,58 @@
              $("#span3").append(data);
          }
      });
+     $.ajax({
+         type:"post",
+         url:"../../afterSell/selectNewCount.do?type="+"11",
+         contentType:"application/json",
+         success:function (data) {
+             $("#span4").append(data);
+         }
+     });
+     $.ajax({
+         type:"post",
+         url:"../../afterSell/selectNewCount.do?type="+"12",
+         contentType:"application/json",
+         success:function (data) {
+             $("#span5").append(data);
+         }
+     });
+     $.ajax({
+         type:"post",
+         url:"../../afterSell/selectNewCount.do?type="+"13",
+         contentType:"application/json",
+         success:function (data) {
+             $("#span6").append(data);
+         }
+     });
+     $.ajax({
+         type:"post",
+         url:"../../afterSell/selectNewCount.do?type="+"14",
+         contentType:"application/json",
+         success:function (data) {
+             $("#span7").append(data);
+         }
+     });
+     $.ajax({
+         type:"post",
+         url:"../../afterSell/selectNewCount.do?type="+"15",
+         contentType:"application/json",
+         success:function (data) {
+             $("#span8").append(data);
+         }
+     });
+     $.ajax({
+         type:"post",
+         url:"../../afterSell/selectNewCount.do?type="+"16",
+         contentType:"application/json",
+         success:function (data) {
+             $("#span9").append(data);
+         }
+     });
+
 
  });
 </script>
-
-
-
 
 <script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script>
@@ -265,6 +320,245 @@
             limit: 3,
             page: true
         });
+
+
+        $("#clz").click(function () {
+            table.render({
+                width:1120,
+                elem: '#currentTableId',
+                url: '../../afterSell/afterSell.do?status=1',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [[
+                    {type: "checkbox", fixed: "left"},
+                    {field: 'id', title: 'ID',templet:'#xuhao'},
+                    {field: 'theme', title: '主题'},
+                    {field: 'serviceType', title: '服务类型', sort: true},
+                    {title: '开始时间',templet:'#times'},
+                    {field: 'servicePeople', title: '服务人员'},
+                    {field: 'serviceScore', title: '服务评分'},
+
+                ]],
+                limits: [3, 6, 9, 12, 15, 20],
+                limit: 3,
+                page: true
+            });
+        });
+
+        $("#yjs").click(function () {
+            table.render({
+                width:1120,
+                elem: '#currentTableId',
+                url: '../../afterSell/afterSell.do?status=2',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [[
+                    {type: "checkbox", fixed: "left"},
+                    {field: 'id', title: 'ID',templet:'#xuhao'},
+                    {field: 'theme', title: '主题'},
+                    {field: 'serviceType', title: '服务类型', sort: true},
+                    {title: '开始时间',templet:'#times'},
+                    {field: 'servicePeople', title: '服务人员'},
+                    {field: 'serviceScore', title: '服务评分'},
+
+                ]],
+                limits: [3, 6, 9, 12, 15, 20],
+                limit: 3,
+                page: true
+            });
+        });
+        $("#ycc").click(function () {
+            table.render({
+                width:1120,
+                elem: '#currentTableId',
+                url: '../../afterSell/afterSell.do?status=3',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [[
+                    {type: "checkbox", fixed: "left"},
+                    {field: 'id', title: 'ID',templet:'#xuhao'},
+                    {field: 'theme', title: '主题'},
+                    {field: 'serviceType', title: '服务类型', sort: true},
+                    {title: '开始时间',templet:'#times'},
+                    {field: 'servicePeople', title: '服务人员'},
+                    {field: 'serviceScore', title: '服务评分'},
+
+                ]],
+                limits: [3, 6, 9, 12, 15, 20],
+                limit: 3,
+                page: true
+            });
+        });
+
+        $("#bzxz").click(function () {
+            table.render({
+                width:1120,
+                elem: '#currentTableId',
+                url: '../../afterSell/afterSell.do?status=11',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [[
+                    {type: "checkbox", fixed: "left"},
+                    {field: 'id', title: 'ID',templet:'#xuhao'},
+                    {field: 'theme', title: '主题'},
+                    {field: 'serviceType', title: '服务类型', sort: true},
+                    {title: '开始时间',templet:'#times'},
+                    {field: 'servicePeople', title: '服务人员'},
+                    {field: 'serviceScore', title: '服务评分'},
+
+                ]],
+                limits: [3, 6, 9, 12, 15, 20],
+                limit: 3,
+                page: true
+            });
+        });
+        $("#szxz").click(function () {
+            table.render({
+                width:1120,
+                elem: '#currentTableId',
+                url: '../../afterSell/afterSell.do?status=12',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [[
+                    {type: "checkbox", fixed: "left"},
+                    {field: 'id', title: 'ID',templet:'#xuhao'},
+                    {field: 'theme', title: '主题'},
+                    {field: 'serviceType', title: '服务类型', sort: true},
+                    {title: '开始时间',templet:'#times'},
+                    {field: 'servicePeople', title: '服务人员'},
+                    {field: 'serviceScore', title: '服务评分'},
+
+                ]],
+                limits: [3, 6, 9, 12, 15, 20],
+                limit: 3,
+                page: true
+            });
+        });
+        $("#byxz").click(function () {
+            table.render({
+                width:1120,
+                elem: '#currentTableId',
+                url: '../../afterSell/afterSell.do?status=13',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [[
+                    {type: "checkbox", fixed: "left"},
+                    {field: 'id', title: 'ID',templet:'#xuhao'},
+                    {field: 'theme', title: '主题'},
+                    {field: 'serviceType', title: '服务类型', sort: true},
+                    {title: '开始时间',templet:'#times'},
+                    {field: 'servicePeople', title: '服务人员'},
+                    {field: 'serviceScore', title: '服务评分'},
+
+                ]],
+                limits: [3, 6, 9, 12, 15, 20],
+                limit: 3,
+                page: true
+            });
+        });
+        $("#syxz").click(function () {
+            table.render({
+                width:1120,
+                elem: '#currentTableId',
+                url: '../../afterSell/afterSell.do?status=14',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [[
+                    {type: "checkbox", fixed: "left"},
+                    {field: 'id', title: 'ID',templet:'#xuhao'},
+                    {field: 'theme', title: '主题'},
+                    {field: 'serviceType', title: '服务类型', sort: true},
+                    {title: '开始时间',templet:'#times'},
+                    {field: 'servicePeople', title: '服务人员'},
+                    {field: 'serviceScore', title: '服务评分'},
+
+                ]],
+                limits: [3, 6, 9, 12, 15, 20],
+                limit: 3,
+                page: true
+            });
+        });
+        $("#bjdxz").click(function () {
+            table.render({
+                width:1120,
+                elem: '#currentTableId',
+                url: '../../afterSell/afterSell.do?status=15',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [[
+                    {type: "checkbox", fixed: "left"},
+                    {field: 'id', title: 'ID',templet:'#xuhao'},
+                    {field: 'theme', title: '主题'},
+                    {field: 'serviceType', title: '服务类型', sort: true},
+                    {title: '开始时间',templet:'#times'},
+                    {field: 'servicePeople', title: '服务人员'},
+                    {field: 'serviceScore', title: '服务评分'},
+
+                ]],
+                limits: [3, 6, 9, 12, 15, 20],
+                limit: 3,
+                page: true
+            });
+        });
+        $("#sjdxz").click(function () {
+            table.render({
+                width:1120,
+                elem: '#currentTableId',
+                url: '../../afterSell/afterSell.do?status=16',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [[
+                    {type: "checkbox", fixed: "left"},
+                    {field: 'id', title: 'ID',templet:'#xuhao'},
+                    {field: 'theme', title: '主题'},
+                    {field: 'serviceType', title: '服务类型', sort: true},
+                    {title: '开始时间',templet:'#times'},
+                    {field: 'servicePeople', title: '服务人员'},
+                    {field: 'serviceScore', title: '服务评分'},
+
+                ]],
+                limits: [3, 6, 9, 12, 15, 20],
+                limit: 3,
+                page: true
+            });
+        });
+
 
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
@@ -303,6 +597,7 @@
             });
             return false;
         });
+
 
         // 监听添加操作
         $("body").on("click",'.data-add-btn',function () {

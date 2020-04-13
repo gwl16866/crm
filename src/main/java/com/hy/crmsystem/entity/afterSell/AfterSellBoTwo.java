@@ -13,7 +13,7 @@ public class AfterSellBoTwo {
     @TableField("theme")
     private Integer themeNo;
 
-    private Integer status;
+    private String status;
 
     @TableField("customer_id")
     private Integer customerId;
@@ -64,11 +64,11 @@ public class AfterSellBoTwo {
         this.themeNo = themeNo;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

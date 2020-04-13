@@ -51,4 +51,8 @@ public interface IAftersellService extends IService<Aftersell> {
 
     public String selectCount(String type);
 
+    public Integer selectNewCount(String type);
+
+    public Integer selectThemeExist(String theme);
+
 }

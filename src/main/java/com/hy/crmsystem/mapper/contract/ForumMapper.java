@@ -16,7 +16,7 @@ public interface ForumMapper extends BaseMapper<Article> {
 
     //查询所有商机
     @SelectProvider(type = ForumDao.class, method = "selectForum")
-    public List<Article> selectForum(Article article);
+    public List<Article> selectForum(Article article,@Param("modules") String modules,@Param("keyword")String keyword);
 
     //查询回复时间
     @Select("select max(t.stime),count(t.id) counts,a.id from article a ,talk t where a.id=t.id group by a.id having a.id=#{value}")

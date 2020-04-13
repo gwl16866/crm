@@ -25,8 +25,8 @@ public class ForumServiceImpl extends ServiceImpl<ForumMapper, Article> {
     private LoginMapper loginMapper;
 
     //查询所有帖子
-    public List<Article> selectForum(Article article) {
-        return forumMapper.selectForum(article);
+    public List<Article> selectForum(Article article,String modules,String keyword) {
+        return forumMapper.selectForum(article,modules,keyword);
     }
 
     //添加帖子——所属商机

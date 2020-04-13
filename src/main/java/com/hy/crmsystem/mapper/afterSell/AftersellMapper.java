@@ -87,4 +87,13 @@ public interface AftersellMapper extends BaseMapper<Aftersell> {
     @Select("SELECT t.theme,c.cname,ct.contract_num,ct.contract_name,ase.contract_infor,ase.linkman,ase.officeno,ase.phoneno,ase.emails,ase.service_type,ase.service_style,ase.starttime,ase.endtime,ase.service_text,ase.customer_return,ase.service_people,ase.service_score,ase.file FROM theme t,aftersell ase,customer c,contract ct WHERE t.id=ase.theme AND c.cid = ase.customer_id AND ct.cid =ase.cid AND t.theme ='张三c-dy1001'")
     public AfterSellThree selectOneAfterSell(String theme);
 
+
+    /**
+     * 查询新增条数
+     */
+    @SelectProvider(type = SqlProvider.class,method = "selectNewCount")
+    public Integer selectNewCount(@Param("type")String type);
+
+
+
 }

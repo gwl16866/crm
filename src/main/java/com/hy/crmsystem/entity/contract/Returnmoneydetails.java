@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -17,40 +18,49 @@ import java.util.Date;
  */
 public class Returnmoneydetails implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    //回款日期
     @TableField("return_date")
     private Date returnDate;
 
+    //收入分类
     @TableField("return_class")
     private String returnClass;
 
+    //收入金额
     @TableField("return_money")
-    private Integer returnMoney;
+    private BigDecimal returnMoney;
 
+    //金额大写
     @TableField("money_capital")
     private String moneyCapital;
 
+    //回款方式
     @TableField("return_money_style")
     private Integer returnMoneyStyle;
 
+    //登记人
     @TableField("write_people")
     private String writePeople;
 
+    //关联人
     @TableField("relevance_people")
     private String relevancePeople;
 
+    //关联部门
     @TableField("relevance_dept")
     private Integer relevanceDept;
 
+    //客户单位
     @TableField("customer_company")
     private Integer customerCompany;
 
+    //合同
     private Integer cid;
 
+    //收入说明
     @TableField("return_details")
     private String returnDetails;
 
@@ -78,11 +88,11 @@ public class Returnmoneydetails implements Serializable {
         this.returnClass = returnClass;
     }
 
-    public Integer getReturnMoney() {
+    public BigDecimal getReturnMoney() {
         return returnMoney;
     }
 
-    public void setReturnMoney(Integer returnMoney) {
+    public void setReturnMoney(BigDecimal returnMoney) {
         this.returnMoney = returnMoney;
     }
 

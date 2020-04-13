@@ -194,16 +194,22 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm data-add-btn"> 新增商机</button>
+        <button type="button" class="layui-btn data-add-btn">
+            <i class="layui-icon">&#xe608;</i> 新增合同
+        </button>
+        <button type="button" class="layui-btn refresh-btn">
+            <i class="layui-icon layui-icon-refresh"></i> 刷新
+        </button>
     </div>
 </script>
 <script type="text/html" id="time">
-    {{layui.util.toDateString(d.replyTime,'yyyy-MM-dd HH:mm')}}
+    {{layui.util.toDateString(d.signedTime,'yyyy-MM-dd')}}
 </script>
 <script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <div id="tab">
     <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
 </div>
+<input type="hidden" name="cid">
 <script>
     layui.use(['form', 'table', 'laydate'], function () {
         var $ = layui.jquery,
@@ -223,10 +229,10 @@
                 icon: 'layui-icon-tips'
             }],
             cols: [[
-                {field: 'contractName', title: '合同全称', sort: true},
+                {field: 'contractName', title: '合同全称',templet:'<div><a href="../../contract/contractDetails.do?contractNum={{d.contractNum}}" style="color: #1E9FFF">{{d.contractName}}</a></div> '},
                 {field: 'contractNum', title: '合同编号'},
                 {field: 'contractMoney', title: '合同金额', sort: true},
-                {field: 'city', title: '汇款额'},
+                {field: 'returnMoney', title: '汇款额'},
                 {field: 'classify', title: '开票额'},
                 {field: 'signedTime', title: '签约日期', templet: '#time'}
             ]],
@@ -244,7 +250,7 @@
         // 监听添加操作
         $(".data-add-btn").on("click", function () {
             var index = layer.open({
-                title: '添加商机',
+                title: '添加合同',
                 type: 2,
                 shade: 0.2,
                 maxmin: true,
@@ -257,6 +263,26 @@
             });
             return false;
         });
+        //刷新页面
+        $("body").on("click",'.refresh-btn', function () {
+            window.location.reload();
+        });
+       /* //监听 合同名称
+        $("#contNa").on("click", function (data) {
+            var index = layer.open({
+                title: data.contractName,
+                type: 2,
+                shade: 0.2,
+                maxmin: true,
+                shadeClose: true,
+                area: ['100%', '100%'],
+                content: '../../contract/contractDetails.do?cid='+data.cid,
+            });
+            $(window).on("resize", function () {
+                layer.full(index);
+            });
+            return false;
+        });*/
     });
 </script>
 </body>

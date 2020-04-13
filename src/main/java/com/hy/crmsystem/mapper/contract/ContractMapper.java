@@ -1,8 +1,12 @@
 package com.hy.crmsystem.mapper.contract;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.hy.crmsystem.controller.contract.ContractDao;
 import com.hy.crmsystem.entity.contract.Contract;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.SelectProvider;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +18,9 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ContractMapper extends BaseMapper<Contract> {
+
+    //查询所有合同
+    @SelectProvider(type = ContractDao.class, method = "selectAllCont")
+    public List<Contract> selectAllCont(Contract contract, Integer condition);
 
 }

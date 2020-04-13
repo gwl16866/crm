@@ -5,7 +5,7 @@ import com.hy.crmsystem.entity.contract.Contract;
 public class ContractDao {
 
     public String selectAllCont(Contract contract, Integer condition) {
-        StringBuffer sql = new StringBuffer("select * from contract where 1=1 ");
+        StringBuffer sql = new StringBuffer("select * from contract where  1=1  ");
         //按合同名称
         if (condition != null && condition == 1 && contract.getKeyword() != null && contract.getKeyword() != "") {
             sql.append("and contract_name like '%" + contract.getKeyword() + "%'");

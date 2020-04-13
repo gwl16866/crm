@@ -3,8 +3,9 @@ package com.hy.crmsystem.entity.contract;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
-import java.util.Date;
+import java.math.BigDecimal;
 
 /**
  * <p>
@@ -36,28 +37,37 @@ public class Contract implements Serializable {
 
     //签约日期
     @TableField("signed_time")
-    private Date signedTime;
+    private String signedTime;
 
     //生效日期
     @TableField("star_time")
-    private Date starTime;
+    private String  starTime;
 
+    //服务期
     @TableField("service_time")
-    private Date serviceTime;
+    private String serviceTime;
 
+    //对方联系人
     private String linkman;
 
+    //固定电话
     private String officeno;
 
+    //移动电话
     private String phoneno;
 
+    //邮箱
     private String email;
 
+    //技术条款
     private String technical;
 
+    //商务条款
     private String commerce;
 
-    private String file;
+    //文件
+    @TableField("file")
+    private String fileName;
 
     //所属部门
     private Integer ofdept;
@@ -65,15 +75,73 @@ public class Contract implements Serializable {
     //关联人员
     private String ofpeople;
 
+    //合同状态
     @TableField("contract_status")
     private String contractStatus;
 
+    //优先级
     private String priority;
 
+    //处理过程
     private String process;
 
     //关键字
     private String keyword;
+
+    //回款额度
+    private BigDecimal returnMoney;
+
+    //客户名称
+    private String cname;
+
+    //所属行业
+    private String cindustry;
+
+    //所在城市
+    private String ccity;
+    //详细地址
+    private String caddress;
+
+
+    public String getCname() {
+        return cname;
+    }
+
+    public void setCname(String cname) {
+        this.cname = cname;
+    }
+
+    public String getCindustry() {
+        return cindustry;
+    }
+
+    public void setCindustry(String cindustry) {
+        this.cindustry = cindustry;
+    }
+
+    public String getCcity() {
+        return ccity;
+    }
+
+    public void setCcity(String ccity) {
+        this.ccity = ccity;
+    }
+
+    public String getCaddress() {
+        return caddress;
+    }
+
+    public void setCaddress(String caddress) {
+        this.caddress = caddress;
+    }
+
+    public BigDecimal getReturnMoney() {
+        return returnMoney;
+    }
+
+    public void setReturnMoney(BigDecimal returnMoney) {
+        this.returnMoney = returnMoney;
+    }
 
     public String getKeyword() {
         return keyword;
@@ -123,27 +191,27 @@ public class Contract implements Serializable {
         this.contractMoney = contractMoney;
     }
 
-    public Date getSignedTime() {
+    public String getSignedTime() {
         return signedTime;
     }
 
-    public void setSignedTime(Date signedTime) {
+    public void setSignedTime(String signedTime) {
         this.signedTime = signedTime;
     }
 
-    public Date getStarTime() {
+    public String getStarTime() {
         return starTime;
     }
 
-    public void setStarTime(Date starTime) {
+    public void setStarTime(String starTime) {
         this.starTime = starTime;
     }
 
-    public Date getServiceTime() {
+    public String getServiceTime() {
         return serviceTime;
     }
 
-    public void setServiceTime(Date serviceTime) {
+    public void setServiceTime(String serviceTime) {
         this.serviceTime = serviceTime;
     }
 
@@ -195,12 +263,12 @@ public class Contract implements Serializable {
         this.commerce = commerce;
     }
 
-    public String getFile() {
-        return file;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setFile(String file) {
-        this.file = file;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public Integer getOfdept() {
@@ -251,21 +319,27 @@ public class Contract implements Serializable {
                 ", contractName='" + contractName + '\'' +
                 ", contractNum='" + contractNum + '\'' +
                 ", contractMoney='" + contractMoney + '\'' +
-                ", signedTime=" + signedTime +
-                ", starTime=" + starTime +
-                ", serviceTime=" + serviceTime +
+                ", signedTime='" + signedTime + '\'' +
+                ", starTime='" + starTime + '\'' +
+                ", serviceTime='" + serviceTime + '\'' +
                 ", linkman='" + linkman + '\'' +
                 ", officeno='" + officeno + '\'' +
                 ", phoneno='" + phoneno + '\'' +
                 ", email='" + email + '\'' +
                 ", technical='" + technical + '\'' +
                 ", commerce='" + commerce + '\'' +
-                ", file='" + file + '\'' +
+                ", fileName='" + fileName + '\'' +
                 ", ofdept=" + ofdept +
                 ", ofpeople='" + ofpeople + '\'' +
                 ", contractStatus='" + contractStatus + '\'' +
                 ", priority='" + priority + '\'' +
                 ", process='" + process + '\'' +
+                ", keyword='" + keyword + '\'' +
+                ", returnMoney=" + returnMoney +
+                ", cname='" + cname + '\'' +
+                ", cindustry='" + cindustry + '\'' +
+                ", ccity='" + ccity + '\'' +
+                ", caddress='" + caddress + '\'' +
                 '}';
     }
 }

@@ -22,6 +22,7 @@ public class Customer implements Serializable {
 
     private Integer mid;
 
+    //客户名称
     private String cname;
 
     private String cspell;
@@ -30,14 +31,17 @@ public class Customer implements Serializable {
 
     private Integer csource;
 
-    private Integer cindustry;
+    //所属行业
+    private String cindustry;
 
     private String curl;
 
     private String cnation;
 
+    //所在城市
     private String ccity;
 
+    //详细地址
     private String caddress;
 
     private String cpostalcode;
@@ -46,6 +50,7 @@ public class Customer implements Serializable {
 
     private String clinkman;
 
+    //部门
     private String cdept;
 
     private String cjob;
@@ -117,13 +122,15 @@ public class Customer implements Serializable {
     public void setCsource(Integer csource) {
         this.csource = csource;
     }
-    public Integer getCindustry() {
+
+    public String getCindustry() {
         return cindustry;
     }
 
-    public void setCindustry(Integer cindustry) {
+    public void setCindustry(String cindustry) {
         this.cindustry = cindustry;
     }
+
     public String getCurl() {
         return curl;
     }

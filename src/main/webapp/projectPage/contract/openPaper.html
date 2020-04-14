@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath()}+'/'">
+    <meta charset="utf-8">
+    <title>论坛</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="css/public.css" media="all">
+</head>
+<script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<body>
+<style>
+    .layui-btn-container {
+        position: absolute;
+        top: 25px;
+        left: 1200px
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        //返回上一个页面
+        $("body").on("click", '.data-add-btn', function () {
+            window.location.href = "projectPage/contract/allContract.html";
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        });
+        //刷新页面
+        $("body").on("click", '.refresh-btn', function () {
+            window.location.reload();
+        });
+    });
+</script>
+<script>
+    layui.use(['form', 'layedit', 'upload', 'laydate'], function () {
+        var form = layui.form;//只有执行了这一步，部分表单元素才会自动修饰成功
+        var layedit = layui.layedit,
+            $ = layui.jquery;
+        var upload = layui.upload;
+        var laydate = layui.laydate;
+        form.render();
+//监听提交
+        form.on('submit(formDemo)', function (data) {
+            $.ajax({
+                url: 'contract/addOpenPaper.do',
+                type: 'POST',
+                dataType: 'json',
+                data: data.field,
+                success: function (msg) {
+                    if (msg == 1) {
+                        //关闭当前页面并打开主页面
+                        window.location.href = "projectPage/contract/allContract.html";
+                    } else {
+                        layer.msg("添加失败", {icon: 6});
+                    }
+                }
+            });
+            return false;
+        });
+        //添加文件
+        upload.render({
+            elem: '#uploadFile'
+            , url: 'forum/uploadFile.do'
+            , accept: 'file'
+            , done: function (res) {
+                var va = res.filename;
+                $("#hidd").val(va);
+                layer.msg("上传成功");
+            }
+            , error: function () {
+                layer.msg("失败");
+            }
+        });
+        //电话正则表达式
+        $("#applyPhone").on('blur', function () {
+            var p = /^((13[0-9])|(15[0-9])|(17[0-9])|(18[0-9]))\d{8}$/;
+            if (a.test($("#applyPhone").val()) == false) {
+                layer.msg("请输入正确电话号码", {icon: 6});
+            }
+        });
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#endtime' //指定元素
+        });
+        laydate.render({
+            elem: '#applyTime'
+        });
+        laydate.render({
+            elem: '#ticketTime'
+        });
+    });
+</script>
+<div class="layui-btn-container">
+    <button type="button" class="layui-btn data-add-btn">
+        <i class="layui-icon layui-icon-left"></i> 返回
+    </button>
+    <button type="button" class="layui-btn refresh-btn">
+        <i class="layui-icon layui-icon-refresh"></i> 刷新
+    </button>
+</div>
+<font size="4">收入登记</font>
+<hr>
+<form class="layui-form">
+    <input type="hidden" name="contractFile" th:value="${cont.getCid()}">
+    <div class="layui-form-item">优先级：
+        <input type="radio" name="priority" value="1" title="高">
+        <input type="radio" name="priority" value="2" title="中">
+        <input type="radio" name="priority" value="3" title="低">
+    </div>
+    <hr>
+    <font size="4">基本信息</font>
+    <hr>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">主题</label>
+            <input type="text" name="theme" th:value="${'开票申请-'+user}" readonly="readonly" required lay-verify="required"
+                   autocomplete="off" class="layui-input"
+                   style="width: 400px">
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">结束时间</label>
+            <div class="layui-inline">
+                <input type="text" id="endtime" name="endtime" autocomplete="off" class="layui-input"
+                       style="width: 400px">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">详细地址</label>
+            <input type="text" name="address" autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">步骤</label>
+            <input readonly="readonly" th:value="${'  填单-责任人:'+user}" style="width: 400px" class="layui-input" type="text"  >
+        </div>
+    </div>
+    <hr>
+    <font size="4">申请信息</font>
+    <hr>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">申请人姓名</label>
+            <input type="text" name="applyName" th:value="${user}" readonly="readonly" required lay-verify="required"
+                   autocomplete="off" class="layui-input"
+                   style="width: 400px">
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">所属部门</label>
+            <input type="text" name="applyOfDept" required lay-verify="required"
+                   autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">申请日期</label>
+            <input type="text" id="applyTime" name="applyTime" required lay-verify="required"
+                   autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">对方单位全称</label>
+            <input type="text" name="unitName"
+                   required lay-verify="required" autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">开票种类</label>
+            <div class="layui-inline">
+                <select name="ticketClass" style="width: 400px">
+                    <option value="利息收入">利息开票</option>
+                    <option value="投资收益">投资开票</option>
+                    <option value="主营业务收入">主营业开票</option>
+                    <option value="其他业务收入">其他业务开票</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">纳税人识别号</label>
+            <input type="text" name="identNumber"
+                   autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">开户行及账号</label>
+            <input type="text" name="account"
+                   autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">电话</label>
+            <input type="text" name="applyPhone" autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <div class="layui-inline">
+            <label class="layui-form-label">开票金额</label>
+            <input type="text" name="ticketMoney" autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">金额大写</label>
+            <input type="text" name="moneyCapital" autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">开票日期</label>
+            <input type="text" id="ticketTime" name="ticketTime" autocomplete="off" class="layui-input"
+                   style="width: 400px">
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">开票号码</label>
+            <input type="text" name="ticketno" autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">相关附件</label>
+        <div class="layui-input-block" type="text">
+            <input type="file" name="file" id="uploadFile">
+            <input type="hidden" id="hidd" name="fileName">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">处理过程</label>
+        <div class="layui-input-block">
+            <textarea name="process" class="layui-textarea" lay-verify="content"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">主要技术条款</label>
+        <div class="layui-input-block">
+            <textarea name="technical" lay-verify="content" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="formDemo">提交</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

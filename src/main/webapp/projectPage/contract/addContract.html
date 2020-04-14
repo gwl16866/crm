@@ -78,6 +78,7 @@
             });
             return false;
         });
+        //客户是否存在
         $("#keyup").keyup(function (e) {
             $.ajax({
                 type: 'post',
@@ -92,7 +93,6 @@
                 }
             });
         });
-
         //执行一个laydate实例
         laydate.render({
             elem: '#signedTime' //指定元素
@@ -103,7 +103,46 @@
         laydate.render({
             elem: '#serviceTime'
         });
-
+        //剩余钱数
+        $("#contractMoney").keyup(function (e) {
+            $("#residueMoney").val($("#contractMoney").val());
+        });
+        //金额正则表达式
+        $("#contractMoney").on('blur',function () {
+            var a = /^(0|[1-9][0-9]*)$/;
+            if (a.test($("#contractMoney").val()) == false) {
+                layer.msg("请输入纯数字", {icon: 6});
+            }
+        });
+        //电话正则表达式
+        $("#phoneno").on('blur',function () {
+            var p=/^((13[0-9])|(15[0-9])|(17[0-9])|(18[0-9]))\d{8}$/;
+            if (a.test($("#phoneno").val()) == false) {
+                layer.msg("请输入正确电话号码", {icon: 6});
+            }
+        });
+        //固定电话
+        $("#officeno").on('blur',function () {
+            var a = /^(0|[1-9][0-9]*)$/;
+            if (a.test($("#officeno").val()) == false) {
+                layer.msg("请输入纯数字", {icon: 6});
+            }
+        });
+        //合同编号唯一
+        $("#contractNum").on('blur',function(){
+            $.ajax({
+                type: 'post',
+                url: '../../contract/selectContractNum.do?contractNum=' + $("#contractNum").val(),
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data=='1'){
+                        layer.msg("该编号已存在!")
+                    }else{
+                        console.log(data);
+                    }
+                }
+            });
+        })
     });
 </script>
 <form class="layui-form">
@@ -146,14 +185,12 @@
         <div class="layui-inline">
             <label class="layui-form-label">所在城市</label>
             <input type="text" name="ccity" id="ccity" required lay-verify="required" autocomplete="off"
-                   class="layui-input"
-                   style="width: 400px">
+                   class="layui-input" style="width: 400px">
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">详细地址</label>
             <input type="text" name="caddress" id="caddress" required lay-verify="required" autocomplete="off"
-                   class="layui-input"
-                   style="width: 400px">
+                   class="layui-input" style="width: 400px">
         </div>
     </div>
     <hr>
@@ -167,16 +204,16 @@
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">合同编号</label>
-            <input type="text" name="contractNum" required lay-verify="required" autocomplete="off" class="layui-input"
+            <input type="text" id="contractNum" name="contractNum" required lay-verify="required" autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
     </div>
     <div class="layui-form-item">
+        <input type="hidden" id="residueMoney" name="residueMoney">
         <div class="layui-inline">
             <label class="layui-form-label">合同金额</label>
-            <input type="text" name="contractMoney" required lay-verify="required" autocomplete="off"
-                   class="layui-input"
-                   style="width: 400px">
+            <input type="text" id="contractMoney" name="contractMoney" required lay-verify="required" autocomplete="off"
+                   class="layui-input" style="width: 400px">
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">签约日期</label>
@@ -204,19 +241,19 @@
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">固定电话</label>
-            <input type="text" name="officeno" required lay-verify="required" autocomplete="off" class="layui-input"
+            <input type="text" id="officeno" name="officeno" required lay-verify="required" autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">移动电话</label>
-            <input type="text" name="phoneno" required lay-verify="required" autocomplete="off" class="layui-input"
+            <input type="text" id="phoneno" name="phoneno" autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">邮件/QQ</label>
-            <input type="text" name="email" required lay-verify="required" autocomplete="off" class="layui-input"
+            <input type="text" name="email"  autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
     </div>
@@ -243,12 +280,12 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">合同所属部门</label>
-            <input type="text" name="ofdept" required lay-verify="required" autocomplete="off" class="layui-input"
+            <input type="text" name="ofdept"  autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">关联人员</label>
-            <input type="text" name="ofpeople" required lay-verify="required" autocomplete="off" class="layui-input"
+            <input type="text" name="ofpeople"  autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
     </div>

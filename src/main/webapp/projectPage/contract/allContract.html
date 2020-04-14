@@ -191,7 +191,20 @@
         </div>
     </form>
 </div>
-
+<script type="text/html" id="rM">
+    {{#  if(d.returnMoney == null){ }}
+    <a href="../../contract/returnMoney.do?contractNum={{d.contractNum}}" class="layui-table-link">0[+]</a>
+    {{#  } else { }}
+    <a href="../../contract/returnMoney.do?contractNum={{d.contractNum}}" class="layui-table-link">{{d.returnMoney}}[+]</a>
+    {{#  } }}
+</script>
+<script type="text/html" id="cf">
+    {{#  if(d.openMoney == null){ }}
+    <a href="../../contract/openPaper.do?contractNum={{d.contractNum}}" class="layui-table-link">0[+]</a>
+    {{#  } else { }}
+    <a href="../../contract/openPaper.do?contractNum={{d.contractNum}}" class="layui-table-link">{{d.openMoney}}[+]</a>
+    {{#  } }}
+</script>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button type="button" class="layui-btn data-add-btn">
@@ -232,8 +245,8 @@
                 {field: 'contractName', title: '合同全称',templet:'<div><a href="../../contract/contractDetails.do?contractNum={{d.contractNum}}" style="color: #1E9FFF">{{d.contractName}}</a></div> '},
                 {field: 'contractNum', title: '合同编号'},
                 {field: 'contractMoney', title: '合同金额', sort: true},
-                {field: 'returnMoney', title: '汇款额'},
-                {field: 'classify', title: '开票额'},
+                {field: 'returnMoney', title: '汇款额',templet:'#rM'},
+                {field: 'openMoney', title: '开票额',templet:'#cf'},
                 {field: 'signedTime', title: '签约日期', templet: '#time'}
             ]],
             limits: [6, 9, 25, 50, 100],
@@ -267,22 +280,6 @@
         $("body").on("click",'.refresh-btn', function () {
             window.location.reload();
         });
-       /* //监听 合同名称
-        $("#contNa").on("click", function (data) {
-            var index = layer.open({
-                title: data.contractName,
-                type: 2,
-                shade: 0.2,
-                maxmin: true,
-                shadeClose: true,
-                area: ['100%', '100%'],
-                content: '../../contract/contractDetails.do?cid='+data.cid,
-            });
-            $(window).on("resize", function () {
-                layer.full(index);
-            });
-            return false;
-        });*/
     });
 </script>
 </body>

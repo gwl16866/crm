@@ -1,7 +1,7 @@
 package com.hy.crmsystem.service.statistics;
 
-import com.hy.crmsystem.entity.statistics.Returnmoneydetails;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hy.crmsystem.entity.contract.Returnmoneydetails;
 
 import java.math.BigDecimal;
 

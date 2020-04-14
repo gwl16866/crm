@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath()}+'/'">
+    <meta charset="utf-8">
+    <title>论坛</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="css/public.css" media="all">
+</head>
+<script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<body>
+<style>
+    .layui-btn-container {
+        position: absolute;
+        top: 15px;
+        left: 1200px
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        //返回上一个页面
+        $("body").on("click", '.data-add-btn', function () {
+            window.location.href = "projectPage/contract/allContract.html";
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        });
+        //刷新页面
+        $("body").on("click", '.refresh-btn', function () {
+            window.location.reload();
+        });
+    });
+</script>
+<script>
+    layui.use(['form', 'layedit', 'upload', 'laydate'], function () {
+        var form = layui.form;//只有执行了这一步，部分表单元素才会自动修饰成功
+        var layedit = layui.layedit,
+            $ = layui.jquery;
+        var upload = layui.upload;
+        var laydate = layui.laydate;
+        form.render();
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            $.ajax({
+                url: 'contract/addReturnMoney.do',
+                type: 'POST',
+                dataType: 'json',
+                data: data.field,
+                success: function (msg) {
+                    if (msg == 1) {
+                        //关闭当前页面并打开主页面
+                        window.location.href = "projectPage/contract/allContract.html";
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    } else {
+                        layer.msg("添加失败", {icon: 6});
+                    }
+                }
+            });
+            return false;
+        });
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#returnDate' //指定元素
+        });
+        //金额正则表达式
+        $("#returnMoney").on('blur',function () {
+            var a = /^(0|[1-9][0-9]*)$/;
+            if (a.test($("#returnMoney").val()) == false) {
+                layer.msg("请输入纯数字", {icon: 6});
+            }
+        });
+        //大写金额正则表达式
+        $("#moneyCapital").on('blur',function () {
+            var a = /[\u4e00-\u9fa5]/;
+            if (a.test($("#moneyCapital").val()) == false) {
+                layer.msg("请输入中文", {icon: 6});
+            }
+        });
+    });
+</script>
+    <div class="layui-btn-container">
+        <button type="button" class="layui-btn data-add-btn">
+            <i class="layui-icon layui-icon-left"></i> 返回
+        </button>
+        <button type="button" class="layui-btn refresh-btn">
+            <i class="layui-icon layui-icon-refresh"></i> 刷新
+        </button>
+    </div>
+    <font size="4">收入登记</font>
+    <hr>
+<form class="layui-form">
+    <input type="hidden" id="cid" th:value="${cont.getCid()}">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">收入日期</label>
+            <input type="text" id="returnDate" name="returnDate" required lay-verify="required"
+                   autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">收入分类</label>
+            <input type="text" name="returnClass" required lay-verify="required"
+                   autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">收入金额</label>
+            <input type="text" id="returnMoney" name="returnMoney" required lay-verify="required"
+                   autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">大写金额</label>
+            <input type="text" id="moneyCapital" name="moneyCapital" autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">登记人</label>
+            <input type="text" name="writePeople" required lay-verify="required"
+                   autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">收款方式</label>
+            <div class="layui-inline">
+                <select name="returnMoneyStyle" class="layui-form-select">
+                    <option value="现金">现金</option>
+                    <option value="转账">转账</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">关联人员</label>
+            <input type="text" name="relevancePeople" autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">关联部门</label>
+            <input type="text" name="relevanceDept" autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <input type="hidden" name="customerCompany" th:value="${cust.getCid()}">
+        <div class="layui-inline">
+            <label class="layui-form-label">对方单位</label>
+            <input type="text" readonly="readonly" th:value="${cust.getCname()}" required lay-verify="required"
+                   autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+        <div class="layui-inline">
+            <input type="hidden" name="cid" th:value="${cont.getCid()}">
+            <label class="layui-form-label">关联合同</label>
+            <input type="text" readonly="readonly" th:value="${cont.getContractName()}" required lay-verify="required"
+                   autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">收入说明</label>
+        <div class="layui-input-block">
+            <textarea name="returnDetails" placeholder="最多输入200个字符" class="layui-textarea"
+                      lay-verify="content"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="formDemo">提交</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

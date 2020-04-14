@@ -80,4 +80,6 @@ private MoneyinforMapper moneyinforMapper;
         moneyinforMapper.update(moneyinfor,);
     }*/
 
+   //查询对方单位
+
 }

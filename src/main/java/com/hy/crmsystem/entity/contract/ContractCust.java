@@ -9,18 +9,17 @@ import java.math.BigDecimal;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Mr.Gao
  * @since 2020-04-02
  */
-public class Contract implements Serializable {
+public class ContractCust implements Serializable {
 
     @TableId(value = "cid", type = IdType.AUTO)
     private Integer cid;
 
-    //客户id
     @TableField("customer_id")
     private Integer customerId;
 
@@ -90,22 +89,23 @@ public class Contract implements Serializable {
     private String keyword;
 
     //回款额度
+    @TableField("return_money")
     private BigDecimal returnMoney;
 
-  //剩余钱数
+   //客户名称
+    private String cname;
+
+    //所属行业
+    private String cindustry;
+
+    //所在城市
+    private String ccity;
+    //详细地址
+    private String caddress;
+
+    //剩余钱数
     @TableField("residue_money")
     private BigDecimal residueMoney;
-
-    //开票额度
-    private BigDecimal openMoney;
-
-    public BigDecimal getOpenMoney() {
-        return openMoney;
-    }
-
-    public void setOpenMoney(BigDecimal openMoney) {
-        this.openMoney = openMoney;
-    }
 
     public BigDecimal getResidueMoney() {
         return residueMoney;
@@ -113,6 +113,38 @@ public class Contract implements Serializable {
 
     public void setResidueMoney(BigDecimal residueMoney) {
         this.residueMoney = residueMoney;
+    }
+
+   public String getCname() {
+        return cname;
+    }
+
+    public void setCname(String cname) {
+        this.cname = cname;
+    }
+
+    public String getCindustry() {
+        return cindustry;
+    }
+
+    public void setCindustry(String cindustry) {
+        this.cindustry = cindustry;
+    }
+
+    public String getCcity() {
+        return ccity;
+    }
+
+    public void setCcity(String ccity) {
+        this.ccity = ccity;
+    }
+
+    public String getCaddress() {
+        return caddress;
+    }
+
+    public void setCaddress(String caddress) {
+        this.caddress = caddress;
     }
 
     public BigDecimal getReturnMoney() {
@@ -293,7 +325,7 @@ public class Contract implements Serializable {
 
     @Override
     public String toString() {
-        return "Contract{" +
+        return "ContractCust{" +
                 "cid=" + cid +
                 ", customerId=" + customerId +
                 ", contractName='" + contractName + '\'' +
@@ -316,8 +348,10 @@ public class Contract implements Serializable {
                 ", process='" + process + '\'' +
                 ", keyword='" + keyword + '\'' +
                 ", returnMoney=" + returnMoney +
-                ", residueMoney=" + residueMoney +
-                ", openMoney=" + openMoney +
+                ", cname='" + cname + '\'' +
+                ", cindustry='" + cindustry + '\'' +
+                ", ccity='" + ccity + '\'' +
+                ", caddress='" + caddress + '\'' +
                 '}';
     }
 }

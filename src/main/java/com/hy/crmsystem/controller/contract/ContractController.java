@@ -3,9 +3,16 @@ package com.hy.crmsystem.controller.contract;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hy.crmsystem.entity.contract.Contract;
+import com.hy.crmsystem.entity.contract.ContractCust;
+import com.hy.crmsystem.entity.contract.Openpaper;
+import com.hy.crmsystem.entity.contract.Returnmoneydetails;
 import com.hy.crmsystem.entity.customerManager.Customer;
 import com.hy.crmsystem.entity.systemManager.LayuiData;
 import com.hy.crmsystem.service.contract.impl.ContractServiceImpl;
+import com.hy.crmsystem.service.contract.impl.OpenpaperServiceImpl;
+import com.hy.crmsystem.service.customerManager.impl.CustomerServiceImpl;
+import com.hy.crmsystem.service.statistics.impl.ReturnmoneydetailsServiceImpl;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +37,15 @@ public class ContractController {
     @Autowired
     ContractServiceImpl contractService;
 
+    @Autowired
+    CustomerServiceImpl customerService;
+
+    @Autowired
+    ReturnmoneydetailsServiceImpl returnmoneydetailsService;
+
+    @Autowired
+    OpenpaperServiceImpl openpaperService;
+
     //主页面——查询所有合同
     @RequestMapping("/selectAllCont.do")
     @ResponseBody
@@ -40,8 +56,8 @@ public class ContractController {
 
         for (Contract c : list) {
             c.setReturnMoney(contractService.selectReturnMoney(c.getCid()));
+            c.setOpenMoney(contractService.selectOpenMoney(c.getCid()));
         }
-        System.out.println();
         LayuiData layuiData = new LayuiData();
         layuiData.setCount(list.size());
         layuiData.setData(list);
@@ -60,11 +76,10 @@ public class ContractController {
     @ResponseBody
     @RequestMapping("/addContract.do")
     public String addContract(Contract contract, Customer customer) {
-
-        //判断是否存在
+        //判断客户是否存在
         Customer cus = contractService.selectCustomer(customer.getCname());
         if (cus == null) {
-            // contractService.save(customer);
+            customerService.save(customer);
         }
         //添加合同
         contractService.save(contract);
@@ -74,9 +89,79 @@ public class ContractController {
     //合同详情
     @RequestMapping("/contractDetails.do")
     public String contractDetails(String contractNum, Model model) {
-       Contract contractList= contractService.contractDetails(contractNum);
-       model.addAttribute("c",contractList);
+        ContractCust contractList = contractService.contractDetails(contractNum);
+        model.addAttribute("c", contractList);
         return "projectPage/contract/contractDetails";
     }
 
+    //编辑合同
+    @RequestMapping("/updateContract.do")
+    public String updateContract(String contractNum, Model model) {
+        ContractCust contractList = contractService.contractDetails(contractNum);
+        model.addAttribute("cont", contractList);
+        return "projectPage/contract/updateContract";
+    }
+
+    //修改合同
+    @ResponseBody
+    @RequestMapping("/subUpdateContract.do")
+    public String subUpdateContract(Contract contract) {
+        contractService.updateById(contract);
+        return "1";
+    }
+
+    //汇款页
+    @RequestMapping("/returnMoney.do")
+    public String returnMoney(String contractNum, Model model) {
+        //查合同id
+        ContractCust contract = contractService.contractDetails(contractNum);
+        model.addAttribute("cont", contract);
+        // 查询对方单位
+        Customer customer = customerService.selectByName(String.valueOf(contract.getCustomerId()));
+        model.addAttribute("cust", customer);
+        return "projectPage/contract/returnMoney";
+    }
+
+    //添加汇款
+    @ResponseBody
+    @RequestMapping("/addReturnMoney.do")
+    public String addReturnMoney(Returnmoneydetails returnmoneydetails, ContractCust contractCust) {
+        returnmoneydetailsService.save(returnmoneydetails);
+        //修改合同未还钱数
+        contractService.updateResidueMoney(contractCust);
+        return "1";
+    }
+
+    //合同编号唯一
+    @ResponseBody
+    @RequestMapping("/selectContractNum.do")
+    public String selectContractNum(String contractNum) {
+        boolean b = contractService.equals(contractNum);
+        //存在
+        if (b == false) {
+            return "1";
+        } else {
+            return "2";
+        }
+    }
+
+    //开票
+    @RequestMapping("/openPaper.do")
+    public String openPaper(Model model, String contractNum) {
+        //查合同id
+        ContractCust contract = contractService.contractDetails(contractNum);
+        model.addAttribute("cont", contract);
+        //查询登录人
+        Object name = SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("user", name);
+        return "projectPage/contract/openPaper";
+    }
+
+    //提交开票
+    @ResponseBody
+    @RequestMapping("/addOpenPaper.do")
+    public String addOpenPaper(Openpaper openpaper) {
+        openpaperService.save(openpaper);
+        return "1";
+    }
 }

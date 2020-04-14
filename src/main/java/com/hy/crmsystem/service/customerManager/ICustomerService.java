@@ -28,5 +28,4 @@ public List<Kehuiganlizonghe> listQueryAll(@Param("kehuiganlizonghe") Kehuiganli
 
     public Moneyinfor selectMoneyinfor(String cid);
 
-
 }

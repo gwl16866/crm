@@ -130,35 +130,27 @@
 <div class="layui-card" id="card">
     <div class="layui-card-header"><i class="fa fa-bullhorn icon icon-tip"></i>分类</div>
     <div class="layui-card-body layui-text">
-
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="">执行中的合同</a></div>
+            <div class="layuimini-notice-title"><a href="javascript:;" id="on1">执行中的合同</a></div>
         </div>
-
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="">已关闭的合同</a></div>
+            <div class="layuimini-notice-title"><a href="javascript:;" id="on2">已关闭的合同</a></div>
         </div>
-
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="">已撤除的合同</a></div>
+            <div class="layuimini-notice-title"><a href="javascript:;" id="on3">已撤除的合同</a></div>
         </div>
-
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="">已搁置的合同</a></div>
+            <div class="layuimini-notice-title"><a href="javascript:;" id="on4">已搁置的合同</a></div>
         </div>
-
         <hr>
-
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="">本周新增</a></div>
+            <div class="layuimini-notice-title"><a href="javascript:;" id="on5">本周新增</a></div>
         </div>
-
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="">本月新增</a></div>
+            <div class="layuimini-notice-title"><a href="javascript:;" id="on6">本月新增</a></div>
         </div>
-
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="">本季度新增</a></div>
+            <div class="layuimini-notice-title"><a href="javascript:;" id="on7">本季度新增</a></div>
         </div>
     </div>
 </div>
@@ -169,17 +161,14 @@
             <div class="layui-inline">
                 <label class="layui-form-label">条件:</label>
                 <div class="layui-input-inline">
-                    <select name="condition" class="layui-form-select">
-                        <option value="1">按合同全称</option>
-                        <option value="2">按合同编号</option>
-                        <option value="3">按合同所属部门</option>
-                        <option value="4">按关联人员</option>
-                        <option value="5">按合同金额</option>
-                        <option value="6">按签约日期</option>
+                    <select name="condition" lay-filter="condition"  class="layui-form-select">
+                        <option value=1>按合同全称</option>
+                        <option value=2>按合同编号</option>
+                        <option value=3>按所属行业</option>
                     </select>
                 </div>
-                <div class="layui-inline">
-                    <input type="text" name="keyword" required lay-verify="required" placeholder="请输入关键字"
+                <div class="layui-inline"  id="keyword" >
+                    <input type="text" name="keyword"  required lay-verify="required" placeholder="请输入关键字"
                            autocomplete="off" class="layui-input" style="width: 400px">
                 </div>
                 <div class="layui-inline">
@@ -191,7 +180,20 @@
         </div>
     </form>
 </div>
-
+<script type="text/html" id="rM">
+    {{#  if(d.returnMoney == null){ }}
+    <a href=" contract/returnMoney.do?contractNum={{d.contractNum}}" class="layui-table-link">0[+]</a>
+    {{#  } else { }}
+    <a href=" contract/returnMoney.do?contractNum={{d.contractNum}}" class="layui-table-link">{{d.returnMoney}}[+]</a>
+    {{#  } }}
+</script>
+<script type="text/html" id="cf">
+    {{#  if(d.openMoney == null){ }}
+    <a href=" contract/openPaper.do?contractNum={{d.contractNum}}" class="layui-table-link">0[+]</a>
+    {{#  } else { }}
+    <a href=" contract/openPaper.do?contractNum={{d.contractNum}}" class="layui-table-link">{{d.openMoney}}[+]</a>
+    {{#  } }}
+</script>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button type="button" class="layui-btn data-add-btn">
@@ -228,17 +230,312 @@
                 layEvent: 'LAYTABLE_TIPS',
                 icon: 'layui-icon-tips'
             }],
-            cols: [[
-                {field: 'contractName', title: '合同全称',templet:'<div><a href="../../contract/contractDetails.do?contractNum={{d.contractNum}}" style="color: #1E9FFF">{{d.contractName}}</a></div> '},
-                {field: 'contractNum', title: '合同编号'},
-                {field: 'contractMoney', title: '合同金额', sort: true},
-                {field: 'returnMoney', title: '汇款额'},
-                {field: 'classify', title: '开票额'},
-                {field: 'signedTime', title: '签约日期', templet: '#time'}
-            ]],
+            cols: [
+                [
+                    {
+                        field: 'contractName',
+                        title: '合同全称',
+                        templet: '<div><a href="../../contract/contractDetails.do?contractNum={{d.contractNum}}" style="color: #1E9FFF">{{d.contractName}}</a></div> '
+                    },
+                    {field: 'contractNum', title: '合同编号'},
+                    {field: 'contractMoney', title: '合同金额', sort: true},
+                    {field: 'returnMoney', title: '汇款额', templet: '#rM'},
+                    {field: 'openMoney', title: '开票额', templet: '#cf'},
+                    {field: 'signedTime', title: '签约日期', templet: '#time'}
+                ]
+            ],
             limits: [6, 9, 25, 50, 100],
             limit: 6,
             page: true
+        });
+        //分类
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "../../contract/selectAllCont.do?contractStatus=1",
+            success: function (data) {
+                $("#on1").append("<span class='layui-badge'>" + data.count + "</span>")
+            },
+            error: function () {
+                alert("出错啦");
+            }
+        });
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "../../contract/selectAllCont.do?contractStatus=2",
+            success: function (data) {
+                $("#on2").append("<span class='layui-badge'>" + data.count + "</span>")
+            },
+            error: function () {
+                alert("出错啦");
+            }
+        });
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "../../contract/selectAllCont.do?contractStatus=3",
+            success: function (data) {
+                $("#on3").append("<span class='layui-badge'>" + data.count + "</span>")
+            },
+            error: function () {
+                alert("出错啦");
+            }
+        });
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "../../contract/selectAllCont.do?contractStatus=4",
+            success: function (data) {
+                $("#on4").append("<span class='layui-badge'>" + data.count + "</span>")
+            },
+            error: function () {
+                alert("出错啦");
+            }
+        });
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "../../contract/selectAllCont.do?contractStatus=5",
+            success: function (data) {
+                $("#on5").append("<span class='layui-badge'>" + data.count + "</span>")
+            },
+            error: function () {
+                alert("出错啦");
+            }
+        });
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "../../contract/selectAllCont.do?contractStatus=6",
+            success: function (data) {
+                $("#on6").append("<span class='layui-badge'>" + data.count + "</span>")
+            },
+            error: function () {
+                alert("出错啦");
+            }
+        });
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "../../contract/selectAllCont.do?contractStatus=7",
+            success: function (data) {
+                $("#on7").append("<span class='layui-badge'>" + data.count + "</span>")
+            },
+            error: function () {
+                alert("出错啦");
+            }
+        });
+        //重新渲染表格
+        $("#on1").click(function () {
+            table.render({
+                width: 1120,
+                elem: '#currentTable',
+                url: '../../contract/selectAllCont.do?contractStatus=1',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [
+                    [
+                        {
+                            field: 'contractName',
+                            title: '合同全称',
+                            templet: '<div><a href="../../contract/contractDetails.do?contractNum={{d.contractNum}}" style="color: #1E9FFF">{{d.contractName}}</a></div> '
+                        },
+                        {field: 'contractNum', title: '合同编号'},
+                        {field: 'contractMoney', title: '合同金额', sort: true},
+                        {field: 'returnMoney', title: '汇款额', templet: '#rM'},
+                        {field: 'openMoney', title: '开票额', templet: '#cf'},
+                        {field: 'signedTime', title: '签约日期', templet: '#time'}
+                    ]
+                ],
+                limits: [6, 9, 25, 50, 100],
+                limit: 6,
+                page: true
+            });
+        });
+        $("#on2").click(function () {
+            table.render({
+                width: 1120,
+                elem: '#currentTable',
+                url: '../../contract/selectAllCont.do?contractStatus=2',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [
+                    [
+                        {
+                            field: 'contractName',
+                            title: '合同全称',
+                            templet: '<div><a href="../../contract/contractDetails.do?contractNum={{d.contractNum}}" style="color: #1E9FFF">{{d.contractName}}</a></div> '
+                        },
+                        {field: 'contractNum', title: '合同编号'},
+                        {field: 'contractMoney', title: '合同金额', sort: true},
+                        {field: 'returnMoney', title: '汇款额', templet: '#rM'},
+                        {field: 'openMoney', title: '开票额', templet: '#cf'},
+                        {field: 'signedTime', title: '签约日期', templet: '#time'}
+                    ]
+                ],
+                limits: [6, 9, 25, 50, 100],
+                limit: 6,
+                page: true
+            });
+        });
+        $("#on3").click(function () {
+            table.render({
+                width: 1120,
+                elem: '#currentTable',
+                url: '../../contract/selectAllCont.do?contractStatus=3',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [
+                    [
+                        {
+                            field: 'contractName',
+                            title: '合同全称',
+                            templet: '<div><a href="../../contract/contractDetails.do?contractNum={{d.contractNum}}" style="color: #1E9FFF">{{d.contractName}}</a></div> '
+                        },
+                        {field: 'contractNum', title: '合同编号'},
+                        {field: 'contractMoney', title: '合同金额', sort: true},
+                        {field: 'returnMoney', title: '汇款额', templet: '#rM'},
+                        {field: 'openMoney', title: '开票额', templet: '#cf'},
+                        {field: 'signedTime', title: '签约日期', templet: '#time'}
+                    ]
+                ],
+                limits: [6, 9, 25, 50, 100],
+                limit: 6,
+                page: true
+            });
+        });
+        $("#on4").click(function () {
+            table.render({
+                width: 1120,
+                elem: '#currentTable',
+                url: '../../contract/selectAllCont.do?contractStatus=4',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [
+                    [
+                        {
+                            field: 'contractName',
+                            title: '合同全称',
+                            templet: '<div><a href="../../contract/contractDetails.do?contractNum={{d.contractNum}}" style="color: #1E9FFF">{{d.contractName}}</a></div> '
+                        },
+                        {field: 'contractNum', title: '合同编号'},
+                        {field: 'contractMoney', title: '合同金额', sort: true},
+                        {field: 'returnMoney', title: '汇款额', templet: '#rM'},
+                        {field: 'openMoney', title: '开票额', templet: '#cf'},
+                        {field: 'signedTime', title: '签约日期', templet: '#time'}
+                    ]
+                ],
+                limits: [6, 9, 25, 50, 100],
+                limit: 6,
+                page: true
+            });
+        });
+        $("#on5").click(function () {
+            table.render({
+                width: 1120,
+                elem: '#currentTable',
+                url: '../../contract/selectAllCont.do?contractStatus=5',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [
+                    [
+                        {
+                            field: 'contractName',
+                            title: '合同全称',
+                            templet: '<div><a href="../../contract/contractDetails.do?contractNum={{d.contractNum}}" style="color: #1E9FFF">{{d.contractName}}</a></div> '
+                        },
+                        {field: 'contractNum', title: '合同编号'},
+                        {field: 'contractMoney', title: '合同金额', sort: true},
+                        {field: 'returnMoney', title: '汇款额', templet: '#rM'},
+                        {field: 'openMoney', title: '开票额', templet: '#cf'},
+                        {field: 'signedTime', title: '签约日期', templet: '#time'}
+                    ]
+                ],
+                limits: [6, 9, 25, 50, 100],
+                limit: 6,
+                page: true
+            });
+        });
+        $("#on6").click(function () {
+            table.render({
+                width: 1120,
+                elem: '#currentTable',
+                url: '../../contract/selectAllCont.do?contractStatus=6',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [
+                    [
+                        {
+                            field: 'contractName',
+                            title: '合同全称',
+                            templet: '<div><a href="../../contract/contractDetails.do?contractNum={{d.contractNum}}" style="color: #1E9FFF">{{d.contractName}}</a></div> '
+                        },
+                        {field: 'contractNum', title: '合同编号'},
+                        {field: 'contractMoney', title: '合同金额', sort: true},
+                        {field: 'returnMoney', title: '汇款额', templet: '#rM'},
+                        {field: 'openMoney', title: '开票额', templet: '#cf'},
+                        {field: 'signedTime', title: '签约日期', templet: '#time'}
+                    ]
+                ],
+                limits: [6, 9, 25, 50, 100],
+                limit: 6,
+                page: true
+            });
+        });
+        $("#on7").click(function () {
+            table.render({
+                width: 1120,
+                elem: '#currentTable',
+                url: '../../contract/selectAllCont.do?contractStatus=7',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [
+                    [
+                        {
+                            field: 'contractName',
+                            title: '合同全称',
+                            templet: '<div><a href="../../contract/contractDetails.do?contractNum={{d.contractNum}}" style="color: #1E9FFF">{{d.contractName}}</a></div> '
+                        },
+                        {field: 'contractNum', title: '合同编号'},
+                        {field: 'contractMoney', title: '合同金额', sort: true},
+                        {field: 'returnMoney', title: '汇款额', templet: '#rM'},
+                        {field: 'openMoney', title: '开票额', templet: '#cf'},
+                        {field: 'signedTime', title: '签约日期', templet: '#time'}
+                    ]
+                ],
+                limits: [6, 9, 25, 50, 100],
+                limit: 6,
+                page: true
+            });
         });
         //   监听submit并改同步提交为异步提交并重新渲染表格
         form.on('submit(data-search-btn)', function (data) {
@@ -264,25 +561,20 @@
             return false;
         });
         //刷新页面
-        $("body").on("click",'.refresh-btn', function () {
+        $("body").on("click", '.refresh-btn', function () {
             window.location.reload();
         });
-       /* //监听 合同名称
-        $("#contNa").on("click", function (data) {
-            var index = layer.open({
-                title: data.contractName,
-                type: 2,
-                shade: 0.2,
-                maxmin: true,
-                shadeClose: true,
-                area: ['100%', '100%'],
-                content: '../../contract/contractDetails.do?cid='+data.cid,
-            });
-            $(window).on("resize", function () {
-                layer.full(index);
-            });
-            return false;
-        });*/
+        //下拉框
+        form.on('select(condition)', function (data) {
+            if (data.value == 3) {
+                $("#keyword").empty();
+                $("#keyword").append(" <select name=\"keyword\"  style=\"width: 200px;\">\n" +
+                    "                <option value=\"IT\">IT</option>\n" +
+                    "                <option value=\"酒店旅游\">酒店旅游</option>\n" +
+                    "            </select>");
+                form.render();
+            }
+        });
     });
 </script>
 </body>

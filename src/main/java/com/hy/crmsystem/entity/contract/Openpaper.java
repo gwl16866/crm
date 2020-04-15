@@ -5,11 +5,10 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Mr.Gao
@@ -17,61 +16,79 @@ import java.util.Date;
  */
 public class Openpaper implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @TableId(value = "oid", type = IdType.AUTO)
     private Integer oid;
-
+    //详细地址
     private String address;
-
-    private Date endtime;
-
+    //结束时间
+    private String endtime;
+    //开票主题
     private String theme;
-
+    //申请人姓名
     @TableField("apply_name")
     private String applyName;
-
+    //所属部门
     @TableField("apply_of_dept")
     private Integer applyOfDept;
-
+    //申请日期
     @TableField("apply_time")
-    private Date applyTime;
-
+    private String applyTime;
+    //技术条款
     private String technical;
-
+    //对方单位全称
     @TableField("unit_name")
     private String unitName;
-
+    //合同
     @TableField("contract_file")
-    private String contractFile;
-
+    private Integer contractFile;
+    //开票种类
     @TableField("ticket_class")
     private String ticketClass;
-
+    //识别号
     @TableField("ident_number")
     private String identNumber;
-
+    //银行账号
     private String account;
-
+    //地址
     @TableField("apply_address")
     private String applyAddress;
-
+    //电话
     @TableField("apply_phone")
     private String applyPhone;
-
+    //开票金额
     @TableField("ticket_money")
     private String ticketMoney;
-
+    //金额大写
+    @TableField("money_capital")
+    private String moneyCapital;
+    //开票日期
     @TableField("ticket_time")
-    private Date ticketTime;
-
+    private String ticketTime;
+    //发票号码
     private String ticketno;
-
-    private String file;
-
+    //附件
+    @TableField("file")
+    private String fileName;
+    //过程
     private String process;
-
+    //优先级
     private Integer priority;
+
+    public String getMoneyCapital() {
+        return moneyCapital;
+    }
+
+    public void setMoneyCapital(String moneyCapital) {
+        this.moneyCapital = moneyCapital;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
     public Integer getOid() {
         return oid;
@@ -89,13 +106,6 @@ public class Openpaper implements Serializable {
         this.address = address;
     }
 
-    public Date getEndtime() {
-        return endtime;
-    }
-
-    public void setEndtime(Date endtime) {
-        this.endtime = endtime;
-    }
 
     public String getTheme() {
         return theme;
@@ -121,13 +131,6 @@ public class Openpaper implements Serializable {
         this.applyOfDept = applyOfDept;
     }
 
-    public Date getApplyTime() {
-        return applyTime;
-    }
-
-    public void setApplyTime(Date applyTime) {
-        this.applyTime = applyTime;
-    }
 
     public String getTechnical() {
         return technical;
@@ -143,13 +146,14 @@ public class Openpaper implements Serializable {
 
     public void setUnitName(String unitName) {
         this.unitName = unitName;
+
     }
 
-    public String getContractFile() {
+    public Integer getContractFile() {
         return contractFile;
     }
 
-    public void setContractFile(String contractFile) {
+    public void setContractFile(Integer contractFile) {
         this.contractFile = contractFile;
     }
 
@@ -201,11 +205,27 @@ public class Openpaper implements Serializable {
         this.ticketMoney = ticketMoney;
     }
 
-    public Date getTicketTime() {
+    public String getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(String endtime) {
+        this.endtime = endtime;
+    }
+
+    public String getApplyTime() {
+        return applyTime;
+    }
+
+    public void setApplyTime(String applyTime) {
+        this.applyTime = applyTime;
+    }
+
+    public String getTicketTime() {
         return ticketTime;
     }
 
-    public void setTicketTime(Date ticketTime) {
+    public void setTicketTime(String ticketTime) {
         this.ticketTime = ticketTime;
     }
 
@@ -215,14 +235,6 @@ public class Openpaper implements Serializable {
 
     public void setTicketno(String ticketno) {
         this.ticketno = ticketno;
-    }
-
-    public String getFile() {
-        return file;
-    }
-
-    public void setFile(String file) {
-        this.file = file;
     }
 
     public String getProcess() {
@@ -260,9 +272,10 @@ public class Openpaper implements Serializable {
                 ", applyAddress='" + applyAddress + '\'' +
                 ", applyPhone='" + applyPhone + '\'' +
                 ", ticketMoney='" + ticketMoney + '\'' +
+                ", moneyCapital='" + moneyCapital + '\'' +
                 ", ticketTime=" + ticketTime +
                 ", ticketno='" + ticketno + '\'' +
-                ", file='" + file + '\'' +
+                ", fileName='" + fileName + '\'' +
                 ", process='" + process + '\'' +
                 ", priority=" + priority +
                 '}';

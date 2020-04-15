@@ -80,4 +80,9 @@ private MoneyinforMapper moneyinforMapper;
         moneyinforMapper.update(moneyinfor,);
     }*/
 
+   //查询客户
+    public Customer selectMaxCustomer(){
+       return customerMapper.selectMaxCustomer();
+    }
+
 }

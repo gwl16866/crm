@@ -47,4 +47,7 @@ public interface CustomerMapper extends BaseMapper<Customer> {
 
     @Select("select m.* from moneyinfor m,customer c where c.mid=m.mid and c.cid=#{value}")
     public Moneyinfor selectMoneyinfor(String cid);
+
+    @Select("select max(cid) cid from customer")
+    public Customer selectMaxCustomer();
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hy.crmsystem.entity.systemManager.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * <p>
@@ -17,4 +18,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper extends BaseMapper<User> {
     @Insert("insert into user values(#{username},#{password},#{age},#{sex})")
     public void Add(User user);
+
+    @Select("select uid from user where user_name=#{name}")
+    public User selectDengLuRen(Object name);
 }

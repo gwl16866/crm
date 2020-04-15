@@ -24,4 +24,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private LoginMapper loginMapper;
     @Autowired
     private UserMapper userMapper;
+
+    public User selectDengLuRen(Object name){
+        return userMapper.selectDengLuRen(name);
+    }
 }

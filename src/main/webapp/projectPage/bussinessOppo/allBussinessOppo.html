@@ -74,7 +74,7 @@
     <img src="../../imgs/wx.png" style="height: 60px;width: 60px">
 </div>
 <div id="f">
-    <font size="6">全部商机</font>
+    <font size="6">我的商机</font>
 </div>
 <div class="layui-card" id="card">
     <div class="layui-card-header"><i class="fa fa-bullhorn icon icon-tip"></i>所有分类</div>
@@ -139,29 +139,29 @@
     <form class="layui-form layui-form-pane" action="">
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">商机全称</label>
+                <label class="layui-form-label">商机名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="username" autocomplete="off" class="layui-input">
+                    <input type="text" name="bname" autocomplete="off" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-inline">
                 <label class="layui-form-label">商机阶段</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="classify" autocomplete="off" class="layui-input">
+                    <input type="text" name="status" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">商机负责人</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="classify" autocomplete="off" class="layui-input">
+                    <input type="text" name="bprincipal" autocomplete="off" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-inline">
                 <label class="layui-form-label">部门:</label>
                 <div class="layui-input-inline">
-                    <select name="" class="layui-form-select" >
+                    <select name="bdept" class="layui-form-select" >
                         <option value="1" selected>1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -172,22 +172,20 @@
             <div class="layui-inline">
                 <label class="layui-form-label">预成交金额</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="classify" autocomplete="off" class="layui-input">
+                    <input type="text" name="bpredictMoney" autocomplete="off" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-inline">
                 <label class="layui-form-label">预结单日期</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd" lay-key="1">
+                    <input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd" lay-key="1" name="boverDate">
                 </div>
             </div>
-
-
-
-
             <div class="layui-inline">
-                <button type="submit" class="layui-btn layui-btn-primary" lay-submit  lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+                <div class="layui-input-inline">
+                    <button class="layui-btn" lay-submit lay-filter="query-submit" id="doSearch">模糊查询</button>
+                </div>
             </div>
         </div>
     </form>
@@ -210,18 +208,22 @@
 
 <script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script>
-    layui.use(['form', 'table','laydate'], function () {
+    layui.use(['jquery','table', 'layer','form','upload'], function () {
         var $ = layui.jquery,
-            form = layui.form,
-            table = layui.table,
             layuimini = layui.layuimini;
-            laydate=layui.laydate;
-
+        var table = layui.table;
+        var layer = layui.layer;
+        var form = layui.form;
+        var upload = layui.upload;
+        var jquery = layui.jquery;
         table.render({
             width:1120,
-            elem: '#currentTableId',
-            url: '../../api/table.json',
-            toolbar: '#toolbarDemo',
+            elem: '#currentTableId'
+            ,url:'../../bussinessOppo/queryAll.do'
+            ,toolbar: '#toolbarDemo'
+            ,limits: [3, 6, 9, 12, 15, 100]
+            ,limit: 3
+            ,page:true,
             defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
                 layEvent: 'LAYTABLE_TIPS',
@@ -229,24 +231,25 @@
             }],
             cols: [[
                 {type: "checkbox", fixed: "left"},
-                {field: 'id', title: 'ID', sort: true},
-                {field: 'username', title: '用户名'},
-                {field: 'sex', title: '性别', sort: true},
-                {field: 'city', title: '城市'},
-                {field: 'classify', title: '职业'},
+                {field: 'bname', title: '商机名称', sort: true,templet:'<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'},
+                {field: 'status', title: '商机阶段'},
+                {field: 'bpredictMoney', title: '预计成交金额', sort: true},
+                {field: 'bprincipal', title: '商机负责人'},
+                {field: 'lastTime', title: '最后跟单'},
+                {field: '讨论', title: '讨论版',templet:'<div><a href="">讨论</a></div>'},
 
-            ]],
-            limits: [3, 6, 9, 25, 50, 100],
-            limit: 5,
-            page: true
+            ]]
+
         });
 
-        // 监听搜索操作
-        form.on('submit(data-search-btn)', function (data) {
-            var result = JSON.stringify(data.field);
-            layer.alert(result, {
-                title: '最终的搜索信息'
+        form.on('submit(query-submit)', function(data) {
+//执行重载
+            table.reload('currentTableId', {
+                where:data.field
             });
+            return false;
+            /*  });*/
+
 
             //执行搜索重载
             table.reload('currentTableId', {
@@ -271,11 +274,11 @@
                 maxmin:true,
                 shadeClose: true,
                 area: ['100%', '100%'],
-                content: '/page/table/add.html',
+                content: '../../projectPage/bussinessOppo/addBussinessOppo.html',
             });
-            $(window).on("resize", function () {
-                layer.full(index);
-            });
+            /*     $(window).on("resize", function () {
+                     layer.full(index);
+                 });*/
 
             return false;
         });
@@ -303,11 +306,11 @@
                     maxmin:true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '/page/table/edit.html',
+                    content: '../../page/table/edit.html',
                 });
-                $(window).on("resize", function () {
-                    layer.full(index);
-                });
+                /*   $(window).on("resize", function () {
+                       layer.full(index);
+                   });*/
                 return false;
             } else if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
@@ -316,13 +319,10 @@
                 });
             }
         });
-        //常规用法
-        laydate.render({
-            elem: '#test1'
-        });
 
     });
 </script>
+
 
 
 

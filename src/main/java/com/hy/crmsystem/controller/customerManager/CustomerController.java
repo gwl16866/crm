@@ -40,7 +40,7 @@ private MoneyinforMapper moneyinforMapper;
     @ResponseBody
     public LayuiData query(@RequestParam(value = "page",defaultValue = "1") Integer page, @RequestParam(value = "limit" ,defaultValue = "3")Integer limit, Kehuiganlizonghe kehuiganlizonghe, HttpSession session){
 
-        IPage list1=customerService.pages(page,limit,kehuiganlizonghe,session);
+        IPage<Kehuiganlizonghe> list1=customerService.pages(page,limit,kehuiganlizonghe,session);
       /*  List<Kehuiganlizonghe> list=customerService.queryAll();*/
        /* session.setAttribute("list",list);*/
         LayuiData layUiData=new LayuiData();

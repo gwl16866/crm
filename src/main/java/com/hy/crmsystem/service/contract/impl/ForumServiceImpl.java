@@ -74,10 +74,6 @@ public class ForumServiceImpl extends ServiceImpl<ForumMapper, Article> {
         forumMapper.deleteReply(id);
     }
 
-    //回复 回复
-    public void replyReply(Talk talk){
-        forumMapper.replyReply(talk);
-    }
 
     //添加回复时修改回复时间
     public void updateReplyTime(Integer id){

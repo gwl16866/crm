@@ -516,7 +516,7 @@
             return false; //阻止表单跳转。
         });
         // 监听添加操作
-        $(".data-add-btn").on("click", function () {
+        $("body").on("click",'.data-add-btn', function () {
             var index = layer.open({
                 title: '添加合同',
                 type: 2,

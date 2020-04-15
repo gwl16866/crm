@@ -67,7 +67,7 @@
                     if (msg == 1) {
                         layer.msg("添加成功", {icon: 6});
                         //关闭当前页面并打开主页面
-                        window.location.href = "../../projectPage/contract/allContract.html";
+                        window.location.href = "../contract/selectMyCont.do";
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                         parent.location.reload();
@@ -135,7 +135,6 @@
                 url: '../../contract/selectContractNum.do?contractNum=' + $("#contractNum").val(),
                 contentType: 'application/json',
                 success: function (data) {
-                    console.log(data);
                     if (data==1){
                         layer.msg("该编号已存在!")
                     }else{
@@ -294,7 +293,7 @@
         <label class="layui-form-label">处理过程</label>
         <div class="layui-input-block">
             <textarea name="process" id="demo" placeholder="【收款方式和时间】？？？" class="layui-textarea"
-                  lay-verify="content"></textarea>
+                      lay-verify="content"></textarea>
         </div>
     </div>
     <div class="layui-form-item">

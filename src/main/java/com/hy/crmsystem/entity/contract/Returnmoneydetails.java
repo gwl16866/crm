@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * <p>
@@ -23,7 +21,7 @@ public class Returnmoneydetails implements Serializable {
 
     //回款日期
     @TableField("return_date")
-    private Date returnDate;
+    private String returnDate;
 
     //收入分类
     @TableField("return_class")
@@ -31,7 +29,7 @@ public class Returnmoneydetails implements Serializable {
 
     //收入金额
     @TableField("return_money")
-    private BigDecimal returnMoney;
+    private String returnMoney;
 
     //金额大写
     @TableField("money_capital")
@@ -39,7 +37,7 @@ public class Returnmoneydetails implements Serializable {
 
     //回款方式
     @TableField("return_money_style")
-    private Integer returnMoneyStyle;
+    private String returnMoneyStyle;
 
     //登记人
     @TableField("write_people")
@@ -72,11 +70,11 @@ public class Returnmoneydetails implements Serializable {
         this.id = id;
     }
 
-    public Date getReturnDate() {
+    public String getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(Date returnDate) {
+    public void setReturnDate(String returnDate) {
         this.returnDate = returnDate;
     }
 
@@ -88,11 +86,11 @@ public class Returnmoneydetails implements Serializable {
         this.returnClass = returnClass;
     }
 
-    public BigDecimal getReturnMoney() {
+    public String getReturnMoney() {
         return returnMoney;
     }
 
-    public void setReturnMoney(BigDecimal returnMoney) {
+    public void setReturnMoney(String returnMoney) {
         this.returnMoney = returnMoney;
     }
 
@@ -104,11 +102,11 @@ public class Returnmoneydetails implements Serializable {
         this.moneyCapital = moneyCapital;
     }
 
-    public Integer getReturnMoneyStyle() {
+    public String getReturnMoneyStyle() {
         return returnMoneyStyle;
     }
 
-    public void setReturnMoneyStyle(Integer returnMoneyStyle) {
+    public void setReturnMoneyStyle(String returnMoneyStyle) {
         this.returnMoneyStyle = returnMoneyStyle;
     }
 

@@ -25,7 +25,7 @@
     $(function () {
         //返回上一个页面
         $("body").on("click", '.data-add-btn', function () {
-            window.location.href = "projectPage/contract/allContract.html";
+            window.location.href = "contract/contractDetails.do?contractNum=" + $("contractNum").val();
             var index = parent.layer.getFrameIndex(window.name);
             parent.layer.close(index);
         });
@@ -43,22 +43,38 @@
         var upload = layui.upload;
         var laydate = layui.laydate;
         form.render();
-        $("#updateContract").on("click", function (data) {
-            var index = layer.open({
-                title: data.contractName,
-                type: 2,
-                shade: 0.2,
-                maxmin: true,
-                shadeClose: true,
-                area: ['100%', '100%'],
-                content: 'contract/updateContract.do?contractNum='+$("#contractNum").val(),
-            });
-            $(window).on("resize", function () {
-                layer.full(index);
+//监听提交
+        form.on('submit(formDemo)', function (data) {
+            $.ajax({
+                url: 'contract/subUpdateContract.do?cid=' + $("#cid").val(),
+                type: 'POST',
+                dataType: 'json',
+                data: data.field,
+                success: function (msg) {
+                    if (msg == 1) {
+                        //关闭当前页面并打开主页面
+                        window.location.href = "projectPage/contract/allContract.html";
+                    } else {
+                        layer.msg("添加失败", {icon: 6});
+                    }
+                }
             });
             return false;
         });
-
+        //添加文件
+        upload.render({
+            elem: '#uploadFile'
+            , url: 'forum/uploadFile.do'
+            , accept: 'file'
+            , done: function (res) {
+                var va = res.filename;
+                $("#hidd").val(va);
+                layer.msg("上传成功");
+            }
+            , error: function () {
+                layer.msg("失败");
+            }
+        });
         //执行一个laydate实例
         laydate.render({
             elem: '#signedTime' //指定元素
@@ -69,14 +85,36 @@
         laydate.render({
             elem: '#serviceTime'
         });
+        //金额正则表达式
+        $("#contractMoney").on('blur',function () {
+            var a = /^(0|[1-9][0-9]*)$/;
+            if (a.test($("#contractMoney").val()) == false) {
+                layer.msg("请输入纯数字", {icon: 6});
+            }
+        });
+        //电话正则表达式
+        $("#phoneno").on('blur',function () {
+            var p=/^((13[0-9])|(15[0-9])|(17[0-9])|(18[0-9]))\d{8}$/;
+            if (a.test($("#phoneno").val()) == false) {
+                layer.msg("请输入正确电话号码", {icon: 6});
+            }
+        });
+        //固定电话
+        $("#officeno").on('blur',function () {
+            var a = /^(0|[1-9][0-9]*)$/;
+            if (a.test($("#officeno").val()) == false) {
+                layer.msg("请输入纯数字", {icon: 6});
+            }
+        });
     });
 </script>
 <form class="layui-form">
-    <input type="hidden" id="customerId" name="customerId">
+    <input type="hidden" id="cid" name="cid" th:value="${cont.getCid()}">
+    <input type="hidden" id="customerId" name="customerId" th:value="${cont.getCustomerId()}">
     <div class="layui-form-item">优先级：
-        <input type="radio" disabled="disabled" name="priority" value="1" title="高" th:checked="${c.getPriority()}==1">
-        <input type="radio" disabled="disabled" name="priority" value="2" title="中" th:checked="${c.getPriority()}== 2">
-        <input type="radio" disabled="disabled" name="priority" value="3" title="低" th:checked="${c.getPriority()}== 3">
+        <input type="radio" name="priority" value="1" title="高" th:checked="${cont.getPriority()}==1">
+        <input type="radio" name="priority" value="2" title="中" th:checked="${cont.getPriority()}==2">
+        <input type="radio" name="priority" value="3" title="低" th:checked="${cont.getPriority()}==3">
     </div>
     <div class="layui-btn-container">
         <button type="button" class="layui-btn data-add-btn">
@@ -92,15 +130,16 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">客户名称</label>
-            <input type="text" name="cname" th:value="${c.getCname()}" disabled="disabled" required lay-verify="required" autocomplete="off"
+            <input type="text" disabled="disabled" th:value="${cont.getCname()}" required lay-verify="required"
+                   autocomplete="off"
                    class="layui-input"
                    style="width: 400px">
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">所属行业</label>
             <div class="layui-inline">
-                <select id="cindustry" name="cindustry" class="layui-form-select">
-                    <option th:text="${c.getCindustry()}"></option>
+                <select class="layui-form-select">
+                    <option th:text="${cont.getCindustry()}"></option>
                 </select>
             </div>
         </div>
@@ -108,14 +147,14 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">所在城市</label>
-            <input type="text" name="ccity" th:value="${c.getCcity()}" disabled="disabled" id="ccity" required lay-verify="required"
+            <input type="text" disabled="disabled" th:value="${cont.getCcity()}" required lay-verify="required"
                    autocomplete="off"
                    class="layui-input"
                    style="width: 400px">
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">详细地址</label>
-            <input type="text" name="caddress" th:value="${c.getCaddress()}" disabled="disabled" id="caddress" required
+            <input type="text" disabled="disabled" th:value="${cont.getCaddress()}" required
                    lay-verify="required" autocomplete="off"
                    class="layui-input"
                    style="width: 400px">
@@ -127,13 +166,14 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">合同名称</label>
-            <input type="text"  name="contractName" disabled="disabled" th:value="${c.getContractName()}" required lay-verify="required"
+            <input type="text" name="contractName" th:value="${cont.getContractName()}" required lay-verify="required"
                    autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">合同编号</label>
-            <input type="text" id="contractNum" name="contractNum" disabled="disabled" th:value="${c.getContractNum()}" required lay-verify="required"
+            <input type="text" id="contractNum" readonly="readonly" name="contractNum" th:value="${cont.getContractNum()}" required
+                   lay-verify="required"
                    autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
@@ -141,14 +181,14 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">合同金额</label>
-            <input type="text" name="contractMoney" disabled="disabled" th:value="${c.getContractMoney()}" required lay-verify="required"
+            <input type="text" id="contractMoney" name="contractMoney" th:value="${cont.getContractMoney()}" required lay-verify="required"
                    autocomplete="off"
                    class="layui-input"
                    style="width: 400px">
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">签约日期</label>
-            <input type="text" id="signedTime" disabled="disabled" th:value="${c.getSignedTime()}" name="signedTime"
+            <input type="text" id="signedTime" th:value="${cont.getSignedTime()}" name="signedTime"
                    placeholder='yyyy-MM-dd' required lay-verify="required" autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
@@ -156,13 +196,13 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">生效日期</label>
-            <input type="text" id="starTime" disabled="disabled" th:value="${c.getStarTime()}" name="starTime" placeholder='yyyy-MM-dd'
+            <input type="text" id="starTime" th:value="${cont.getStarTime()}" name="starTime" placeholder='yyyy-MM-dd'
                    required lay-verify="required" autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">服务期至</label>
-            <input type="text" id="serviceTime" disabled="disabled" th:value="${c.getServiceTime()}" name="serviceTime"
+            <input type="text" id="serviceTime" th:value="${cont.getServiceTime()}" name="serviceTime"
                    placeholder='yyyy-MM-dd' required lay-verify="required" autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
@@ -170,13 +210,13 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">对方联系人</label>
-            <input type="text" name="linkman" disabled="disabled" th:value="${c.getLinkman()}" required lay-verify="required"
+            <input type="text" name="linkman" th:value="${cont.getLinkman()}" required lay-verify="required"
                    autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">固定电话</label>
-            <input type="text" name="officeno" disabled="disabled" th:value="${c.getOfficeno()}" required lay-verify="required"
+            <input type="text" id="officeno" name="officeno" th:value="${cont.getOfficeno()}" required lay-verify="required"
                    autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
@@ -184,13 +224,14 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">移动电话</label>
-            <input type="text" name="phoneno" disabled="disabled" th:value="${c.getPhoneno()}" required lay-verify="required"
+            <input type="text" id="phoneno" name="phoneno" th:value="${cont.getPhoneno()}" required lay-verify="required"
                    autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">邮件/QQ</label>
-            <input type="text" name="email" disabled="disabled" th:value="${c.getEmail()}" required lay-verify="required" autocomplete="off"
+            <input type="text" name="email" th:value="${cont.getEmail()}" required lay-verify="required"
+                   autocomplete="off"
                    class="layui-input"
                    style="width: 400px">
         </div>
@@ -198,34 +239,35 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">主要技术条款</label>
         <div class="layui-input-block">
-            <textarea name="technical" disabled="disabled" th:text="${c.getTechnical()}" placeholder="【产品交付和时间】？？？" class="layui-textarea"
+            <textarea name="technical" th:text="${cont.getTechnical()}" placeholder="【产品交付和时间】？？？"
+                      class="layui-textarea"
                       lay-verify="content"></textarea>
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">主要商务条款</label>
         <div class="layui-input-block">
-            <textarea name="commerce" disabled="disabled" th:text="${c.getCommerce()}" placeholder="【收款方式和时间】？？？" class="layui-textarea"
+            <textarea name="commerce" th:text="${cont.getCommerce()}" placeholder="【收款方式和时间】？？？" class="layui-textarea"
                       lay-verify="content"></textarea>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">相关附件</label>
         <div class="layui-input-block" type="text">
-            <input type="file" disabled="disabled" name="file" id="uploadFile">
-            <input type="hidden" th:value="${c.getFileName()}" name="fileName">
+            <input type="file" name="file" id="uploadFile">
+            <input type="hidden" id="hidd" th:value="${cont.getFileName()}" name="fileName">
         </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">合同所属部门</label>
-            <input type="text" disabled="disabled" name="ofdept" th:value="${c.getOfdept()}" required lay-verify="required"
+            <input type="text" name="ofdept" th:value="${cont.getOfdept()}" required lay-verify="required"
                    autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">关联人员</label>
-            <input type="text" disabled="disabled" name="ofpeople" th:value="${c.ofpeople}" required lay-verify="required"
+            <input type="text" name="ofpeople" th:value="${cont.ofpeople}" required lay-verify="required"
                    autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
@@ -233,13 +275,13 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">处理过程</label>
         <div class="layui-input-block">
-            <textarea name="process" disabled="disabled" th:text="${c.getProcess()}" placeholder="【收款方式和时间】？？？" class="layui-textarea"
+            <textarea name="process" th:text="${cont.getProcess()}" placeholder="【收款方式和时间】？？？" class="layui-textarea"
                       lay-verify="content"></textarea>
         </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button type="submit" id="updateContract" class="layui-btn" lay-submit="" lay-filter="update">编辑</button>
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="formDemo">提交</button>
         </div>
     </div>
 </form>

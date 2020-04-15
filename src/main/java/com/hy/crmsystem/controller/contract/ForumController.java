@@ -1,5 +1,7 @@
 package com.hy.crmsystem.controller.contract;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
 import com.hy.crmsystem.entity.contract.Article;
 import com.hy.crmsystem.entity.contract.Talk;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.List;
@@ -30,14 +33,15 @@ public class ForumController {
     //主页面——查询所有
     @RequestMapping("/selectForum.do")
     @ResponseBody
-    public LayuiData selectForum(Article article,String modules,String keyword) {
+    public LayuiData selectForum(Article article,String modules,String keyword,@RequestParam(value = "page", required = true, defaultValue = "1") int page, @RequestParam(value = "limit", required = true, defaultValue = "3") int pageSize) {
+        Page pageHelper = PageHelper.startPage(page, pageSize, true);
         List<Article> list = forumService.selectForum(article,modules,keyword);
         for (Article a:list){
             a.setCount(forumService.selectCountReply(a.getId()));
         }
         LayuiData layuiData = new LayuiData();
         layuiData.setCode(0);
-        layuiData.setCount(list.size());
+        layuiData.setCount((int)pageHelper.getTotal());
         layuiData.setMsg("");
         layuiData.setData(list);
 
@@ -106,10 +110,10 @@ public class ForumController {
     //添加回复
     @ResponseBody
     @RequestMapping("/addReply.do")
-    public String addReply(Talk talk,Integer id) {
+    public String addReply(Talk talk) {
         try {
             forumService.addReply(talk);
-            forumService.updateReplyTime(id);
+            forumService.updateReplyTime(talk.getId());
         } catch (Exception e) {
             return "0";
         }

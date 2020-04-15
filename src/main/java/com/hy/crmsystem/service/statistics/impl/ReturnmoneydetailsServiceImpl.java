@@ -1,9 +1,9 @@
 package com.hy.crmsystem.service.statistics.impl;
 
-import com.hy.crmsystem.entity.statistics.Returnmoneydetails;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hy.crmsystem.entity.contract.Returnmoneydetails;
 import com.hy.crmsystem.mapper.statistics.ReturnmoneydetailsMapper;
 import com.hy.crmsystem.service.statistics.IReturnmoneydetailsService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +20,7 @@ import java.math.BigDecimal;
  */
 @Service
 @Transactional
-public class ReturnmoneydetailsServiceImpl extends ServiceImpl<ReturnmoneydetailsMapper, Returnmoneydetails> implements IReturnmoneydetailsService {
+public class ReturnmoneydetailsServiceImpl extends ServiceImpl<ReturnmoneydetailsMapper,Returnmoneydetails> implements IReturnmoneydetailsService {
 
     @Autowired
     private ReturnmoneydetailsMapper returnmoneydetailsMapper;

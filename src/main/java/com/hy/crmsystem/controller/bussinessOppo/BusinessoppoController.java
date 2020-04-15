@@ -3,6 +3,7 @@ package com.hy.crmsystem.controller.bussinessOppo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
 import com.hy.crmsystem.entity.customerManager.Customer;
+import com.hy.crmsystem.entity.customerManager.Kehuiganlizonghe;
 import com.hy.crmsystem.entity.customerManager.Moneyinfor;
 import com.hy.crmsystem.entity.systemManager.LayuiData;
 import com.hy.crmsystem.mapper.bussinessOppo.BusinessoppoMapper;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * <p>
@@ -47,8 +49,9 @@ private IBusinessoppoService businessoppoService;
         layUiData.setMsg("");
         layUiData.setCount(Integer.parseInt(String.valueOf(list1.getTotal())));
         layUiData.setData(list1.getRecords());
-      /*  List<Kehuiganlizonghe> list=customerService.listQueryAll(businessoppo);
-        session.setAttribute("list",list);*/
+
+        List<Businessoppo> list=businessoppoService.listQueryAll(businessoppo);
+        session.setAttribute("list",list);
         return layUiData;
     }
     @RequestMapping("/insert.do")
@@ -65,9 +68,10 @@ private IBusinessoppoService businessoppoService;
     }
     //根据 id 查信息进行展示 以 修改
     @RequestMapping("/selectEmpById.do")
-    public String selectEmpById(String bid, Model model){
-        model.addAttribute("bus",businessoppoService.selectBusinessoppo(bid));
-        model.addAttribute("cust",businessoppoService.selectByName(bid));
+    public String selectEmpById(Integer bid, Model model){
+        System.out.println(bid);
+        model.addAttribute("bus",businessoppoService.selectByName(String.valueOf(bid)));
+        model.addAttribute("cust",businessoppoService.selectBusinessoppo(String.valueOf(bid)));
         return "/projectPage/bussinessOppo/toUpdate";
     }
 
@@ -75,13 +79,12 @@ private IBusinessoppoService businessoppoService;
     @ResponseBody
     public String update(Customer customer, Businessoppo businessoppo){
         String i="0";
-        try{
-            customerService.updateById(customer);
-            /* moneyinforService.saveOrUpdate(moneyinfor);*/
-            businessoppoService.saveOrUpdate(businessoppo);
-        }catch (Exception e){
+        /*try{*/
+            businessoppoService.updateById(businessoppo);
+            customerService.saveOrUpdate(customer);
+       /* }catch (Exception e){
             i="1";
-        }
+        }*/
 
         return i;
     }

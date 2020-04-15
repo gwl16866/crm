@@ -75,32 +75,27 @@
 
 <div id="search">
     <form class="layui-form layui-form-pane" action="">
-
         <div class="layui-form-item">
-
-            <div class="layui-inline">
+       <!--     <div class="layui-inline">
                 <label class="layui-form-label">条件:</label>
                 <div class="layui-input-inline">
                     <select name="" class="layui-form-select" >
                         <option value="1" selected>按跟单主题</option>
-                        <option value="2">按跟单人儿</option>
+                        <option value="2">按跟单人</option>
                         <option value="3">按跟单时间</option>
                     </select>
                 </div>
-            </div>
-
+            </div>-->
             <div class="layui-inline">
-                <label class="layui-form-label">关键字</label>
+                <label class="layui-form-label">跟单人:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="username" autocomplete="off" class="layui-input">
+                    <input type="text" name="documentaryPeople" autocomplete="off" class="layui-input">
                 </div>
             </div>
-
-
-
-
             <div class="layui-inline">
-                <button type="submit" class="layui-btn layui-btn-primary" lay-submit  lay-filter="data-search-btn"><i class="layui-icon"></i>模糊 搜 索</button>
+                <div class="layui-input-inline">
+                    <button class="layui-btn" lay-submit lay-filter="query-submit" id="doSearch">模糊查询</button>
+                </div>
             </div>
         </div>
     </form>
@@ -114,7 +109,7 @@
 </script>
 
 <div id="tab">
-    <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+    <table class="layui-hide" id="tableId" lay-filter="tableId"></table>
 </div>
 
 
@@ -123,17 +118,19 @@
 
 <script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script>
-    layui.use(['form', 'table','laydate'], function () {
+    layui.use(['jquery','table', 'layer','form','upload'], function () {
         var $ = layui.jquery,
             form = layui.form,
             table = layui.table,
+            upload = layui.upload,
+            layer = layui.layer,
             layuimini = layui.layuimini;
-        laydate=layui.laydate;
+            laydate=layui.laydate;
 
         table.render({
             width : 1300,
-            elem: '#currentTableId',
-            url: '../../api/table.json',
+            elem: '#tableId',
+            url: '../../documentary/queryAll.do',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
@@ -142,27 +139,42 @@
             }],
             cols: [[
                 {type: "checkbox", fixed: "left"},
-                {field: 'id', title: 'ID', sort: true},
-                {field: 'username', title: '用户名'},
-                {field: 'sex',  title: '性别', sort: true},
-                {field: 'city',  title: '城市'},
-                {field: 'sign', title: '签名'},
-                {field: 'classify', title: '职业'},
+                {field: 'documentaryTime', title: '跟单时间', sort: true},
+                {field: 'theme', title: '跟单主题'},
+                {field: 'documentaryPeople',  title: '跟单人', sort: true},
+                {field: 'detail',  title: '详细内容'},
+                {field: 'file', title: '附件'},
             ]],
             limits: [3, 6, 9, 25, 50, 100],
             limit: 5,
             page: true
         });
-
         // 监听搜索操作
-        form.on('submit(data-search-btn)', function (data) {
+        form.on('submit(query-submit)', function(data) {
+            //执行重载
+            table.reload('tableId', {
+                where:data.field
+            });
+            //执行搜索重载
+            table.reload('tableId', {
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    searchParams: result
+                }
+            }, 'data');
+            return false;
+        });
+
+      /*  form.on('submit(data-search-btn)', function (data) {
             var result = JSON.stringify(data.field);
             layer.alert(result, {
                 title: '最终的搜索信息'
             });
 
             //执行搜索重载
-            table.reload('currentTableId', {
+            table.reload('tableId', {
                 page: {
                     curr: 1
                 }
@@ -172,7 +184,7 @@
             }, 'data');
 
             return false;
-        });
+        });*/
 
         // 监听添加操作
         $(".data-add-btn").on("click", function () {
@@ -196,20 +208,13 @@
 
 
         //监听表格复选框选择
-        table.on('checkbox(currentTableFilter)', function (obj) {
+        table.on('checkbox(tableId)', function (obj) {
             console.log(obj)
         });
 
 
     });
 </script>
-
-
-
-
-
-
-
 
 </body>
 </html>

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * <p>
@@ -34,12 +35,17 @@ public class BusinessoppoServiceImpl extends ServiceImpl<BusinessoppoMapper, Bus
     }
 
     @Override
-    public Customer selectByName(String bid) {
+    public List<Businessoppo> listQueryAll(@Param("businessoppo") Businessoppo businessoppo) {
+        return businessoppoMapper.listQueryAll(businessoppo);
+    }
+
+    @Override
+    public  Businessoppo selectByName(String bid) {
         return businessoppoMapper.selectByName(bid);
     }
 
     @Override
-    public Businessoppo selectBusinessoppo(String bid) {
+    public Customer selectBusinessoppo(String bid) {
         return businessoppoMapper.selectBusinessoppo(bid);
     }
 }

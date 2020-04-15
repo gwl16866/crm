@@ -16,7 +16,7 @@
 <body>
 <div id="add-user-layer" style="display: block; padding: 20px">
     <form class="layui-form" action="" method="post" id="add-user-form">
-        <input type="hidden" name="cid" th:value="${bus.bid}">
+        <input type="hidden" name="bid" th:value="${bus.bid}">
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">商机名称:</label>
@@ -227,14 +227,9 @@
 </div>
 
 <script>
-    layui.use(['form','layer','upload','layedit', 'laydate'], function(){
-        var form = layui.form
-        var $ = layui.jquery
-            ,layer= layui.layer
-            ,upload=layui.upload
-            ,layedit = layui.layedit
-            ,laydate = layui.laydate
-            , $ = layui.$;
+    layui.use(['form','layer', 'laydate','upload'], function(){
+        var form = layui.form,layer= layui.layer,upload=layui.upload  ,laydate = layui.laydate , $ = layui.$;
+
         form.on('submit(demo2)', function(data){
             var da=data.field;
             $.ajax({
@@ -259,13 +254,13 @@
                     }
                 }
             });
-            return true; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+           /* return true; *///阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
 
         //指定允许上传的文件类型
         upload.render({
             elem: '#test3'
-            ,url: '../../afterSell/uploadFile.do' //改成您自己的上传接口
+            ,url: 'afterSell/uploadFile.do' //改成您自己的上传接口
             ,accept: 'file' //普通文件
             ,done: function(res){
                 $("#hi").val(res.filename);
@@ -276,13 +271,16 @@
         laydate.render({
             elem: '#date'
         });
-
-
-
-
-
     });
 </script>
+
+
+
+
+
+
+
+
 
 
 

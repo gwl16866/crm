@@ -86,6 +86,7 @@ public class ContractController {
     @ResponseBody
     @RequestMapping("/selectCustomer.do")
     public Customer selectCustomer(String cname) {
+
         return contractService.selectCustomer(cname);
     }
 

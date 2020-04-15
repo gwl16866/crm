@@ -56,7 +56,4 @@ public interface ForumMapper extends BaseMapper<Article> {
     @Delete("delete from article where id=#{id}")
     public void deleteReply(Integer id);
 
-    //回复 回复
-    @Insert("")
-    public void replyReply(Talk talk);
 }

@@ -132,9 +132,6 @@
 </div>
 
 
-
-
-
 <div id="search">
     <form class="layui-form layui-form-pane" action="">
         <div class="layui-form-item">
@@ -158,16 +155,16 @@
                 </div>
             </div>
 
-            <div class="layui-inline">
+       <!--     <div class="layui-inline">
                 <label class="layui-form-label">部门:</label>
                 <div class="layui-input-inline">
                     <select name="bdept" class="layui-form-select" >
-                        <option value="1" selected>1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                        <option value="1" selected>研发部</option>
+                        <option value="2">销售部</option>
+                        <option value="3">人事部</option>
                     </select>
                 </div>
-            </div>
+            </div>-->
 
             <div class="layui-inline">
                 <label class="layui-form-label">预成交金额</label>
@@ -176,12 +173,12 @@
                 </div>
             </div>
 
-            <div class="layui-inline">
+          <!--  <div class="layui-inline">
                 <label class="layui-form-label">预结单日期</label>
                 <div class="layui-input-inline">
                     <input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd" lay-key="1" name="boverDate">
                 </div>
-            </div>
+            </div>-->
             <div class="layui-inline">
                 <div class="layui-input-inline">
                     <button class="layui-btn" lay-submit lay-filter="query-submit" id="doSearch">模糊查询</button>
@@ -215,7 +212,6 @@
         var layer = layui.layer;
         var form = layui.form;
         var upload = layui.upload;
-        var jquery = layui.jquery;
         table.render({
             width:1120,
             elem: '#currentTableId'

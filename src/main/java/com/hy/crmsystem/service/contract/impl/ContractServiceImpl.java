@@ -57,5 +57,8 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
         contractMapper.updateResidueMoney(contractCust);
     }
 
-
+//合同编号
+   public Contract selectContractNum(String contractNum){
+        return contractMapper.selectContractNum(contractNum);
+   }
 }

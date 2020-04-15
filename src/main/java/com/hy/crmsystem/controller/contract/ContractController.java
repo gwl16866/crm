@@ -8,10 +8,12 @@ import com.hy.crmsystem.entity.contract.Openpaper;
 import com.hy.crmsystem.entity.contract.Returnmoneydetails;
 import com.hy.crmsystem.entity.customerManager.Customer;
 import com.hy.crmsystem.entity.systemManager.LayuiData;
+import com.hy.crmsystem.entity.systemManager.User;
 import com.hy.crmsystem.service.contract.impl.ContractServiceImpl;
 import com.hy.crmsystem.service.contract.impl.OpenpaperServiceImpl;
 import com.hy.crmsystem.service.customerManager.impl.CustomerServiceImpl;
 import com.hy.crmsystem.service.statistics.impl.ReturnmoneydetailsServiceImpl;
+import com.hy.crmsystem.service.systemManager.impl.UserServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,24 +47,39 @@ public class ContractController {
 
     @Autowired
     OpenpaperServiceImpl openpaperService;
+    @Autowired
+    UserServiceImpl userService;
 
     //主页面——查询所有合同
     @RequestMapping("/selectAllCont.do")
     @ResponseBody
-    public LayuiData selectAllCont(Contract contract, Integer condition, @RequestParam(value = "page", required = true, defaultValue = "1") int page, @RequestParam(value = "limit", required = true, defaultValue = "3") int pageSize) {
+    public LayuiData selectAllCont(Contract contract, Integer condition, Model model, @RequestParam(value = "page", required = true, defaultValue = "1") int page, @RequestParam(value = "limit", required = true, defaultValue = "3") int pageSize) {
         //分页
         Page pageHelper = PageHelper.startPage(page, pageSize, true);
         List<Contract> list = contractService.selectAllCont(contract, condition);
-
+        //查询汇款额，开票额
         for (Contract c : list) {
             c.setReturnMoney(contractService.selectReturnMoney(c.getCid()));
             c.setOpenMoney(contractService.selectOpenMoney(c.getCid()));
         }
         LayuiData layuiData = new LayuiData();
-        layuiData.setCount(list.size());
+        layuiData.setCode(0);
+        layuiData.setMsg("");
+        layuiData.setCount((int)pageHelper.getTotal());
         layuiData.setData(list);
 
         return layuiData;
+    }
+
+
+    //主页面——查询我的合同
+    @RequestMapping("/selectMyCont.do")
+    public String selectMyCont(Model model) {
+        //查询登录人
+        Object name = SecurityUtils.getSubject().getPrincipal();
+        User u = userService.selectDengLuRen(name);
+        model.addAttribute("uid",u.getUid());
+        return "projectPage/contract/myContract";
     }
 
     //查询客户
@@ -81,10 +98,19 @@ public class ContractController {
         if (cus == null) {
             customerService.save(customer);
         }
+        Customer c= customerService.selectMaxCustomer();
+        contract.setCustomerId(c.getCid());
+        //查询当前登录人ID
+        Object name = SecurityUtils.getSubject().getPrincipal();
+        User u = userService.selectDengLuRen(name);
+        contract.setUid(u.getUid());
+        //添加状态
+        contract.setContractStatus(1);
         //添加合同
         contractService.save(contract);
         return "1";
     }
+
 
     //合同详情
     @RequestMapping("/contractDetails.do")
@@ -135,14 +161,14 @@ public class ContractController {
     //合同编号唯一
     @ResponseBody
     @RequestMapping("/selectContractNum.do")
-    public String selectContractNum(String contractNum) {
-        boolean b = contractService.equals(contractNum);
-        //存在
-        if (b == false) {
-            return "1";
-        } else {
-            return "2";
-        }
+    public Integer selectContractNum(String contractNum) {
+
+     Contract contract= contractService.selectContractNum(contractNum);
+     if(null == contract){
+         return  2;
+     }else {
+         return 1;
+     }
     }
 
     //开票

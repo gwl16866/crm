@@ -47,4 +47,7 @@ public interface ContractMapper extends BaseMapper<Contract> {
     @Update("update contract set residue_money=residue_money-#{returnMoney} where cid=#{cid}")
     public void updateResidueMoney(ContractCust contractCust);
 
+    //合同编号
+    @Select("select * from contract where contract_num=#{contractNum}")
+    public Contract selectContractNum(String contractNum);
 }

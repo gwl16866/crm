@@ -78,7 +78,7 @@ public class Contract implements Serializable {
 
     //合同状态
     @TableField("contract_status")
-    private String contractStatus;
+    private Integer contractStatus;
 
     //优先级
     private String priority;
@@ -93,11 +93,22 @@ public class Contract implements Serializable {
     private BigDecimal returnMoney;
 
   //剩余钱数
-    @TableField("residue_money")
-    private BigDecimal residueMoney;
+    @TableField("remain_money")
+    private BigDecimal remainMoney;
 
     //开票额度
     private BigDecimal openMoney;
+
+    //用户ID
+    private Integer uid;
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
 
     public BigDecimal getOpenMoney() {
         return openMoney;
@@ -107,12 +118,12 @@ public class Contract implements Serializable {
         this.openMoney = openMoney;
     }
 
-    public BigDecimal getResidueMoney() {
-        return residueMoney;
+    public BigDecimal getRemainMoney() {
+        return remainMoney;
     }
 
-    public void setResidueMoney(BigDecimal residueMoney) {
-        this.residueMoney = residueMoney;
+    public void setRemainMoney(BigDecimal remainMoney) {
+        this.remainMoney = remainMoney;
     }
 
     public BigDecimal getReturnMoney() {
@@ -267,11 +278,11 @@ public class Contract implements Serializable {
         this.ofpeople = ofpeople;
     }
 
-    public String getContractStatus() {
+    public Integer getContractStatus() {
         return contractStatus;
     }
 
-    public void setContractStatus(String contractStatus) {
+    public void setContractStatus(Integer contractStatus) {
         this.contractStatus = contractStatus;
     }
 
@@ -316,8 +327,9 @@ public class Contract implements Serializable {
                 ", process='" + process + '\'' +
                 ", keyword='" + keyword + '\'' +
                 ", returnMoney=" + returnMoney +
-                ", residueMoney=" + residueMoney +
+                ", remainMoney=" + remainMoney +
                 ", openMoney=" + openMoney +
+                ", uid=" + uid +
                 '}';
     }
 }

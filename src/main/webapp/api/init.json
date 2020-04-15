@@ -88,7 +88,7 @@
           "child": [
             {
               "title": "我的合同",
-              "href": "../projectPage/contract/myContract.html",
+              "href": "../contract/selectMyCont.do",
               "icon": "fa fa-hourglass-end",
               "target": "_self"
             },

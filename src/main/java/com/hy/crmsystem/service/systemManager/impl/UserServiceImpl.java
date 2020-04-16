@@ -1,12 +1,10 @@
 package com.hy.crmsystem.service.systemManager.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hy.crmsystem.entity.systemManager.DeskMonth;
+import com.hy.crmsystem.entity.systemManager.DeskPojo;
 import com.hy.crmsystem.entity.systemManager.User;
-import com.hy.crmsystem.mapper.bussinessOppo.BusinessoppoMapper;
-import com.hy.crmsystem.mapper.contract.ContractMapper;
-import com.hy.crmsystem.mapper.customerManager.CustomerMapper;
-import com.hy.crmsystem.mapper.statistics.ReturnmoneydetailsMapper;
-import com.hy.crmsystem.mapper.systemManager.LoginMapper;
+import com.hy.crmsystem.entity.systemManager.UserDept;
 import com.hy.crmsystem.mapper.bussinessOppo.BusinessoppoMapper;
 import com.hy.crmsystem.mapper.contract.ContractMapper;
 import com.hy.crmsystem.mapper.customerManager.CustomerMapper;
@@ -44,7 +42,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private ReturnmoneydetailsMapper returnmoneydetailsMapper;
     @Autowired
     private CustomerMapper customerMapper;
-            ;
+
+    public List<UserDept> selectAllUser(UserDept user) {
+        return userMapper.selectAllUser(user);
+    }
+    public User selectUserByUid(Integer uid) {
+        return userMapper.selectUserByUid(uid);
+    }
+    public void updateUser(User user) {
+        userMapper.updateUser(user);
+    }
+    public void deleteUser(Integer uid){
+        userMapper.deleteUser(uid);
+    }
 
     public User selectDengLuRen(Object name){
         return userMapper.selectDengLuRen(name);
@@ -131,65 +141,62 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public ArrayList<String> selectSumUsers() {
-        DeskMonth dm=new DeskMonth();
+        DeskMonth dm = new DeskMonth();
         ArrayList<DeskPojo> d = userMapper.selectSumUsers();
 
-        for(int i=0;i<d.size();i++){
-            if(d.get(i).getMonth().equals("01")){
+        for (int i = 0; i < d.size(); i++) {
+            if (d.get(i).getMonth().equals("01")) {
                 dm.setOne(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("02")){
+            if (d.get(i).getMonth().equals("02")) {
                 dm.setTwo(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("03")){
+            if (d.get(i).getMonth().equals("03")) {
                 dm.setThree(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("04")){
+            if (d.get(i).getMonth().equals("04")) {
                 dm.setFour(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("05")){
+            if (d.get(i).getMonth().equals("05")) {
                 dm.setFive(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("06")){
+            if (d.get(i).getMonth().equals("06")) {
                 dm.setSix(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("07")){
+            if (d.get(i).getMonth().equals("07")) {
                 dm.setSeven(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("08")){
+            if (d.get(i).getMonth().equals("08")) {
                 dm.setEight(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("09")){
+            if (d.get(i).getMonth().equals("09")) {
                 dm.setNine(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("10")){
+            if (d.get(i).getMonth().equals("10")) {
                 dm.setTen(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("11")){
+            if (d.get(i).getMonth().equals("11")) {
                 dm.setEleven(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("12")){
+            if (d.get(i).getMonth().equals("12")) {
                 dm.setTwelve(d.get(i).getVal());
             }
         }
         ArrayList<String> arr = new ArrayList<>();
-        arr.add(0,dm.getOne());
-        arr.add(1,dm.getTwo());
-        arr.add(2,dm.getThree());
-        arr.add(3,dm.getFour());
-        arr.add(4,dm.getFive());
-        arr.add(5,dm.getSix());
-        arr.add(6,dm.getSeven());
-        arr.add(7,dm.getEight());
-        arr.add(8,dm.getNine());
-        arr.add(9,dm.getTen());
-        arr.add(10,dm.getEleven());
-        arr.add(11,dm.getTwelve());
+        arr.add(0, dm.getOne());
+        arr.add(1, dm.getTwo());
+        arr.add(2, dm.getThree());
+        arr.add(3, dm.getFour());
+        arr.add(4, dm.getFive());
+        arr.add(5, dm.getSix());
+        arr.add(6, dm.getSeven());
+        arr.add(7, dm.getEight());
+        arr.add(8, dm.getNine());
+        arr.add(9, dm.getTen());
+        arr.add(10, dm.getEleven());
+        arr.add(11, dm.getTwelve());
         return arr;
-    public void deleteUser(Integer uid){
-        userMapper.deleteUser(uid);
-        System.out.println();
-        System.out.println();
+
     }
 
     @Override

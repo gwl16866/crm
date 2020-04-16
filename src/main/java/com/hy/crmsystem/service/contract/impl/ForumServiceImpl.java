@@ -56,6 +56,12 @@ public class ForumServiceImpl extends ServiceImpl<ForumMapper, Article> {
         return forumMapper.selectOneForum(id);
     }
 
+    //修改点击数
+    public void updateClickCounts(Integer id ){
+        forumMapper.updateClickCounts(id);
+    }
+
+
     //查询回复数
     public Integer selectCountReply(Integer id){
         return forumMapper.selectCountReply(id);

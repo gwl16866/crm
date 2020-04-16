@@ -27,11 +27,11 @@ public class StatisticsProvider {
         str.append("SELECT c.cname,SUM(b.bpredict_money) AS money FROM businessoppo b,customer c WHERE c.cid =b.cid  AND c.cname =#{name} ");
 
         if(type.equals("bz")){
-            str.append(" and YEARWEEK(DATE_FORMAT(insert_date,'%Y-%m-%d'),1) = YEARWEEK(NOW(),1)");
+            str.append(" and YEARWEEK(DATE_FORMAT(b.insert_date,'%Y-%m-%d'),1) = YEARWEEK(NOW(),1)");
         }
 
         if(type.equals("sz")){
-            str.append(" and YEARWEEK(DATE_FORMAT(insert_date,'%Y-%m-%d'),1) = YEARWEEK(NOW(),1)-1");
+            str.append(" and YEARWEEK(DATE_FORMAT(b.insert_date,'%Y-%m-%d'),1) = YEARWEEK(NOW(),1)-1");
         }
         return str.toString();
     }
@@ -42,11 +42,11 @@ public class StatisticsProvider {
         str.append("SELECT count(b.bpredict_money) FROM businessoppo b,customer c WHERE c.cid =b.cid  AND c.cname =#{name} ");
 
         if(type.equals("bz")){
-            str.append(" and YEARWEEK(DATE_FORMAT(insert_date,'%Y-%m-%d'),1) = YEARWEEK(NOW(),1)");
+            str.append(" and YEARWEEK(DATE_FORMAT(b.insert_date,'%Y-%m-%d'),1) = YEARWEEK(NOW(),1)");
         }
 
         if(type.equals("sz")){
-            str.append(" and YEARWEEK(DATE_FORMAT(insert_date,'%Y-%m-%d'),1) = YEARWEEK(NOW(),1)-1");
+            str.append(" and YEARWEEK(DATE_FORMAT(b.insert_date,'%Y-%m-%d'),1) = YEARWEEK(NOW(),1)-1");
         }
         return str.toString();
     }
@@ -60,11 +60,11 @@ public class StatisticsProvider {
         str.append("SELECT SUM(bpredict_money) FROM businessoppo WHERE 1=1 ");
 
         if(type.equals("by")){
-            str.append(" AND  DATE_FORMAT(insert_date,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m')");
+            str.append(" AND  DATE_FORMAT(b.insert_date,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m')");
         }
 
         if(type.equals("sy")){
-            str.append(" AND DATE_FORMAT(insert_date,'%Y-%m')=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m')");
+            str.append(" AND DATE_FORMAT(b.insert_date,'%Y-%m')=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m')");
         }
         return str.toString();
     }
@@ -75,11 +75,11 @@ public class StatisticsProvider {
         str.append("SELECT c.cname,SUM(b.bpredict_money) AS money FROM businessoppo b,customer c WHERE c.cid =b.cid  AND c.cname =#{name} ");
 
         if(type.equals("by")){
-            str.append(" AND  DATE_FORMAT(insert_date,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m')");
+            str.append(" AND  DATE_FORMAT(b.insert_date,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m')");
         }
 
         if(type.equals("sy")){
-            str.append(" AND DATE_FORMAT(insert_date,'%Y-%m')=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m')");
+            str.append(" AND DATE_FORMAT(b.insert_date,'%Y-%m')=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m')");
         }
         return str.toString();
     }
@@ -89,11 +89,11 @@ public class StatisticsProvider {
         str.append("SELECT count(b.bpredict_money) AS money FROM businessoppo b,customer c WHERE c.cid =b.cid  AND c.cname =#{name} ");
 
         if(type.equals("by")){
-            str.append(" AND  DATE_FORMAT(insert_date,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m')");
+            str.append(" AND  DATE_FORMAT(b.insert_date,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m')");
         }
 
         if(type.equals("sy")){
-            str.append(" AND DATE_FORMAT(insert_date,'%Y-%m')=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m')");
+            str.append(" AND DATE_FORMAT(b.insert_date,'%Y-%m')=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m')");
         }
         return str.toString();
     }
@@ -122,11 +122,11 @@ public class StatisticsProvider {
         str.append("SELECT c.cname,SUM(b.bpredict_money) AS money FROM businessoppo b,customer c WHERE c.cid =b.cid  AND c.cname =#{name} ");
 
         if(type.equals("bj")){
-            str.append(" AND QUARTER(insert_date)=QUARTER(NOW())");
+            str.append(" AND QUARTER(b.insert_date)=QUARTER(NOW())");
         }
 
         if(type.equals("sj")){
-            str.append(" AND QUARTER(insert_date)=QUARTER(DATE_SUB(NOW(),INTERVAL 1 QUARTER))");
+            str.append(" AND QUARTER(b.insert_date)=QUARTER(DATE_SUB(NOW(),INTERVAL 1 QUARTER))");
         }
         return str.toString();
     }
@@ -137,11 +137,11 @@ public class StatisticsProvider {
         str.append("SELECT count(b.bpredict_money) AS money FROM businessoppo b,customer c WHERE c.cid =b.cid  AND c.cname =#{name} ");
 
         if(type.equals("bj")){
-            str.append(" AND QUARTER(insert_date)=QUARTER(NOW())");
+            str.append(" AND QUARTER(b.insert_date)=QUARTER(NOW())");
         }
 
         if(type.equals("sj")){
-            str.append(" AND QUARTER(insert_date)=QUARTER(DATE_SUB(NOW(),INTERVAL 1 QUARTER))");
+            str.append(" AND QUARTER(b.insert_date)=QUARTER(DATE_SUB(NOW(),INTERVAL 1 QUARTER))");
         }
         return str.toString();
     }
@@ -171,11 +171,11 @@ public class StatisticsProvider {
         str.append("SELECT c.cname,SUM(b.bpredict_money) as money FROM businessoppo b,customer c WHERE 1=1 AND c.cid =b.cid and c.cname=#{name} ");
 
         if(type.equals("bn")){
-            str.append(" and YEAR(insert_date)=YEAR(NOW())");
+            str.append(" and YEAR(b.insert_date)=YEAR(NOW())");
         }
 
         if(type.equals("sn")){
-            str.append(" and YEAR(insert_date)=YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR))");
+            str.append(" and YEAR(b.insert_date)=YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR))");
         }
         return str.toString();
     }
@@ -185,11 +185,11 @@ public class StatisticsProvider {
         str.append("SELECT count(b.bpredict_money) as money FROM businessoppo b,customer c WHERE 1=1 AND c.cid =b.cid and c.cname=#{name} ");
 
         if(type.equals("bn")){
-            str.append(" and YEAR(insert_date)=YEAR(NOW())");
+            str.append(" and YEAR(b.insert_date)=YEAR(NOW())");
         }
 
         if(type.equals("sn")){
-            str.append(" and YEAR(insert_date)=YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR))");
+            str.append(" and YEAR(b.insert_date)=YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR))");
         }
         return str.toString();
     }

@@ -25,7 +25,7 @@
     $(function () {
         //返回上一个页面
         $("body").on("click", '.data-add-btn', function () {
-            window.location.href = "projectPage/contract/allContract.html";
+            window.location.href = "contract/selectMyCont.do";
             var index = parent.layer.getFrameIndex(window.name);
             parent.layer.close(index);
         });
@@ -47,7 +47,7 @@
                 maxmin: true,
                 shadeClose: true,
                 area: ['100%', '100%'],
-                content: 'contract/updateContract.do?contractNum=' + $("#contractNum").val(),
+                content: 'contract/updateMyContract.do?contractNum=' + $("#contractNum").val(),
             });
             $(window).on("resize", function () {
                 layer.full(index);
@@ -73,8 +73,8 @@
                     url:'contract/deleteContract.do?cid='+$("#cid").val(),
                     success:function (msg) {
                         if (msg == 1) {
-                             layer.msg("删除成功", {icon: 6});
-                            window.location.href = "projectPage/contract/allContract.html";
+                            layer.msg("删除成功", {icon: 6});
+                            window.location.href = "contract/selectMyCont.do";
                             var index = parent.layer.getFrameIndex(window.name);
                             parent.layer.close(index);
                         } else {

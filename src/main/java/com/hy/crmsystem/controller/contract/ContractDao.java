@@ -5,7 +5,7 @@ import com.hy.crmsystem.entity.contract.Contract;
 public class ContractDao {
 
     public String selectAllCont(Contract contract, Integer condition) {
-        StringBuffer sql = new StringBuffer("select c.*,r.* from contract c,customer r where c.customer_id=r.cid and 1=1 ");
+        StringBuffer sql = new StringBuffer("select c.*,r.* from contract c,customer r where c.customer_id=r.cid  and 1=1 ");
         //我的合同
         if (contract.getUid() != null) {
             sql.append(" and c.uid = '"+contract.getUid()+"' ");

@@ -120,12 +120,28 @@ public class ContractController {
         return "projectPage/contract/contractDetails";
     }
 
+    //我的合同详情
+    @RequestMapping("/myContractDetails.do")
+    public String myContractDetails(String contractNum, Model model) {
+        ContractCust contractList = contractService.contractDetails(contractNum);
+        model.addAttribute("c", contractList);
+        return "projectPage/contract/myContractDetails";
+    }
+
     //编辑合同
     @RequestMapping("/updateContract.do")
     public String updateContract(String contractNum, Model model) {
         ContractCust contractList = contractService.contractDetails(contractNum);
         model.addAttribute("cont", contractList);
         return "projectPage/contract/updateContract";
+    }
+
+    //编辑我的合同
+    @RequestMapping("/updateMyContract.do")
+    public String updateMyContract(String contractNum, Model model) {
+        ContractCust contractList = contractService.contractDetails(contractNum);
+        model.addAttribute("cont", contractList);
+        return "projectPage/contract/updateMyContract";
     }
 
     //修改合同
@@ -188,6 +204,14 @@ public class ContractController {
     @RequestMapping("/addOpenPaper.do")
     public String addOpenPaper(Openpaper openpaper) {
         openpaperService.save(openpaper);
+        return "1";
+    }
+
+    //删除合同
+    @ResponseBody
+    @RequestMapping("/deleteContract.do")
+    public String deleteContract(Integer cid){
+        contractService.deleteContract(cid);
         return "1";
     }
 }

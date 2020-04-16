@@ -46,7 +46,6 @@ public interface ReturnmoneydetailsMapper extends BaseMapper<Returnmoneydetails>
     public Integer sumMonthAndCustomerCounts(@Param("type") String type,@Param("name")String name);
 
 
-
     @SelectProvider(type = StatisticsProvider.class,method = "sumQuarter")
     public BigDecimal sumQuarter(@Param("type") String type);
 
@@ -119,4 +118,7 @@ public interface ReturnmoneydetailsMapper extends BaseMapper<Returnmoneydetails>
 
     @Select("select * from customer")
     public List<Customer> selectCustomer();
+
+    @Select("select sum(return_money) from returnmoneydetails")
+    public String selectReturnMoney();
 }

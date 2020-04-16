@@ -151,7 +151,6 @@ public class StatisticsController {
         Page pageHelper = PageHelper.startPage(page, pageSize, true);
         List<AllWeekStatistics> m = returnmoneydetailsService.sumAll(type);
         LayuiData data = new LayuiData();
-        System.out.println("------tttttt---------ttttttt---------"+m.size());
         data.setCount(returnmoneydetailsService.sumAll(type).size());
         data.setData(m);
         data.setCode(0);

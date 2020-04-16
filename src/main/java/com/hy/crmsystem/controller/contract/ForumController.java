@@ -95,6 +95,7 @@ public class ForumController {
     @RequestMapping("/selectTalk.do")
     public String selectTalk(int id, Model model) {
         List<Forum> list = forumService.selectTalk(id);
+        forumService.updateClickCounts(id);
         Article oneForum = forumService.selectOneForum(id);
         Integer counts = forumService.selectCountReply(id);
         model.addAttribute("of", oneForum);

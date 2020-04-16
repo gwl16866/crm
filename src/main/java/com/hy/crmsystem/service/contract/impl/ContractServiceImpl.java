@@ -61,4 +61,9 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
    public Contract selectContractNum(String contractNum){
         return contractMapper.selectContractNum(contractNum);
    }
+
+   //删除合同
+    public void deleteContract(Integer cid){
+        contractMapper.deleteContract(cid);
+    }
 }

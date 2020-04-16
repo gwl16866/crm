@@ -1,13 +1,14 @@
 package com.hy.crmsystem.mapper.systemManager;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.hy.crmsystem.controller.systemManager.UserDao;
 import com.hy.crmsystem.entity.systemManager.DeskPojo;
 import com.hy.crmsystem.entity.systemManager.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import com.hy.crmsystem.entity.systemManager.UserDept;
+import org.apache.ibatis.annotations.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -24,6 +25,23 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("select uid from user where user_name=#{name}")
     public User selectDengLuRen(Object name);
+
+    //查询所有
+    @SelectProvider(type = UserDao.class,method = "selectAllUser")
+    public List<UserDept> selectAllUser(UserDept user);
+
+    @Select("select * from user where  uid=#{uid}")
+    public User selectUserByUid(Integer uid);
+
+    @Update("update user set status=2 where uid=#{uid}")
+    public void deleteUser(Integer uid);
+
+    @Update("update user set password=#{password} where uid=#{uid}")
+    public void updateUser(User user);
+
+
+
+
 
 
     @Select("SELECT SUM(return_money) val,DATE_FORMAT(return_date,'%m') month FROM returnmoneydetails GROUP BY DATE_FORMAT(return_date,'%Y%m')ORDER BY DATE_FORMAT(return_date,'%Y%m')")

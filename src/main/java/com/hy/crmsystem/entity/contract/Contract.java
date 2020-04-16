@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Mr.Gao
@@ -34,7 +34,7 @@ public class Contract implements Serializable {
 
     //合同金额
     @TableField("contract_money")
-    private String contractMoney;
+    private BigDecimal contractMoney;
 
     //签约日期
     @TableField("signed_time")
@@ -92,7 +92,7 @@ public class Contract implements Serializable {
     //回款额度
     private BigDecimal returnMoney;
 
-  //剩余钱数
+    //剩余钱数
     @TableField("remain_money")
     private BigDecimal remainMoney;
 
@@ -174,11 +174,11 @@ public class Contract implements Serializable {
         this.contractNum = contractNum;
     }
 
-    public String getContractMoney() {
+    public BigDecimal getContractMoney() {
         return contractMoney;
     }
 
-    public void setContractMoney(String contractMoney) {
+    public void setContractMoney(BigDecimal contractMoney) {
         this.contractMoney = contractMoney;
     }
 

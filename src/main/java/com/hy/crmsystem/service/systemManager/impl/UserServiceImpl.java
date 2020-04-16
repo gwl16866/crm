@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hy.crmsystem.entity.systemManager.DeskMonth;
 import com.hy.crmsystem.entity.systemManager.DeskPojo;
 import com.hy.crmsystem.entity.systemManager.User;
+import com.hy.crmsystem.entity.systemManager.UserDept;
 import com.hy.crmsystem.mapper.bussinessOppo.BusinessoppoMapper;
 import com.hy.crmsystem.mapper.contract.ContractMapper;
 import com.hy.crmsystem.mapper.customerManager.CustomerMapper;
@@ -41,6 +42,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private ReturnmoneydetailsMapper returnmoneydetailsMapper;
     @Autowired
     private CustomerMapper customerMapper;
+
+    public List<UserDept> selectAllUser(UserDept user) {
+        return userMapper.selectAllUser(user);
+    }
+    public User selectUserByUid(Integer uid) {
+        return userMapper.selectUserByUid(uid);
+    }
+    public void updateUser(User user) {
+        userMapper.updateUser(user);
+    }
+    public void deleteUser(Integer uid){
+        userMapper.deleteUser(uid);
+    }
+
+
+
+
+
 
     public User selectDengLuRen(Object name){
         return userMapper.selectDengLuRen(name);

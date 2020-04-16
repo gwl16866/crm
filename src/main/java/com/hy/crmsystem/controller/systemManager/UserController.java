@@ -24,6 +24,7 @@ import java.util.List;
  *
  * @author Mr.Gao
  * @since 2020-04-02
+ *
  */
 @Controller
 @RequestMapping("/systemManager")
@@ -71,4 +72,6 @@ public class UserController {
         userService.deleteUser(uid);
         return "1";
     }
+
+
 }

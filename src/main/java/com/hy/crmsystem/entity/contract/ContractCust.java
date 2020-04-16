@@ -33,7 +33,7 @@ public class ContractCust implements Serializable {
 
     //合同金额
     @TableField("contract_money")
-    private String contractMoney;
+    private BigDecimal contractMoney;
 
     //签约日期
     @TableField("signed_time")
@@ -92,7 +92,7 @@ public class ContractCust implements Serializable {
     @TableField("return_money")
     private BigDecimal returnMoney;
 
-   //客户名称
+    //客户名称
     private String cname;
 
     //所属行业
@@ -104,8 +104,8 @@ public class ContractCust implements Serializable {
     private String caddress;
 
     //剩余钱数
-    @TableField("residue_money")
-    private BigDecimal residueMoney;
+    @TableField("remain_money")
+    private BigDecimal remainMoney;
 
     //用户ID
     private Integer uid;
@@ -118,15 +118,16 @@ public class ContractCust implements Serializable {
         this.uid = uid;
     }
 
-    public BigDecimal getResidueMoney() {
-        return residueMoney;
+    public BigDecimal getRemainMoney() {
+        return remainMoney;
     }
 
-    public void setResidueMoney(BigDecimal residueMoney) {
-        this.residueMoney = residueMoney;
+
+    public void setRemainMoney(BigDecimal remainMoney) {
+        this.remainMoney = remainMoney;
     }
 
-   public String getCname() {
+    public String getCname() {
         return cname;
     }
 
@@ -206,11 +207,11 @@ public class ContractCust implements Serializable {
         this.contractNum = contractNum;
     }
 
-    public String getContractMoney() {
+    public BigDecimal getContractMoney() {
         return contractMoney;
     }
 
-    public void setContractMoney(String contractMoney) {
+    public void setContractMoney(BigDecimal contractMoney) {
         this.contractMoney = contractMoney;
     }
 
@@ -363,6 +364,8 @@ public class ContractCust implements Serializable {
                 ", cindustry='" + cindustry + '\'' +
                 ", ccity='" + ccity + '\'' +
                 ", caddress='" + caddress + '\'' +
+                ", remainMoney=" + remainMoney +
+                ", uid=" + uid +
                 '}';
     }
 }

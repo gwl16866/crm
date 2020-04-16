@@ -171,6 +171,11 @@ public class ContractController {
         returnmoneydetailsService.save(returnmoneydetails);
         //修改合同未还钱数
         contractService.updateResidueMoney(contractCust);
+        //查询合同未还款
+        ContractCust cust=contractService.selectRemainMoney(contractCust.getCid());
+        if (cust.getRemainMoney().intValue()<=1){
+            contractService.updateContractStatus(contractCust.getCid());
+        }
         return "1";
     }
 

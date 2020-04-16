@@ -43,6 +43,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     public void deleteUser(Integer uid){
         userMapper.deleteUser(uid);
+        System.out.println();
+        System.out.println();
     }
 
 }

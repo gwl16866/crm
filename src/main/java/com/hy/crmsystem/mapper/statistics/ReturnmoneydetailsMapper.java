@@ -1,8 +1,8 @@
 package com.hy.crmsystem.mapper.statistics;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.hy.crmsystem.entity.contract.Returnmoneydetails;
 import com.hy.crmsystem.entity.customerManager.Customer;
-import com.hy.crmsystem.entity.statistics.Returnmoneydetails;
 import com.hy.crmsystem.entity.statistics.TableStatistics;
 import com.hy.crmsystem.mapper.afterSell.StatisticsProvider;
 import org.apache.ibatis.annotations.Mapper;

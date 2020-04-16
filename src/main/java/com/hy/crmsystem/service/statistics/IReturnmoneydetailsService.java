@@ -1,8 +1,8 @@
 package com.hy.crmsystem.service.statistics;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hy.crmsystem.entity.contract.Returnmoneydetails;
 import com.hy.crmsystem.entity.statistics.AllWeekStatistics;
-import com.hy.crmsystem.entity.statistics.Returnmoneydetails;
 
 import java.math.BigDecimal;
 import java.util.List;

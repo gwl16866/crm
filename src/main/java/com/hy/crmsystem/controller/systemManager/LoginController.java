@@ -67,7 +67,6 @@ public class LoginController {
                 System.out.println("插入失败");
             }
             return "page/login-1";
-
         }
     }
 

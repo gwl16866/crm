@@ -1,9 +1,9 @@
 package com.hy.crmsystem.service.statistics.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hy.crmsystem.entity.contract.Returnmoneydetails;
 import com.hy.crmsystem.entity.customerManager.Customer;
 import com.hy.crmsystem.entity.statistics.AllWeekStatistics;
-import com.hy.crmsystem.entity.statistics.Returnmoneydetails;
 import com.hy.crmsystem.entity.statistics.TableStatistics;
 import com.hy.crmsystem.mapper.statistics.ReturnmoneydetailsMapper;
 import com.hy.crmsystem.service.statistics.IReturnmoneydetailsService;

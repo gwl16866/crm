@@ -10,7 +10,7 @@ public class SqlProvider3 {
 
     public String select_documentary_like(@Param("documentary") Documentary documentary) {
 
-        StringBuffer buffer = new StringBuffer("SELECT documentary_time,theme,documentary_people,detail,FILE FROM documentary where 1=1 ");
+        StringBuffer buffer = new StringBuffer("SELECT did,documentary_time,theme,documentary_people,detail,FILE FROM documentary where 1=1 ");
    if (!StringUtils.isNullOrEmpty(documentary.getDocumentaryPeople())) {
             buffer.append(" and documentary_people like '%" + documentary.getDocumentaryPeople() + "%'");
         }

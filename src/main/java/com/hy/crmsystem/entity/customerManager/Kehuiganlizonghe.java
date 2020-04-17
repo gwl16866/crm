@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class Kehuiganlizonghe implements Serializable {
     private Integer cid;
 
+    private Integer cclass;
     /*客户名称*/
     private  String cname;
   /*  商机数*/
@@ -105,5 +106,13 @@ public class Kehuiganlizonghe implements Serializable {
 
     public void setServiceScore(int serviceScore) {
         this.serviceScore = serviceScore;
+    }
+
+    public Integer getCclass() {
+        return cclass;
+    }
+
+    public void setCclass(Integer cclass) {
+        this.cclass = cclass;
     }
 }

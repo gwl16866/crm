@@ -7,6 +7,7 @@ import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
 import com.hy.crmsystem.entity.customerManager.Customer;
 import com.hy.crmsystem.entity.customerManager.Kehuiganlizonghe;
 import com.hy.crmsystem.entity.customerManager.Moneyinfor;
+import com.hy.crmsystem.mapper.afterSell.SqlProvider;
 import com.hy.crmsystem.mapper.customerManager.SqlProvider1;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -42,4 +43,12 @@ public interface BusinessoppoMapper extends BaseMapper<Businessoppo> {
 
     @Select("SELECT c.cname,c.cindustry,c.ccity,c.caddress,c.csource FROM customer c,businessoppo b WHERE c.cid=b.cid and b.bid=#{value}")
     public Customer selectBusinessoppo(String bid);
+
+
+    /**
+     * 查询新增条数
+     */
+    @SelectProvider(type = SqlProvider2.class,method = "selectNewCount")
+    public Integer selectNewCount(@Param("type")String type);
+
 }

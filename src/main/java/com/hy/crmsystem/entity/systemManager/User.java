@@ -73,6 +73,14 @@ public class User implements Serializable {
         this.sex = sex;
     }
 
+    public Integer getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Integer deptId) {
+        this.deptId = deptId;
+    }
+
     @Override
     public String toString() {
         return "User{" +

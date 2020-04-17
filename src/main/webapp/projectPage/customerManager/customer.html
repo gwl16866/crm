@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
     <link rel="stylesheet" href="../../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
     <link rel="stylesheet" href="../../css/public.css" media="all">
+    <script type="text/javascript" src="../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
     <style>
         .layui-card {border:1px solid #f2f2f2;border-radius:5px;}
         .icon {margin-right:10px;color:#1aa094;}
@@ -79,27 +80,27 @@
     <div class="layui-card-header"><i class="fa fa-bullhorn icon icon-tip"></i>分类</div>
     <div class="layui-card-body layui-text">
 
-        <br>
-        <br>
+
+       <br>
 
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="">客户类别一</a> </div>
+            <div class="layuimini-notice-title" id="khy">
+                <a href="javascript:void(0)">类别一</a>
+                <span class="layui-badge layui-bg-cyan" id="span1"></span>
+            </div>
         </div>
-
-        <br>
-
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="">客户类别二</a> </div>
+            <div class="layuimini-notice-title" id="khe">
+                <a href="javascript:void(0)">类别二</a>
+                <span class="layui-badge layui-bg-cyan" id="span2"></span>
+            </div>
         </div>
-
-        <br>
-
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="">客户类别三</a> </div>
+            <div class="layuimini-notice-title" id="khs">
+                <a href="javascript:void(0)">类别三</a>
+                <span class="layui-badge layui-bg-cyan" id="span3"></span>
+            </div>
         </div>
-
-
-
     </div>
 </div>
 
@@ -147,6 +148,46 @@
 
 
 <script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        //查询count
+        $.ajax({
+            type:"post",
+            url:"../../customerManager/selectCount.do?type="+"1",
+            contentType:"application/json",
+            success:function (data) {
+                $("#span1").append(data);
+            }
+        });
+        $.ajax({
+            type:"post",
+            url:"../../customerManager/selectCount.do?type="+"2",
+            contentType:"application/json",
+            success:function (data) {
+                $("#span2").append(data);
+            }
+        });
+        $.ajax({
+            type:"post",
+            url:"../../customerManager/selectCount.do?type="+"3",
+            contentType:"application/json",
+            success:function (data) {
+                $("#span3").append(data);
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
 <script>
     layui.use(['jquery','table', 'layer','form','upload'], function () {
         var $ = layui.jquery,
@@ -175,6 +216,81 @@
                 ]]
 
             });
+
+
+        $("#khy").click(function () {
+            table.render({
+                width:1120,
+                elem: '#currentTableId',
+                url: '../../customerManager/queryAll.do?cclass=1'
+                ,toolbar: '#toolbarDemo'
+                ,limits: [3, 6, 9, 12, 15, 100]
+                ,limit: 3
+                ,page:true
+                ,cols: [[
+                    {type: "checkbox", width: 50, fixed: "left"},
+                    {field: 'cname', width: 120, title: '客户名称', sort: true,templet:'<div><a href="../../customerManager/selectEmpById.do?cid={{d.cid}}">{{d.cname}}</a></div>'},
+                    {field: 'bussinessCount', width: 120, title: '商机数',templet:'<div><a href="/projectPage/bussinessOppo/myBussinessOppo.html">{{d.bussinessCount}}</a></div>'},
+                    {field: 'bpredictMoney', width: 120, title: '预计成交金额', sort: true},
+                    {field: 'contractCount', width: 120, title: '合同数',templet:'<div><a href="../../page/table/add.html" style="background-color: #00b7ee">{{d.contractCount}}</a></div>'},
+                    {field: 'contractMoney',width: 120, title: '合同金额'},
+                    {field: 'returnMoney', width: 120, title: '回款额'},
+                    {field: 'caftersaleCount', width: 120, title: '售后服务数',templet:'<div><a href="../../page/table/add.html" style="background-color: #00b7ee">{{d.caftersaleCount}}</a></div>'},
+                    {field: 'serviceScore', width: 120, title: '服务均分'}
+
+                ]],
+
+            });
+        });
+        $("#khe").click(function () {
+            table.render({
+                width:1120,
+                elem: '#currentTableId',
+                url: '../../customerManager/queryAll.do?cclass=2'
+                ,toolbar: '#toolbarDemo'
+                ,limits: [3, 6, 9, 12, 15, 100]
+                ,limit: 3
+                ,page:true
+                ,cols: [[
+                    {type: "checkbox", width: 50, fixed: "left"},
+                    {field: 'cname', width: 120, title: '客户名称', sort: true,templet:'<div><a href="../../customerManager/selectEmpById.do?cid={{d.cid}}">{{d.cname}}</a></div>'},
+                    {field: 'bussinessCount', width: 120, title: '商机数',templet:'<div><a href="/projectPage/bussinessOppo/myBussinessOppo.html">{{d.bussinessCount}}</a></div>'},
+                    {field: 'bpredictMoney', width: 120, title: '预计成交金额', sort: true},
+                    {field: 'contractCount', width: 120, title: '合同数',templet:'<div><a href="../../page/table/add.html" style="background-color: #00b7ee">{{d.contractCount}}</a></div>'},
+                    {field: 'contractMoney',width: 120, title: '合同金额'},
+                    {field: 'returnMoney', width: 120, title: '回款额'},
+                    {field: 'caftersaleCount', width: 120, title: '售后服务数',templet:'<div><a href="../../page/table/add.html" style="background-color: #00b7ee">{{d.caftersaleCount}}</a></div>'},
+                    {field: 'serviceScore', width: 120, title: '服务均分'}
+
+                ]],
+
+            });
+        });
+        $("#khs").click(function () {
+            table.render({
+                width:1120,
+                elem: '#currentTableId',
+                url: '../../customerManager/queryAll.do?cclass=3'
+                ,toolbar: '#toolbarDemo'
+                ,limits: [3, 6, 9, 12, 15, 100]
+                ,limit: 3
+                ,page:true
+                ,cols: [[
+                    {type: "checkbox", width: 50, fixed: "left"},
+                    {field: 'cname', width: 120, title: '客户名称', sort: true,templet:'<div><a href="../../customerManager/selectEmpById.do?cid={{d.cid}}">{{d.cname}}</a></div>'},
+                    {field: 'bussinessCount', width: 120, title: '商机数',templet:'<div><a href="/projectPage/bussinessOppo/myBussinessOppo.html">{{d.bussinessCount}}</a></div>'},
+                    {field: 'bpredictMoney', width: 120, title: '预计成交金额', sort: true},
+                    {field: 'contractCount', width: 120, title: '合同数',templet:'<div><a href="../../page/table/add.html" style="background-color: #00b7ee">{{d.contractCount}}</a></div>'},
+                    {field: 'contractMoney',width: 120, title: '合同金额'},
+                    {field: 'returnMoney', width: 120, title: '回款额'},
+                    {field: 'caftersaleCount', width: 120, title: '售后服务数',templet:'<div><a href="../../page/table/add.html" style="background-color: #00b7ee">{{d.caftersaleCount}}</a></div>'},
+                    {field: 'serviceScore', width: 120, title: '服务均分'}
+
+                ]],
+
+            });
+        });
+
 
         form.on('submit(query-submit)', function(data) {
             //执行重载

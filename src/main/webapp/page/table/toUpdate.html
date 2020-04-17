@@ -14,6 +14,7 @@
     <script src="lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
 </head>
 <body>
+<button class="layui-btn layui-btn-sm data-add-btn" id="but"> 返回 </button>
 <div id="add-user-layer" style="display: block; padding: 20px">
     <form class="layui-form" action="" method="post" id="add-user-form">
         <input type="hidden" name="cid" th:value="${cust.cid}">
@@ -255,7 +256,10 @@
 <script>
     layui.use(['form','layer','upload'], function(){
         var form = layui.form,layer= layui.layer,upload=layui.upload;
+        $("#but").click(function(){
+            window.parent.location.reload();
 
+        });
         form.on('submit(demo2)', function(data){
             var da=data.field;
             $.ajax({
@@ -276,7 +280,7 @@
                             //do...
                             parent.location.reload();
                         });
-
+                        window.location.href="/crmsystem/projectPage/customerManager/customer.html";
                     }
                 }
             });

@@ -1,6 +1,7 @@
 package com.hy.crmsystem.controller.systemManager;
 import com.hy.crmsystem.entity.systemManager.User;
 import com.hy.crmsystem.service.systemManager.IUserService;
+import com.hy.crmsystem.service.systemManager.impl.UserServiceImpl;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -23,6 +24,8 @@ public class LoginController {
 
     @Autowired
     private IUserService usersService;
+    @Autowired
+    private UserServiceImpl userServicel;
 
     //登陆页面
     @RequestMapping("/login.do")
@@ -45,29 +48,36 @@ public class LoginController {
     }
 
     @RequestMapping("/register.do")
-    public String register(@RequestParam("username") String user, @RequestParam("password") String psw, Model model, @RequestParam("age") int age, @RequestParam("sex") int sex){
-        if("".equals(user) || null == user || "".equals(psw) || null == psw){
+    public String register(@RequestParam("deptId")int deptId,@RequestParam("username") String username, @RequestParam("password") String psw, Model model, @RequestParam("age") int age, @RequestParam("sex") int sex){
+        if("".equals(username) || null == username || "".equals(psw) || null == psw){
             model.addAttribute("message","账号或密码不能为空");
             return "error";
         }else{
+            String user1= userServicel.selectname(username);
+            if(user1!=null){
+                model.addAttribute("mess","账号或密码不能重复");
+
+                return "page/error";
+            }else{
             //密码
             Object password=psw;
             //盐值
-            Object salt= ByteSource.Util.bytes(user);
+            Object salt= ByteSource.Util.bytes(username);
             Object simpleHash=new SimpleHash("MD5",password,salt,1024);
             User infor=new User();
-            infor.setUsername(user);
+            infor.setDeptId(deptId);
+            infor.setUsername(username);
             infor.setPassword(String.valueOf(simpleHash));
             infor.setAge(age);
             infor.setSex(sex);
-            boolean a= usersService.save(infor);
-            if(a == true){
+           userServicel.add(infor);
+            /*if(a == true){
                 System.out.println("插入成功");
             }else{
                 System.out.println("插入失败");
-            }
+            }*/
             return "page/login-1";
-
+            }
         }
     }
 
@@ -76,6 +86,15 @@ public class LoginController {
         SecurityUtils.getSubject().logout();
         return "login";
     }
+    @RequestMapping("/selectDept.do")
+    public String selectDept( Model model){
+        model.addAttribute("dept",userServicel.select());
+        return "page/zhuce";
+    }
+
+
+
+
 
 
 }

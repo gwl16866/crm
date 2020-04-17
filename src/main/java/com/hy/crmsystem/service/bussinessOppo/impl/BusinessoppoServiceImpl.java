@@ -1,5 +1,6 @@
 package com.hy.crmsystem.service.bussinessOppo.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -47,5 +48,24 @@ public class BusinessoppoServiceImpl extends ServiceImpl<BusinessoppoMapper, Bus
     @Override
     public Customer selectBusinessoppo(String bid) {
         return businessoppoMapper.selectBusinessoppo(bid);
+    }
+
+    @Override
+    public String selectCount(String type) {
+        QueryWrapper qr=new QueryWrapper();
+        if(type.equals("9")){
+            qr.eq("status","1");
+        }else if(type.equals("10")){
+            qr.eq("status","2");
+        }else if(type.equals("11")){
+            qr.eq("status","3");
+        }
+        Integer c=businessoppoMapper.selectCount(qr);
+        return String.valueOf(c);
+    }
+
+    @Override
+    public Integer selectNewCount(String type) {
+        return businessoppoMapper.selectNewCount(type);
     }
 }

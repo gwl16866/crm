@@ -16,9 +16,14 @@ import org.apache.ibatis.annotations.Select;
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
-    @Insert("insert into user values(#{username},#{password},#{age},#{sex})")
+    @Insert("insert into user(dept_id,user_name,password,age,sex) values(#{deptId},#{username},#{password},#{age},#{sex})")
     public void Add(User user);
 
     @Select("select uid from user where user_name=#{name}")
     public User selectDengLuRen(Object name);
+
+    @Select("SELECT user_name FROM user where user_name=#{username}")
+     public  String selectname(String username);
+
+
 }

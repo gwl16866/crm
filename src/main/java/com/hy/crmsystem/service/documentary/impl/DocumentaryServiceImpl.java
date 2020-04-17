@@ -2,6 +2,7 @@ package com.hy.crmsystem.service.documentary.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
 import com.hy.crmsystem.entity.customerManager.Kehuiganlizonghe;
 import com.hy.crmsystem.entity.documentary.Documentary;
 import com.hy.crmsystem.mapper.documentary.DocumentaryMapper;
@@ -37,6 +38,16 @@ public class DocumentaryServiceImpl extends ServiceImpl<DocumentaryMapper, Docum
     @Override
     public List<Documentary> listQueryAll(@Param("documentary")Documentary documentary) {
         return documentaryMapper.listQueryAll(documentary);
+    }
+
+    @Override
+    public List<Businessoppo> selectBname() {
+        return documentaryMapper.selectBname();
+    }
+
+    @Override
+    public List<Documentary> selectTheme(String theme) {
+        return documentaryMapper.selectTheme(theme);
     }
 
 }

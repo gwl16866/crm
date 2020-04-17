@@ -23,5 +23,6 @@ public interface IDocumentaryService extends IService<Documentary> {
     IPage<Documentary> pages(@Param("page") Integer page, @Param("limit") Integer limit, @Param("documentary") Documentary documentary, @Param("session") HttpSession session);
 
     public List<Documentary> listQueryAll(@Param("documentary") Documentary documentary);
-
+    public List<Businessoppo> selectBname();
+    public List<Documentary> selectTheme(String theme);
 }

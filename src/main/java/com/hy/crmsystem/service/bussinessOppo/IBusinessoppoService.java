@@ -27,5 +27,7 @@ public interface IBusinessoppoService extends IService<Businessoppo> {
 
     public Customer selectBusinessoppo(String bid);
 
+    public String selectCount(String type);
 
+    public Integer selectNewCount(String type);
 }

@@ -1,5 +1,6 @@
 package com.hy.crmsystem.service.customerManager.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -68,6 +69,20 @@ private MoneyinforMapper moneyinforMapper;
     @Override
     public Moneyinfor selectMoneyinfor(String cid) {
         return customerMapper.selectMoneyinfor(cid);
+    }
+
+    @Override
+    public String selectCount(String type) {
+        QueryWrapper qr=new QueryWrapper();
+        if(type.equals("1")){
+            qr.eq("cclass","1");
+        }else if(type.equals("2")){
+            qr.eq("cclass","2");
+        }else if(type.equals("3")){
+            qr.eq("cclass","3");
+        }
+        Integer c=customerMapper.selectCount(qr);
+        return String.valueOf(c);
     }
 
    /* @Override

@@ -86,4 +86,13 @@ private MoneyinforMapper moneyinforMapper;
 
         return i;
     }
+    @ResponseBody
+    @RequestMapping("/selectCount.do")
+    public String selectCount(String type){
+        return   customerService.selectCount(type);
+    }
+
+
+
+
 }

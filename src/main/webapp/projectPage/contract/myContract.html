@@ -133,16 +133,16 @@
     <div class="layui-card-header"><i class="fa fa-bullhorn icon icon-tip"></i>分类</div>
     <div class="layui-card-body layui-text">
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="javascript:;" id="on1">执行中的合同</a></div>
+            <div class="layuimini-notice-title"><a href="javascript:;" id="on1">执行中</a></div>
         </div>
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="javascript:;" id="on2">已关闭的合同</a></div>
+            <div class="layuimini-notice-title"><a href="javascript:;" id="on2">已关闭</a></div>
         </div>
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="javascript:;" id="on3">已撤除的合同</a></div>
+            <div class="layuimini-notice-title"><a href="javascript:;" id="on3">已撤除</a></div>
         </div>
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="javascript:;" id="on4">已搁置的合同</a></div>
+            <div class="layuimini-notice-title"><a href="javascript:;" id="on4">已搁置</a></div>
         </div>
         <hr>
         <div class="layuimini-notice">
@@ -156,7 +156,6 @@
         </div>
     </div>
 </div>
-
 <div id="search">
     <form class="layui-form layui-form-pane">
         <div class="layui-form-item">
@@ -235,7 +234,7 @@
             }],
             cols: [
                 [
-                    {field: 'contractName', title: '合同全称',templet:'<div><a href="contract/contractDetails.do?contractNum={{d.contractNum}}" style="color: #1E9FFF">{{d.contractName}}</a></div> '},
+                    {field: 'contractName', title: '合同全称',templet:'<div><a href="contract/myContractDetails.do?contractNum={{d.contractNum}}" style="color: #1E9FFF">{{d.contractName}}</a></div> '},
                     {field: 'contractNum', title: '合同编号'},
                     {field: 'contractMoney', title: '合同金额', sort: true},
                     {field: 'returnMoney', title: '汇款额',templet:'#rM'},
@@ -516,7 +515,7 @@
             return false; //阻止表单跳转。
         });
         // 监听添加操作
-        $(".data-add-btn").on("click", function () {
+        $("body").on("click",'.data-add-btn', function () {
             var index = layer.open({
                 title: '添加合同',
                 type: 2,
@@ -537,6 +536,16 @@
         });
         //下拉框
         form.on('select(condition)', function (data) {
+            if (data.value==1){
+                $("#keyword").empty();
+                $("#keyword").append("<input type=\"text\" name=\"keyword\"  required lay-verify=\"required\" placeholder=\"请输入名称\"\n" +
+                    "                           autocomplete=\"off\" class=\"layui-input\" style=\"width: 400px\">");
+            }
+            if (data.value==2){
+                $("#keyword").empty();
+                $("#keyword").append("<input type=\"text\" name=\"keyword\"  required lay-verify=\"required\" placeholder=\"请输入编号\"\n" +
+                    "                           autocomplete=\"off\" class=\"layui-input\" style=\"width: 400px\">");
+            }
             if (data.value == 3) {
                 $("#keyword").empty();
                 $("#keyword").append(" <select name=\"keyword\"  style=\"width: 200px;\">\n" +

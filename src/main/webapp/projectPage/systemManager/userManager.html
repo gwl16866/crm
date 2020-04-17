@@ -10,34 +10,39 @@
     <link rel="stylesheet" href="../../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
     <link rel="stylesheet" href="../../css/public.css" media="all">
     <style>
-        .layui-card {border:1px solid #f2f2f2;border-radius:5px;}
-        .icon {margin-right:10px;color:#1aa094;}
-        .icon-cray {color:#ffb800!important;}
-        .icon-blue {color:#1e9fff!important;}
-        .icon-tip {color:#ff5722!important;}
-        .layuimini-qiuck-module {text-align:center;margin-top: 10px}
-        .layuimini-qiuck-module a i {display:inline-block;width:100%;height:60px;line-height:60px;text-align:center;border-radius:2px;font-size:30px;background-color:#F8F8F8;color:#333;transition:all .3s;-webkit-transition:all .3s;}
-        .layuimini-qiuck-module a cite {position:relative;top:2px;display:block;color:#666;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;font-size:14px;}
-        .welcome-module {width:100%;height:210px;}
-        .panel {background-color:#fff;border:1px solid transparent;border-radius:3px;-webkit-box-shadow:0 1px 1px rgba(0,0,0,.05);box-shadow:0 1px 1px rgba(0,0,0,.05)}
-        .panel-body {padding:10px}
-        .panel-title {margin-top:0;margin-bottom:0;font-size:12px;color:inherit}
-        .label {display:inline;padding:.2em .6em .3em;font-size:75%;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25em;margin-top: .3em;}
-        .layui-red {color:red}
-        .main_btn > p {height:40px;}
-        .layui-bg-number {background-color:#F8F8F8;}
-        .layuimini-notice:hover {background:#f6f6f6;}
-        .layuimini-notice {padding:7px 16px;clear:both;font-size:12px !important;cursor:pointer;position:relative;transition:background 0.2s ease-in-out;}
-        .layuimini-notice-title,.layuimini-notice-label {
-            padding-right: 70px !important;text-overflow:ellipsis!important;overflow:hidden!important;white-space:nowrap!important;}
-        .layuimini-notice-title {line-height:28px;font-size:14px;}
-        .layuimini-notice-extra {position:absolute;top:50%;margin-top:-8px;right:16px;display:inline-block;height:16px;color:#999;}
+        .layuimini-qiuck-module a i {
+            display: inline-block;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            border-radius: 2px;
+            font-size: 30px;
+            background-color: #F8F8F8;
+            color: #333;
+            transition: all .3s;
+            -webkit-transition: all .3s;
+        }
+
+        .layuimini-qiuck-module a cite {
+            position: relative;
+            top: 2px;
+            display: block;
+            color: #666;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .main_btn > p {
+            height: 40px;
+        }
     </style>
 </head>
 <body>
 <div class="layuimini-container">
     <div class="layuimini-main">
-
         <fieldset class="table-search-fieldset">
             <legend>搜索信息</legend>
             <div style="margin: 10px 10px 10px 10px">
@@ -49,38 +54,39 @@
                                 <input type="text" name="username" autocomplete="off" class="layui-input">
                             </div>
                         </div>
-
                         <div class="layui-inline">
-                            <label class="layui-form-label">用户职业</label>
+                            <label class="layui-form-label">用户部门</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="classify" autocomplete="off" class="layui-input">
+                                <select name="deptId" class="layui-form-select">
+                                    <option value="0">请选择部门</option>
+                                    <option value="1">开发部</option>
+                                    <option value="2">销售部</option>
+                                </select>
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <button type="submit" class="layui-btn layui-btn-primary" lay-submit  lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+                            <button type="submit" class="layui-btn layui-btn-primary" lay-submit
+                                    lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索
+                            </button>
                         </div>
                     </div>
                 </form>
             </div>
         </fieldset>
-
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-sm data-add-btn"> 添加用户 </button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn"> 删除用户 </button>
+                <button type="button" class="layui-btn refresh-btn">
+                    <i class="layui-icon layui-icon-refresh"></i> 刷新
+                </button>
             </div>
         </script>
-
         <div id="tab">
             <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
         </div>
-
-
         <script type="text/html" id="currentTableBar">
             <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
         </script>
-
     </div>
 </div>
 <script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
@@ -93,7 +99,7 @@
 
         table.render({
             elem: '#currentTableId',
-            url: '../../api/table.json',
+            url: '../../systemManager/selectAllUser.do',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
@@ -101,101 +107,66 @@
                 icon: 'layui-icon-tips'
             }],
             cols: [[
-                {type: "checkbox", width: 50, fixed: "left"},
-                {field: 'id', width: 80, title: 'ID', sort: true},
-                {field: 'username', width: 80, title: '用户名'},
-                {field: 'sex', width: 80, title: '性别', sort: true},
-                {field: 'city', width: 80, title: '城市'},
-                {field: 'sign', title: '签名', minWidth: 150},
-                {field: 'classify', width: 80, title: '职业'},
-                {title: '操作', minWidth: 50, templet: '#currentTableBar', fixed: "right", align: "center"}
+                {field: 'uid', width: 160, title: 'ID', sort: true},
+                {field: 'username', width: 350, title: '用户名'},
+                {field: 'deptName', width: 350, title: '部门'},
+                {field: 'sex', width: 160, title: '性别'},
+                {field: 'age', width: 160, title: '年龄', sort: true},
+                {title: '操作', minWidth: 100, templet: '#currentTableBar', fixed: "right", align: "center"}
             ]],
             limits: [10, 15, 20, 25, 50, 100],
-            limit: 15,
+            limit: 10,
             page: true
         });
-
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
-            var result = JSON.stringify(data.field);
-            layer.alert(result, {
-                title: '最终的搜索信息'
-            });
-
-            //执行搜索重载
+            //执行重载
             table.reload('currentTableId', {
-                page: {
-                    curr: 1
-                }
-                , where: {
-                    searchParams: result
-                }
-            }, 'data');
-
+                where: data.field
+            });
             return false;
         });
-
-        // 监听添加操作
-        $(".data-add-btn").on("click", function () {
-
-            var index = layer.open({
-                title: '添加用户',
-                type: 2,
-                shade: 0.2,
-                maxmin:true,
-                shadeClose: true,
-                area: ['100%', '100%'],
-                content: '/page/table/add.html',
-            });
-            $(window).on("resize", function () {
-                layer.full(index);
-            });
-
-            return false;
-        });
-
-        // 监听删除操作
-        $(".data-delete-btn").on("click", function () {
-            var checkStatus = table.checkStatus('currentTableId')
-                , data = checkStatus.data;
-            layer.alert(JSON.stringify(data));
-        });
-
-        //监听表格复选框选择
-        table.on('checkbox(currentTableFilter)', function (obj) {
-            console.log(obj)
-        });
-
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
             if (obj.event === 'edit') {
-
                 var index = layer.open({
                     title: '编辑用户',
                     type: 2,
                     shade: 0.2,
-                    maxmin:true,
+                    maxmin: true,
                     shadeClose: true,
-                    area: ['100%', '100%'],
-                    content: '/page/table/edit.html',
+                    area: ['50%', '70%'],
+                    content: '../../systemManager/selectUserByUid.do?uid='+data.uid,
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
                 });
                 return false;
             } else if (obj.event === 'delete') {
-                layer.confirm('真的删除行么', function (index) {
-                    obj.del();
-                    layer.close(index);
-                });
+                layer.confirm('真的删除行么',function () {
+                    $.ajax({
+                        type:"post",
+                        url:'../../systemManager/deleteUser.do?uid='+data.uid,
+                        success:function (msg) {
+                            if (msg == 1) {
+                                layer.msg("删除成功", {icon: 6});
+                                window.location.href = "projectPage/systemManager/userManager.html";
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);
+                                window.location.reload();
+                            } else {
+                                layer.msg("删除失败", {icon: 6});
+                            }
+                        }
+                    })
+                })
             }
         });
-
+        //刷新页面
+        $("body").on("click",'.refresh-btn', function () {
+            window.location.reload();
+        });
     });
 </script>
-<script>
-
-</script>
-
 </body>
 </html>

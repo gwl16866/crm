@@ -56,6 +56,12 @@ public class ForumServiceImpl extends ServiceImpl<ForumMapper, Article> {
         return forumMapper.selectOneForum(id);
     }
 
+    //修改点击数
+    public void updateClickCounts(Integer id ){
+        forumMapper.updateClickCounts(id);
+    }
+
+
     //查询回复数
     public Integer selectCountReply(Integer id){
         return forumMapper.selectCountReply(id);
@@ -74,10 +80,6 @@ public class ForumServiceImpl extends ServiceImpl<ForumMapper, Article> {
         forumMapper.deleteReply(id);
     }
 
-    //回复 回复
-    public void replyReply(Talk talk){
-        forumMapper.replyReply(talk);
-    }
 
     //添加回复时修改回复时间
     public void updateReplyTime(Integer id){

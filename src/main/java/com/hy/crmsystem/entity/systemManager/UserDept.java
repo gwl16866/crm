@@ -3,21 +3,18 @@ package com.hy.crmsystem.entity.systemManager;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Mr.Gao
  * @since 2020-04-02
  */
-@TableName("user")
-public class User implements Serializable {
-
+public class UserDept implements Serializable {
 
     @TableId(value = "uid", type = IdType.AUTO)
     private Integer uid;
@@ -25,6 +22,8 @@ public class User implements Serializable {
     @TableField("dept_id")
     private Integer deptId;
 
+    @TableField("dept_name")
+    private String deptName;
 
     @TableField("user_name")
     private String username;
@@ -82,11 +81,21 @@ public class User implements Serializable {
         this.deptId = deptId;
     }
 
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+
     @Override
     public String toString() {
         return "User{" +
                 "uid=" + uid +
                 ", deptId=" + deptId +
+                ", deptName='" + deptName + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", age=" + age +

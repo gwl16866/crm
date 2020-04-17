@@ -39,6 +39,9 @@ public interface ForumMapper extends BaseMapper<Article> {
 
     @Select("select a.*,u.user_name from article a,user u where a.uid=u.uid and a.id=#{id}")
     public Article selectOneForum(Integer id);
+    //修改点击数
+    @Update("update article set click_count=click_count+1 where id=#{id}")
+    public void updateClickCounts(Integer id);
 
     //查询回复数
     @Select("select count(id) from talk where id=#{id}")
@@ -56,7 +59,4 @@ public interface ForumMapper extends BaseMapper<Article> {
     @Delete("delete from article where id=#{id}")
     public void deleteReply(Integer id);
 
-    //回复 回复
-    @Insert("")
-    public void replyReply(Talk talk);
 }

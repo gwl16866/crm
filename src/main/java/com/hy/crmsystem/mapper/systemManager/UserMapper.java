@@ -5,6 +5,7 @@ import com.hy.crmsystem.entity.systemManager.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 
 /**
  * <p>
@@ -16,14 +17,48 @@ import org.apache.ibatis.annotations.Select;
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
-    @Insert("insert into user(dept_id,user_name,password,age,sex) values(#{deptId},#{username},#{password},#{age},#{sex})")
+    @Insert("insert into user values(#{username},#{password},#{age},#{sex})")
     public void Add(User user);
 
-    @Select("select uid from user where user_name=#{name}")
+    @Select("select * from user where user_name=#{name}")
     public User selectDengLuRen(Object name);
 
     @Select("SELECT user_name FROM user where user_name=#{username}")
      public  String selectname(String username);
 
 
+
+    //查询所有
+    @SelectProvider(type = UserDao.class,method = "selectAllUser")
+    public List<UserDept> selectAllUser(UserDept user);
+
+    @Select("select * from user where  uid=#{uid}")
+    public User selectUserByUid(Integer uid);
+
+    @Update("update user set status=2 where uid=#{uid}")
+    public void deleteUser(Integer uid);
+
+    @Update("update user set password=#{password} where uid=#{uid}")
+    public void updateUser(User user);
+
+
+
+
+
+
+    @Select("SELECT SUM(return_money) val,DATE_FORMAT(return_date,'%m') month FROM returnmoneydetails GROUP BY DATE_FORMAT(return_date,'%Y%m')ORDER BY DATE_FORMAT(return_date,'%Y%m')")
+    public ArrayList<DeskPojo> seleMoneyByMonth();
+
+    @Select("SELECT COUNT(*) val,DATE_FORMAT(create_date,'%m') month FROM USER GROUP BY DATE_FORMAT(create_date,'%Y%m')ORDER BY DATE_FORMAT(create_date,'%Y%m')")
+    public ArrayList<DeskPojo> selectSumUsers();
+
+    @Select("SELECT COUNT(*)val,DATE_FORMAT(insert_date,'%m') month FROM customer GROUP BY DATE_FORMAT(insert_date,'%Y%m') ORDER BY DATE_FORMAT(insert_date,'%Y%m')")
+    public ArrayList<DeskPojo> selectSumCustomer();
+
+
+    @Select("SELECT COUNT(*)val,DATE_FORMAT(insert_date,'%m') month FROM businessoppo GROUP BY DATE_FORMAT(insert_date,'%Y%m') ORDER BY DATE_FORMAT(insert_date,'%Y%m')")
+    public ArrayList<DeskPojo> selectBussinessCounts();
+
+    @Select("SELECT COUNT(*)val,DATE_FORMAT(insert_time,'%m') MONTH FROM contract GROUP BY DATE_FORMAT(insert_time,'%Y%m') ORDER BY DATE_FORMAT(insert_time,'%Y%m')")
+    public ArrayList<DeskPojo> selectContractCounts();
 }

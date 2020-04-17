@@ -35,30 +35,44 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
 
     //查询汇款额
     public BigDecimal selectReturnMoney(Integer cid) {
-       return contractMapper.selectReturnMoney(cid);
+        return contractMapper.selectReturnMoney(cid);
     }
+
     //查询汇款额
     public BigDecimal selectOpenMoney(Integer cid) {
         return contractMapper.selectOpenMoney(cid);
     }
 
     //查询客户
-    public Customer selectCustomer(String cname){
+    public Customer selectCustomer(String cname) {
         return contractMapper.selectCustomer(cname);
     }
 
     //帖子详情
-    public ContractCust contractDetails(String contractNum){
+    public ContractCust contractDetails(String contractNum) {
         return contractMapper.contractDetails(contractNum);
     }
 
     //剩余钱数
-    public void updateResidueMoney(ContractCust contractCust){
+    public void updateResidueMoney(ContractCust contractCust) {
         contractMapper.updateResidueMoney(contractCust);
     }
+    //查询未还款
+    public ContractCust selectRemainMoney(Integer cid){
+        return contractMapper.selectRemainMoney(cid);
+    }
 
-//合同编号
-   public Contract selectContractNum(String contractNum){
+    public void updateContractStatus(Integer cid) {
+        contractMapper.updateContractStatus(cid);
+    }
+
+    //合同编号
+    public Contract selectContractNum(String contractNum) {
         return contractMapper.selectContractNum(contractNum);
-   }
+    }
+
+    //删除合同
+    public void deleteContract(Integer cid) {
+        contractMapper.deleteContract(cid);
+    }
 }

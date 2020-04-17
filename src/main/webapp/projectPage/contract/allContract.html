@@ -131,16 +131,16 @@
     <div class="layui-card-header"><i class="fa fa-bullhorn icon icon-tip"></i>分类</div>
     <div class="layui-card-body layui-text">
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="javascript:;" id="on1">执行中的合同</a></div>
+            <div class="layuimini-notice-title"><a href="javascript:;" id="on1">执行中</a></div>
         </div>
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="javascript:;" id="on2">已关闭的合同</a></div>
+            <div class="layuimini-notice-title"><a href="javascript:;" id="on2">已关闭</a></div>
         </div>
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="javascript:;" id="on3">已撤除的合同</a></div>
+            <div class="layuimini-notice-title"><a href="javascript:;" id="on3">已撤除</a></div>
         </div>
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title"><a href="javascript:;" id="on4">已搁置的合同</a></div>
+            <div class="layuimini-notice-title"><a href="javascript:;" id="on4">已搁置</a></div>
         </div>
         <hr>
         <div class="layuimini-notice">
@@ -162,7 +162,7 @@
                 <label class="layui-form-label">条件:</label>
                 <div class="layui-input-inline">
                     <select name="condition" lay-filter="condition"  class="layui-form-select">
-                        <option value=1>按合同全称</option>
+                        <option value=1>按合同名称</option>
                         <option value=2>按合同编号</option>
                         <option value=3>按所属行业</option>
                     </select>
@@ -182,16 +182,16 @@
 </div>
 <script type="text/html" id="rM">
     {{#  if(d.returnMoney == null){ }}
-    <a href=" contract/returnMoney.do?contractNum={{d.contractNum}}" class="layui-table-link">0[+]</a>
+    <a href="../../contract/returnMoney.do?contractNum={{d.contractNum}}" class="layui-table-link">0[+]</a>
     {{#  } else { }}
-    <a href=" contract/returnMoney.do?contractNum={{d.contractNum}}" class="layui-table-link">{{d.returnMoney}}[+]</a>
+    <a href="../../contract/returnMoney.do?contractNum={{d.contractNum}}" class="layui-table-link">{{d.returnMoney}}[+]</a>
     {{#  } }}
 </script>
 <script type="text/html" id="cf">
     {{#  if(d.openMoney == null){ }}
-    <a href=" contract/openPaper.do?contractNum={{d.contractNum}}" class="layui-table-link">0[+]</a>
+    <a href="../../contract/openPaper.do?contractNum={{d.contractNum}}" class="layui-table-link">0[+]</a>
     {{#  } else { }}
-    <a href=" contract/openPaper.do?contractNum={{d.contractNum}}" class="layui-table-link">{{d.openMoney}}[+]</a>
+    <a href="../../contract/openPaper.do?contractNum={{d.contractNum}}" class="layui-table-link">{{d.openMoney}}[+]</a>
     {{#  } }}
 </script>
 <script type="text/html" id="toolbarDemo">
@@ -545,7 +545,7 @@
             return false; //阻止表单跳转。
         });
         // 监听添加操作
-        $(".data-add-btn").on("click", function () {
+        $("body").on("click", '.data-add-btn',function () {
             var index = layer.open({
                 title: '添加合同',
                 type: 2,
@@ -566,6 +566,16 @@
         });
         //下拉框
         form.on('select(condition)', function (data) {
+            if (data.value==1){
+                $("#keyword").empty();
+                $("#keyword").append("<input type=\"text\" name=\"keyword\"  required lay-verify=\"required\" placeholder=\"请输入名称\"\n" +
+                    "                           autocomplete=\"off\" class=\"layui-input\" style=\"width: 400px\">");
+            }
+            if (data.value==2){
+                $("#keyword").empty();
+                $("#keyword").append("<input type=\"text\" name=\"keyword\"  required lay-verify=\"required\" placeholder=\"请输入编号\"\n" +
+                    "                           autocomplete=\"off\" class=\"layui-input\" style=\"width: 400px\">");
+            }
             if (data.value == 3) {
                 $("#keyword").empty();
                 $("#keyword").append(" <select name=\"keyword\"  style=\"width: 200px;\">\n" +

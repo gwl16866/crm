@@ -120,12 +120,28 @@ public class ContractController {
         return "projectPage/contract/contractDetails";
     }
 
+    //我的合同详情
+    @RequestMapping("/myContractDetails.do")
+    public String myContractDetails(String contractNum, Model model) {
+        ContractCust contractList = contractService.contractDetails(contractNum);
+        model.addAttribute("c", contractList);
+        return "projectPage/contract/myContractDetails";
+    }
+
     //编辑合同
     @RequestMapping("/updateContract.do")
     public String updateContract(String contractNum, Model model) {
         ContractCust contractList = contractService.contractDetails(contractNum);
         model.addAttribute("cont", contractList);
         return "projectPage/contract/updateContract";
+    }
+
+    //编辑我的合同
+    @RequestMapping("/updateMyContract.do")
+    public String updateMyContract(String contractNum, Model model) {
+        ContractCust contractList = contractService.contractDetails(contractNum);
+        model.addAttribute("cont", contractList);
+        return "projectPage/contract/updateMyContract";
     }
 
     //修改合同
@@ -155,6 +171,11 @@ public class ContractController {
         returnmoneydetailsService.save(returnmoneydetails);
         //修改合同未还钱数
         contractService.updateResidueMoney(contractCust);
+        //查询合同未还款
+        ContractCust cust=contractService.selectRemainMoney(contractCust.getCid());
+        if (cust.getRemainMoney().intValue()<=1){
+            contractService.updateContractStatus(contractCust.getCid());
+        }
         return "1";
     }
 
@@ -163,12 +184,12 @@ public class ContractController {
     @RequestMapping("/selectContractNum.do")
     public Integer selectContractNum(String contractNum) {
 
-     Contract contract= contractService.selectContractNum(contractNum);
-     if(null == contract){
-         return  2;
-     }else {
-         return 1;
-     }
+        Contract contract= contractService.selectContractNum(contractNum);
+        if(null == contract){
+            return  2;
+        }else {
+            return 1;
+        }
     }
 
     //开票
@@ -177,9 +198,14 @@ public class ContractController {
         //查合同id
         ContractCust contract = contractService.contractDetails(contractNum);
         model.addAttribute("cont", contract);
-        //查询登录人
+        // 查询对方单位
+        Customer customer = customerService.selectByName(String.valueOf(contract.getCustomerId()));
+        model.addAttribute("cust", customer);
+        //查询登录人及部门
         Object name = SecurityUtils.getSubject().getPrincipal();
-        model.addAttribute("user", name);
+        User user=userService.selectDengLuRen(String.valueOf(name));
+        model.addAttribute("user",user);
+        model.addAttribute("name", name);
         return "projectPage/contract/openPaper";
     }
 
@@ -188,6 +214,14 @@ public class ContractController {
     @RequestMapping("/addOpenPaper.do")
     public String addOpenPaper(Openpaper openpaper) {
         openpaperService.save(openpaper);
+        return "1";
+    }
+
+    //删除合同
+    @ResponseBody
+    @RequestMapping("/deleteContract.do")
+    public String deleteContract(Integer cid){
+        contractService.deleteContract(cid);
         return "1";
     }
 }

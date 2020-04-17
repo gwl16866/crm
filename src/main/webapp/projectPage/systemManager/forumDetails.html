@@ -65,7 +65,7 @@
         //提交回复
         form.on('submit(formSubmit)', function (data) {
             $.ajax({
-                url: 'forum/addReply.do?sid=' + $("#byName").val()+'$bsid='+$("#replyName").val(),
+                url: 'forum/addReply.do',
                 type: 'POST',
                 dataType: 'json',
                 data: data.field,
@@ -81,15 +81,14 @@
             return false;
         });
     });
-
     function hf(e) {
         layer.open({
             title: '回复' + e,
-            type: 1,
+            type: 2,
             skin: "layui-layer-molv",
-            content: $("#talk"),
-            area: ['50%', '70%'],
-        })
+            content:"forum/replyReply.do?sid="+e+"&id="+$("#id").val(),
+            area: ['40%', '70%'],
+        });
     }
 </script>
 <div class="layui-btn-container">
@@ -106,15 +105,14 @@
 <hr id="hr" class="layui-bg-black">
 <font size="4">点击(<span th:text="${of.getClickCount()}"></span>)</font>
 <font size="4">回复(<span th:text="${counts.intValue()}"></span>)</font>
-<input type="hidden" name="id" th:value="${of.getId()}">
-<input type="hidden" name="sid" th:value="${of.getUsername()}" id="byName">
 <form class="layui-form">
+    <input type="hidden" name="id" id="id" th:value="${of.getId()}">
+    <input type="hidden" name="bsid" th:value="${of.getUsername()}">
     <!--帖子-->
     <table class="layui-table" lay-skin="line">
         <colgroup>
             <col width="120">
             <col width="270">
-            <col width="90">
             <col width="90">
             <col width="90">
         </colgroup>
@@ -125,8 +123,8 @@
             <td></td>
         </tr>
         <tr th:height="70">
-            <td th:text="${of.getUsername()}" class="layui-icon layui-icon-friends" style="font-size:30px"></td>
-            <td th:value="${of.getId()}" th:text="${of.getArticleText()}" style="font-size:30px"></td>
+            <td th:text="${of.getUsername()}"class="layui-icon layui-icon-friends" style="font-size:30px"></td>
+            <td th:value="${of.getId()}"  th:text="${of.getArticleText()}" style="font-size:30px"></td>
             <td th:text="${#dates.format(of.getSendTime(),'yyyy/MM/dd HH:mm')}"></td>
             <td></td>
         </tr>
@@ -136,8 +134,8 @@
     <table class="layui-table" lay-skin="line">
         <colgroup>
             <col width="120">
+            <col width="120">
             <col width="270">
-            <col width="90">
             <col width="90">
             <col width="90">
         </colgroup>
@@ -151,14 +149,13 @@
         <tr th:each="li:${list}" th:if="${li.getSid()} != null">
             <td th:value="${li.getUid()}" th:text="${li.getSid()}" class="layui-icon layui-icon-friends"
                 style="font-size:20px"></td>
-            <td th:text="${li.getSid()}"></td>
+            <td th:text="${li.getBsid()}"></td>
             <td th:value="${li.getId()}" th:text="${li.getText()}"></td>
             <td th:text="${#dates.format(li.getStime(),'yyyy/MM/dd HH:mm')}" style="font-size:12px"></td>
             <td>
                 <button type="button" class="layui-btn layui-btn-xs layui-btn-radius layui-btn-primary"
-                        th:value="${li.getSid()}" onclick="hf(this.value)">回复
+                        th:value="${li.getSid()}" onclick="hf(this.value)" id="replyName">回复
                 </button>
-                <input type="hidden" name="bsid" id="replyName" th:value="${li.getSid()}">
             </td>
         </tr>
         </tbody>
@@ -173,22 +170,5 @@
         </div>
     </div>
 </form>
-<!--回复 回复-->
-<div id="talk" style="display: none">
-    <form class="layui-form">
-        <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">回复</label>
-            <textarea style="width: 500px" name="text" placeholder="请输入内容" class="layui-textarea"
-                      lay-verify="content"></textarea>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button type="submit" id="reply" class="layui-btn" lay-submit="" lay-filter="formSubmit">回复</button>
-                <button type="reset" class="layui-btn" id="clean">取消</button>
-            </div>
-        </div>
-    </form>
-</div>
-
 </body>
 </html>

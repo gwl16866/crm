@@ -9,6 +9,7 @@ import com.hy.crmsystem.entity.contract.Upload;
 import com.hy.crmsystem.entity.systemManager.Forum;
 import com.hy.crmsystem.entity.systemManager.LayuiData;
 import com.hy.crmsystem.entity.systemManager.User;
+import com.hy.crmsystem.service.contract.impl.ContractServiceImpl;
 import com.hy.crmsystem.service.contract.impl.ForumServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,19 +30,21 @@ public class ForumController {
 
     @Autowired
     private ForumServiceImpl forumService;
+    @Autowired
+    ContractServiceImpl contractService;
 
     //主页面——查询所有
     @RequestMapping("/selectForum.do")
     @ResponseBody
-    public LayuiData selectForum(Article article,String modules,String keyword,@RequestParam(value = "page", required = true, defaultValue = "1") int page, @RequestParam(value = "limit", required = true, defaultValue = "3") int pageSize) {
+    public LayuiData selectForum(Article article, String modules, String keyword, @RequestParam(value = "page", required = true, defaultValue = "1") int page, @RequestParam(value = "limit", required = true, defaultValue = "3") int pageSize) {
         Page pageHelper = PageHelper.startPage(page, pageSize, true);
-        List<Article> list = forumService.selectForum(article,modules,keyword);
-        for (Article a:list){
+        List<Article> list = forumService.selectForum(article, modules, keyword);
+        for (Article a : list) {
             a.setCount(forumService.selectCountReply(a.getId()));
         }
         LayuiData layuiData = new LayuiData();
         layuiData.setCode(0);
-        layuiData.setCount((int)pageHelper.getTotal());
+        layuiData.setCount((int) pageHelper.getTotal());
         layuiData.setMsg("");
         layuiData.setData(list);
 
@@ -52,7 +55,7 @@ public class ForumController {
     @ResponseBody
     @RequestMapping("/addForum.do")
     public String addForum(Article article) {
-            forumService.addForum(article);
+        forumService.addForum(article);
 
         return "1";
     }
@@ -92,11 +95,12 @@ public class ForumController {
     @RequestMapping("/selectTalk.do")
     public String selectTalk(int id, Model model) {
         List<Forum> list = forumService.selectTalk(id);
+        forumService.updateClickCounts(id);
         Article oneForum = forumService.selectOneForum(id);
         Integer counts = forumService.selectCountReply(id);
         model.addAttribute("of", oneForum);
         model.addAttribute("list", list);
-        model.addAttribute("counts",counts);
+        model.addAttribute("counts", counts);
         return "projectPage/systemManager/forumDetails";
     }
 
@@ -122,20 +126,16 @@ public class ForumController {
 
     //删除帖子
     @RequestMapping("/deleteReply.do")
-    public String deleteReply(Integer id){
-            forumService.deleteReply(id);
+    public String deleteReply(Integer id) {
+        forumService.deleteReply(id);
         return "/projectPage/systemManager/forum";
     }
 
     //回复 回复
-    @ResponseBody
     @RequestMapping("/replyReply.do")
-    public String replyReply(Talk talk) {
-        try {
-            forumService.replyReply(talk);
-        } catch (Exception e) {
-            return "0";
-        }
-        return "1";
+    public String replyReply(Model model, String sid,Integer id) {
+        model.addAttribute("sid", sid);
+        model.addAttribute("id",id);
+        return "/projectPage/systemManager/replyreply";
     }
 }

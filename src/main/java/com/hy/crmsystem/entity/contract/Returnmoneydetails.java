@@ -49,7 +49,7 @@ public class Returnmoneydetails implements Serializable {
 
     //关联部门
     @TableField("relevance_dept")
-    private Integer relevanceDept;
+    private String relevanceDept;
 
     //客户单位
     @TableField("customer_company")
@@ -126,11 +126,11 @@ public class Returnmoneydetails implements Serializable {
         this.relevancePeople = relevancePeople;
     }
 
-    public Integer getRelevanceDept() {
+    public String getRelevanceDept() {
         return relevanceDept;
     }
 
-    public void setRelevanceDept(Integer relevanceDept) {
+    public void setRelevanceDept(String relevanceDept) {
         this.relevanceDept = relevanceDept;
     }
 

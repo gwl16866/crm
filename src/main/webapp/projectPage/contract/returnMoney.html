@@ -135,13 +135,16 @@
         </div>
     </div>
     <div class="layui-form-item">
+        <input type="hidden" name="relevanceDept" th:value="${cont.getOfdept()}">
         <div class="layui-inline">
             <label class="layui-form-label">关联人员</label>
             <input type="text" name="relevancePeople" autocomplete="off" class="layui-input" style="width: 400px">
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">关联部门</label>
-            <input type="text" name="relevanceDept" autocomplete="off" class="layui-input" style="width: 400px">
+            <input type="hidden" name="cid" th:value="${cont.getCid()}">
+            <label class="layui-form-label">关联合同</label>
+            <input type="text" readonly="readonly" th:value="${cont.getContractName()}" required lay-verify="required"
+                   autocomplete="off" class="layui-input" style="width: 400px">
         </div>
     </div>
     <div class="layui-form-item">
@@ -149,12 +152,6 @@
         <div class="layui-inline">
             <label class="layui-form-label">对方单位</label>
             <input type="text" readonly="readonly" th:value="${cust.getCname()}" required lay-verify="required"
-                   autocomplete="off" class="layui-input" style="width: 400px">
-        </div>
-        <div class="layui-inline">
-            <input type="hidden" name="cid" th:value="${cont.getCid()}">
-            <label class="layui-form-label">关联合同</label>
-            <input type="text" readonly="readonly" th:value="${cont.getContractName()}" required lay-verify="required"
                    autocomplete="off" class="layui-input" style="width: 400px">
         </div>
     </div>

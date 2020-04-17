@@ -92,7 +92,7 @@ public class ContractCust implements Serializable {
     @TableField("return_money")
     private BigDecimal returnMoney;
 
-   //客户名称
+    //客户名称
     private String cname;
 
     //所属行业

@@ -55,7 +55,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
 
     //剩余钱数
     public void updateResidueMoney(ContractCust contractCust) {
-         contractMapper.updateResidueMoney(contractCust);
+        contractMapper.updateResidueMoney(contractCust);
     }
     //查询未还款
     public ContractCust selectRemainMoney(Integer cid){

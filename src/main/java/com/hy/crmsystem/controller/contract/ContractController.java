@@ -184,12 +184,12 @@ public class ContractController {
     @RequestMapping("/selectContractNum.do")
     public Integer selectContractNum(String contractNum) {
 
-     Contract contract= contractService.selectContractNum(contractNum);
-     if(null == contract){
-         return  2;
-     }else {
-         return 1;
-     }
+        Contract contract= contractService.selectContractNum(contractNum);
+        if(null == contract){
+            return  2;
+        }else {
+            return 1;
+        }
     }
 
     //开票

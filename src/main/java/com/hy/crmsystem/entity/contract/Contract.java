@@ -67,8 +67,7 @@ public class Contract implements Serializable {
     private String commerce;
 
     //文件
-    @TableField("file")
-    private String fileName;
+    private String file;
 
     //所属部门
     private Integer ofdept;
@@ -254,13 +253,6 @@ public class Contract implements Serializable {
         this.commerce = commerce;
     }
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
 
     public Integer getOfdept() {
         return ofdept;
@@ -302,6 +294,14 @@ public class Contract implements Serializable {
         this.process = process;
     }
 
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
+    }
+
     @Override
     public String toString() {
         return "Contract{" +
@@ -309,7 +309,7 @@ public class Contract implements Serializable {
                 ", customerId=" + customerId +
                 ", contractName='" + contractName + '\'' +
                 ", contractNum='" + contractNum + '\'' +
-                ", contractMoney='" + contractMoney + '\'' +
+                ", contractMoney=" + contractMoney +
                 ", signedTime='" + signedTime + '\'' +
                 ", starTime='" + starTime + '\'' +
                 ", serviceTime='" + serviceTime + '\'' +
@@ -319,10 +319,10 @@ public class Contract implements Serializable {
                 ", email='" + email + '\'' +
                 ", technical='" + technical + '\'' +
                 ", commerce='" + commerce + '\'' +
-                ", fileName='" + fileName + '\'' +
+                ", file='" + file + '\'' +
                 ", ofdept=" + ofdept +
                 ", ofpeople='" + ofpeople + '\'' +
-                ", contractStatus='" + contractStatus + '\'' +
+                ", contractStatus=" + contractStatus +
                 ", priority='" + priority + '\'' +
                 ", process='" + process + '\'' +
                 ", keyword='" + keyword + '\'' +

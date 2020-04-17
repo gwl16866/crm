@@ -77,9 +77,16 @@
         });
         //电话正则表达式
         $("#applyPhone").on('blur', function () {
-            var p = /^((13[0-9])|(15[0-9])|(17[0-9])|(18[0-9]))\d{8}$/;
-            if (a.test($("#applyPhone").val()) == false) {
+            var p = /^1[345789]\d{9}$/;
+            if (p.test($("#applyPhone").val()) == false) {
                 layer.msg("请输入正确电话号码", {icon: 6});
+            }
+        });
+        //银行卡正则表达式
+        $("#account").on('blur', function () {
+            var p = /^(\d{16}|\d{19}|\d{17})$/;
+            if (p.test($("#account").val()) == false) {
+                layer.msg("请输入正确银行卡号", {icon: 6});
             }
         });
         //执行一个laydate实例
@@ -173,7 +180,7 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">开户行及账号</label>
-            <input type="text" name="account"
+            <input type="text" name="account" id="account" oninput="if(value.length>11)value=value.slice(0,18)"
                    autocomplete="off" class="layui-input" style="width: 400px">
         </div>
         <div class="layui-inline">
@@ -212,7 +219,7 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">电话</label>
-            <input type="text" name="applyPhone" autocomplete="off" class="layui-input" style="width: 400px">
+            <input type="text" name="applyPhone" oninput="if(value.length>11)value=value.slice(0,11)" autocomplete="off" class="layui-input" style="width: 400px">
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">相关附件</label>

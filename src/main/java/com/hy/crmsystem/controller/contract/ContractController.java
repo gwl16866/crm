@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -65,12 +68,11 @@ public class ContractController {
         LayuiData layuiData = new LayuiData();
         layuiData.setCode(0);
         layuiData.setMsg("");
-        layuiData.setCount((int)pageHelper.getTotal());
+        layuiData.setCount((int) pageHelper.getTotal());
         layuiData.setData(list);
 
         return layuiData;
     }
-
 
     //主页面——查询我的合同
     @RequestMapping("/selectMyCont.do")
@@ -78,7 +80,7 @@ public class ContractController {
         //查询登录人
         Object name = SecurityUtils.getSubject().getPrincipal();
         User u = userService.selectDengLuRen(name);
-        model.addAttribute("uid",u.getUid());
+        model.addAttribute("uid", u.getUid());
         return "projectPage/contract/myContract";
     }
 
@@ -92,13 +94,13 @@ public class ContractController {
     //添加合同
     @ResponseBody
     @RequestMapping("/addContract.do")
-    public String addContract(Contract contract, Customer customer) {
+    public String addContract(Contract contract, Customer customer)  {
         //判断客户是否存在
         Customer cus = contractService.selectCustomer(customer.getCname());
         if (cus == null) {
             customerService.save(customer);
         }
-        Customer c= customerService.selectMaxCustomer();
+        Customer c = customerService.selectMaxCustomer();
         contract.setCustomerId(c.getCid());
         //查询当前登录人ID
         Object name = SecurityUtils.getSubject().getPrincipal();
@@ -111,6 +113,34 @@ public class ContractController {
         return "1";
     }
 
+   //下载文件
+    @ResponseBody
+    @RequestMapping("/downloadFile.do")
+   private String downloadFileByOutputStream(Contract contract, HttpServletResponse response, HttpServletRequest request)
+            throws FileNotFoundException, IOException {
+        //2.获取要下载的文件名
+        String fileName = contract.getFile();
+        //1.获取要下载的文件的绝对路径
+        String realPath =request.getSession().getServletContext().getRealPath("/imgs/"+fileName);
+        //3.设置content-disposition响应头控制浏览器以下载的形式打开文件
+        response.setCharacterEncoding("UTF-8"); //设置编码字符
+        response.setContentType("application/octet-stream;charset=UTF-8"); //设置下载内容类型
+        response.setHeader("content-disposition", "attachment;filename="+fileName);
+        //4.获取要下载的文件输入流
+        InputStream in = new FileInputStream(realPath);
+        int len = 0;
+        //5.创建数据缓冲区
+        byte[] buffer = new byte[1024];
+        //6.通过response对象获取OutputStream流
+        OutputStream out = response.getOutputStream();
+        //7.将FileInputStream流写入到buffer缓冲区
+        while ((len = in.read(buffer)) > 0) {
+            //8.使用OutputStream将缓冲区的数据输出到客户端浏览器
+            out.write(buffer,0,len);
+        }
+        in.close();
+        return "";
+    }
 
     //合同详情
     @RequestMapping("/contractDetails.do")
@@ -172,8 +202,8 @@ public class ContractController {
         //修改合同未还钱数
         contractService.updateResidueMoney(contractCust);
         //查询合同未还款
-        ContractCust cust=contractService.selectRemainMoney(contractCust.getCid());
-        if (cust.getRemainMoney().intValue()<=1){
+        ContractCust cust = contractService.selectRemainMoney(contractCust.getCid());
+        if (cust.getRemainMoney().intValue() <= 1) {
             contractService.updateContractStatus(contractCust.getCid());
         }
         return "1";
@@ -184,10 +214,10 @@ public class ContractController {
     @RequestMapping("/selectContractNum.do")
     public Integer selectContractNum(String contractNum) {
 
-        Contract contract= contractService.selectContractNum(contractNum);
-        if(null == contract){
-            return  2;
-        }else {
+        Contract contract = contractService.selectContractNum(contractNum);
+        if (null == contract) {
+            return 2;
+        } else {
             return 1;
         }
     }
@@ -203,8 +233,8 @@ public class ContractController {
         model.addAttribute("cust", customer);
         //查询登录人及部门
         Object name = SecurityUtils.getSubject().getPrincipal();
-        User user=userService.selectDengLuRen(String.valueOf(name));
-        model.addAttribute("user",user);
+        User user = userService.selectDengLuRen(String.valueOf(name));
+        model.addAttribute("user", user);
         model.addAttribute("name", name);
         return "projectPage/contract/openPaper";
     }
@@ -220,7 +250,7 @@ public class ContractController {
     //删除合同
     @ResponseBody
     @RequestMapping("/deleteContract.do")
-    public String deleteContract(Integer cid){
+    public String deleteContract(Integer cid) {
         contractService.deleteContract(cid);
         return "1";
     }

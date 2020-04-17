@@ -94,6 +94,9 @@ public interface AftersellMapper extends BaseMapper<Aftersell> {
     @SelectProvider(type = SqlProvider.class,method = "selectNewCount")
     public Integer selectNewCount(@Param("type")String type);
 
+    @Select("select count(*) from theme where theme=#{name}")
+    public Integer selectThemeCountByTheme(String name);
+
 
 
 }

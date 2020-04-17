@@ -121,9 +121,7 @@ public class AftersellServiceImpl extends ServiceImpl<AftersellMapper, Aftersell
 
     @Override
     public Integer selectThemeExist(String theme) {
-        QueryWrapper qr=new QueryWrapper();
-        qr.eq("theme",theme);
-        return aftersellMapper.selectCount(qr);
+        return aftersellMapper.selectThemeCountByTheme(theme);
     }
 
 

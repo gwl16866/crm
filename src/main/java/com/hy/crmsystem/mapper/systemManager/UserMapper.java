@@ -23,7 +23,7 @@ public interface UserMapper extends BaseMapper<User> {
     @Insert("insert into user values(#{username},#{password},#{age},#{sex})")
     public void Add(User user);
 
-    @Select("select uid from user where user_name=#{name}")
+    @Select("select * from user where user_name=#{name}")
     public User selectDengLuRen(Object name);
 
     //查询所有

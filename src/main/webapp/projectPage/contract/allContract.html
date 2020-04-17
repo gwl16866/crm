@@ -162,7 +162,7 @@
                 <label class="layui-form-label">条件:</label>
                 <div class="layui-input-inline">
                     <select name="condition" lay-filter="condition"  class="layui-form-select">
-                        <option value=1>按合同全称</option>
+                        <option value=1>按合同名称</option>
                         <option value=2>按合同编号</option>
                         <option value=3>按所属行业</option>
                     </select>
@@ -566,6 +566,16 @@
         });
         //下拉框
         form.on('select(condition)', function (data) {
+            if (data.value==1){
+                $("#keyword").empty();
+                $("#keyword").append("<input type=\"text\" name=\"keyword\"  required lay-verify=\"required\" placeholder=\"请输入名称\"\n" +
+                    "                           autocomplete=\"off\" class=\"layui-input\" style=\"width: 400px\">");
+            }
+            if (data.value==2){
+                $("#keyword").empty();
+                $("#keyword").append("<input type=\"text\" name=\"keyword\"  required lay-verify=\"required\" placeholder=\"请输入编号\"\n" +
+                    "                           autocomplete=\"off\" class=\"layui-input\" style=\"width: 400px\">");
+            }
             if (data.value == 3) {
                 $("#keyword").empty();
                 $("#keyword").append(" <select name=\"keyword\"  style=\"width: 200px;\">\n" +

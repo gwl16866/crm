@@ -198,9 +198,14 @@ public class ContractController {
         //查合同id
         ContractCust contract = contractService.contractDetails(contractNum);
         model.addAttribute("cont", contract);
-        //查询登录人
+        // 查询对方单位
+        Customer customer = customerService.selectByName(String.valueOf(contract.getCustomerId()));
+        model.addAttribute("cust", customer);
+        //查询登录人及部门
         Object name = SecurityUtils.getSubject().getPrincipal();
-        model.addAttribute("user", name);
+        User user=userService.selectDengLuRen(String.valueOf(name));
+        model.addAttribute("user",user);
+        model.addAttribute("name", name);
         return "projectPage/contract/openPaper";
     }
 

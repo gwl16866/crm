@@ -60,11 +60,11 @@ public class StatisticsProvider {
         str.append("SELECT SUM(bpredict_money) FROM businessoppo WHERE 1=1 ");
 
         if(type.equals("by")){
-            str.append(" AND  DATE_FORMAT(b.insert_date,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m')");
+            str.append(" AND  DATE_FORMAT(insert_date,'%Y-%m')=DATE_FORMAT(NOW(),'%Y-%m')");
         }
 
         if(type.equals("sy")){
-            str.append(" AND DATE_FORMAT(b.insert_date,'%Y-%m')=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m')");
+            str.append(" AND DATE_FORMAT(insert_date,'%Y-%m')=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m')");
         }
         return str.toString();
     }

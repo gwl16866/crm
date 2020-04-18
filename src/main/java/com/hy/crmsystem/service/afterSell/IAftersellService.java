@@ -55,4 +55,6 @@ public interface IAftersellService extends IService<Aftersell> {
 
     public Integer selectThemeExist(String theme);
 
+    public void upDateStatus(String type,String aid);
+
 }

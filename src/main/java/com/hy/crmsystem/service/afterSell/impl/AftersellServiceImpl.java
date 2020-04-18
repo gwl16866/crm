@@ -124,5 +124,10 @@ public class AftersellServiceImpl extends ServiceImpl<AftersellMapper, Aftersell
         return aftersellMapper.selectThemeCountByTheme(theme);
     }
 
+    @Override
+    public void upDateStatus(String type,String aid) {
+      aftersellMapper.updateStatus(Integer.valueOf(type),Integer.valueOf(aid));
+    }
+
 
 }

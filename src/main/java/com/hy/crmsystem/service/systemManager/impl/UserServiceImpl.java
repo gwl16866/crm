@@ -57,10 +57,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
 
-
-
-
-
     public User selectDengLuRen(Object name){
         return userMapper.selectDengLuRen(name);
     }
@@ -395,4 +391,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public Integer selectCustomerCounts() {
         return customerMapper.selectCount(null);
     }
+
+    @Override
+    public List<Dept> queryDept() {
+        return userMapper.queryDept();
+    }
+
+
 }

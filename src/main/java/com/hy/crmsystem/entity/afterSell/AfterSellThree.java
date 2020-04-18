@@ -8,6 +8,9 @@ import java.sql.Date;
 public class AfterSellThree implements Serializable {
 
 
+    private Integer status;
+    private Integer aid;
+
     @TableField("theme")
     private String theme;
 
@@ -58,6 +61,21 @@ public class AfterSellThree implements Serializable {
 
     private String file;
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getAid() {
+        return aid;
+    }
+
+    public void setAid(Integer aid) {
+        this.aid = aid;
+    }
 
     public String getServicePeople() {
         return servicePeople;

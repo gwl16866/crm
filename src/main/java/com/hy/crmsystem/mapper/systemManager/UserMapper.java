@@ -2,6 +2,7 @@ package com.hy.crmsystem.mapper.systemManager;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hy.crmsystem.controller.systemManager.UserDao;
+import com.hy.crmsystem.entity.systemManager.Dept;
 import com.hy.crmsystem.entity.systemManager.DeskPojo;
 import com.hy.crmsystem.entity.systemManager.User;
 import com.hy.crmsystem.entity.systemManager.UserDept;
@@ -41,13 +42,8 @@ public interface UserMapper extends BaseMapper<User> {
     @Update("update user set status=2 where uid=#{uid}")
     public void deleteUser(Integer uid);
 
-    @Update("update user set password=#{password} where uid=#{uid}")
+    @Update("update user set password=#{password},dept_id=#{deptId},age=#{age},sex=#{sex} where uid=#{uid}")
     public void updateUser(User user);
-
-
-
-
-
 
     @Select("SELECT SUM(return_money) val,DATE_FORMAT(return_date,'%m') month FROM returnmoneydetails GROUP BY DATE_FORMAT(return_date,'%Y%m')ORDER BY DATE_FORMAT(return_date,'%Y%m')")
     public ArrayList<DeskPojo> seleMoneyByMonth();
@@ -64,4 +60,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("SELECT COUNT(*)val,DATE_FORMAT(insert_time,'%m') MONTH FROM contract GROUP BY DATE_FORMAT(insert_time,'%Y%m') ORDER BY DATE_FORMAT(insert_time,'%Y%m')")
     public ArrayList<DeskPojo> selectContractCounts();
+
+    @Select("select * from dept")
+    public List<Dept> queryDept();
 }

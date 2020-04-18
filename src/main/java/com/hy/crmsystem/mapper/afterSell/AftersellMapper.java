@@ -84,7 +84,7 @@ public interface AftersellMapper extends BaseMapper<Aftersell> {
 
 
 
-    @Select("SELECT t.theme,c.cname,ct.contract_num,ct.contract_name,ase.contract_infor,ase.linkman,ase.officeno,ase.phoneno,ase.emails,ase.service_type,ase.service_style,ase.starttime,ase.endtime,ase.service_text,ase.customer_return,ase.service_people,ase.service_score,ase.file FROM theme t,aftersell ase,customer c,contract ct WHERE t.id=ase.theme AND c.cid = ase.customer_id AND ct.cid =ase.cid AND t.theme ='张三c-dy1001'")
+    @Select("SELECT ase.status,ase.aid,t.theme,c.cname,ct.contract_num,ct.contract_name,ase.contract_infor,ase.linkman,ase.officeno,ase.phoneno,ase.emails,ase.service_type,ase.service_style,ase.starttime,ase.endtime,ase.service_text,ase.customer_return,ase.service_people,ase.service_score,ase.file FROM theme t,aftersell ase,customer c,contract ct WHERE t.id=ase.theme AND c.cid = ase.customer_id AND ct.cid =ase.cid AND t.theme =#{theme}")
     public AfterSellThree selectOneAfterSell(String theme);
 
 
@@ -96,6 +96,9 @@ public interface AftersellMapper extends BaseMapper<Aftersell> {
 
     @Select("select count(*) from theme where theme=#{name}")
     public Integer selectThemeCountByTheme(String name);
+
+    @Update("update aftersell set status =#{type} where aid=#{aid}")
+    public void updateStatus(@Param("type") Integer type,@Param("aid") Integer aid);
 
 
 

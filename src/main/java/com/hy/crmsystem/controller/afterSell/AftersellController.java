@@ -147,7 +147,6 @@ public class AftersellController {
             System.out.println(afterSellBoTwo);
             aftersellService.saveAfterSell(afterSellBoTwo);
 
-
         return "0";
     }
 
@@ -204,6 +203,17 @@ public class AftersellController {
     }
 
 
+    @RequestMapping("/updateStatus.do")
+    @ResponseBody
+    public String updateStatus(String type,String aid){
+        try {
+            aftersellService.upDateStatus(type,aid);
+
+        }catch (Exception e){
+            return "1";
+        }
+        return "0";
+    }
 
 
 

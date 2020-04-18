@@ -1,10 +1,7 @@
 package com.hy.crmsystem.service.systemManager.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.hy.crmsystem.entity.systemManager.DeskMonth;
-import com.hy.crmsystem.entity.systemManager.DeskPojo;
-import com.hy.crmsystem.entity.systemManager.User;
-import com.hy.crmsystem.entity.systemManager.UserDept;
+import com.hy.crmsystem.entity.systemManager.*;
 import com.hy.crmsystem.mapper.bussinessOppo.BusinessoppoMapper;
 import com.hy.crmsystem.mapper.contract.ContractMapper;
 import com.hy.crmsystem.mapper.customerManager.CustomerMapper;
@@ -55,10 +52,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public void deleteUser(Integer uid){
         userMapper.deleteUser(uid);
     }
-
-
-
-
 
 
     public User selectDengLuRen(Object name){
@@ -384,4 +377,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public Integer selectCustomerCounts() {
         return customerMapper.selectCount(null);
     }
+
+    @Override
+    public List<Dept> queryDept() {
+        return userMapper.queryDept();
+    }
+
+
 }

@@ -24,6 +24,7 @@ public class SqlProvider {
         }else if (types == 5 && !StringUtils.isNullOrEmpty(aftersellBo.getServiceScore())) {
             buffer.append(" and ase.service_score = '" +aftersellBo.getServiceScore() + "'");
         }else if(null != aftersellBo.getStatus() && aftersellBo.getStatus() <= 3){
+            System.out.println("========="+aftersellBo.getStatus());
             buffer.append(" and ase.status = " +aftersellBo.getStatus() + "");
         }else if(null != aftersellBo.getStatus() && aftersellBo.getStatus() == 11){
             //11代表本周

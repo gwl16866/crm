@@ -2,6 +2,7 @@ package com.hy.crmsystem.controller.systemManager;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.hy.crmsystem.entity.systemManager.Dept;
 import com.hy.crmsystem.entity.systemManager.LayuiData;
 import com.hy.crmsystem.entity.systemManager.User;
 import com.hy.crmsystem.entity.systemManager.UserDept;
@@ -52,13 +53,16 @@ public class UserController {
     @RequestMapping("/selectUserByUid.do")
     public String selectUserByUid(Integer uid, Model model) {
         User user = userService.selectUserByUid(uid);
+        List<Dept> depts = userService.queryDept();
         model.addAttribute("user", user);
+        model.addAttribute("depts", depts);
         return "/projectPage/systemManager/updateUser";
     }
 
     @ResponseBody
     @RequestMapping("/updateUser.do")
     public String updateUser(User user) {
+        System.out.println(user);
         Object salt = ByteSource.Util.bytes(user.getUsername());
         Object simpleHash = new SimpleHash("MD5", user.getPassword(), salt, 1024);
         user.setPassword(String.valueOf(simpleHash));
@@ -72,6 +76,16 @@ public class UserController {
         userService.deleteUser(uid);
         return "1";
     }
+
+    @ResponseBody
+    @RequestMapping("/queryDept.do")
+    public List<Dept> queryDept() {
+
+        return userService.queryDept();
+    }
+
+
+
 
 
 }

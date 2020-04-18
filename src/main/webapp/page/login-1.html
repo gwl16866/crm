@@ -40,19 +40,16 @@
 
             <form class="layui-form" action="../login/login.do" name="form1" method="post">
                 <div class="layui-form-item logo-title">
-                    <h1>LayuiMini后台登录</h1>
+                    <h1>CRM管理系统</h1>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-username" for="username"></label>
-                    <input type="text" name="username" lay-verify="required|account" placeholder="用户名或者邮箱" autocomplete="off" class="layui-input">
+                    <input type="text" name="username" lay-verify="required|account" placeholder="用户名" autocomplete="off" class="layui-input">
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-password" for="password"></label>
                     <input type="password" name="password" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-form-item">
-                    <input type="checkbox" name="rememberMe" value="true" lay-skin="primary" title="记住密码">
                 </div>
 
                 <div class="layui-form-item">
@@ -83,8 +80,8 @@
         // 粒子线条背景
         $(document).ready(function(){
             $('.layui-container').particleground({
-                dotColor:'#5cbdaa',
-                lineColor:'#5cbdaa'
+                dotColor:'#e1e3db',
+                lineColor:'#e3e1da'
             });
         });
 

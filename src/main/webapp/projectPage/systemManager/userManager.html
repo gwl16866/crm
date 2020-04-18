@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
     <link rel="stylesheet" href="../../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
     <link rel="stylesheet" href="../../css/public.css" media="all">
+    <script type="text/javascript" src="../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
     <style>
         .layuimini-qiuck-module a i {
             display: inline-block;
@@ -40,6 +41,24 @@
         }
     </style>
 </head>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type:"post",
+            url:"../../systemManager/queryDept.do",
+            contentType:"application/json",
+            success:function (datas) {
+                var s="<option value='0'>请选择</option>";
+                for (var j=0;j<datas.length;j++){
+                    s+="<option value='"+datas[j].deptId+"'>"+datas[j].deptName+"</option>";
+                }
+                $("#depts").append(s);
+                layui.form.render();
+            }
+        });
+
+    });
+</script>
 <body>
 <div class="layuimini-container">
     <div class="layuimini-main">
@@ -57,10 +76,8 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">用户部门</label>
                             <div class="layui-input-inline">
-                                <select name="deptId" class="layui-form-select">
-                                    <option value="0">请选择部门</option>
-                                    <option value="1">开发部</option>
-                                    <option value="2">销售部</option>
+                                <select name="deptId" class="layui-form-select" id="depts">
+
                                 </select>
                             </div>
                         </div>
@@ -90,6 +107,13 @@
     </div>
 </div>
 <script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script type="text/html" id="Bar_sex">
+    {{#  if(d.sex == 1 ){ }}
+    男
+    {{#  } else { }}
+    女
+    {{#  } }}
+</script>
 <script>
     layui.use(['form', 'table'], function () {
         var $ = layui.jquery,
@@ -98,6 +122,7 @@
             layuimini = layui.layuimini;
 
         table.render({
+            width:1320,
             elem: '#currentTableId',
             url: '../../systemManager/selectAllUser.do',
             toolbar: '#toolbarDemo',
@@ -107,15 +132,15 @@
                 icon: 'layui-icon-tips'
             }],
             cols: [[
-                {field: 'uid', width: 160, title: 'ID', sort: true},
-                {field: 'username', width: 350, title: '用户名'},
-                {field: 'deptName', width: 350, title: '部门'},
-                {field: 'sex', width: 160, title: '性别'},
-                {field: 'age', width: 160, title: '年龄', sort: true},
-                {title: '操作', minWidth: 100, templet: '#currentTableBar', fixed: "right", align: "center"}
+                {field: 'uid', title: 'ID', sort: true},
+                {field: 'username',  title: '用户名'},
+                {field: 'deptName',  title: '部门'},
+                {field: 'sex',  title: '性别',templet : '#Bar_sex'},
+                {field: 'age',  title: '年龄', sort: true},
+                {title: '操作',  templet: '#currentTableBar', fixed: "right", align: "center"}
             ]],
-            limits: [10, 15, 20, 25, 50, 100],
-            limit: 10,
+            limits: [3, 6, 9, 12, 50, 100],
+            limit: 3,
             page: true
         });
         // 监听搜索操作

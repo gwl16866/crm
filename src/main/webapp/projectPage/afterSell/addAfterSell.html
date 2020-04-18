@@ -216,6 +216,22 @@
             laydate = layui.laydate,
             upload = layui.upload,
             $ = layui.$;
+
+        //多选标签-基本配置
+        selectM({
+            //元素容器【必填】
+            elem: '#username'
+            //候选数据【必填】
+            ,data: '../../afterSell/selectUser.do'
+            ,max:3//可以选几个
+            ,width:400
+            ,delimiter:','//
+            ,field:{idName:'username',titleName:'username'}
+            //添加验证
+            ,verify:'required'
+        });
+
+
         $("#but").click(function(){
             window.parent.location.reload();
 
@@ -247,19 +263,7 @@
             }
         });
 
-        //多选标签-基本配置
-        selectM({
-            //元素容器【必填】
-            elem: '#username'
-            //候选数据【必填】
-            ,data: '../../afterSell/selectUser.do'
-            ,max:3//可以选几个
-            ,width:400
-            ,delimiter:','//
-            ,field:{idName:'username',titleName:'username'}
-            //添加验证
-            ,verify:'required'
-        });
+
         $.ajax({
             type:"post",
             url:"../../afterSell/selectCustomer.do",

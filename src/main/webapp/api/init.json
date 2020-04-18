@@ -22,22 +22,43 @@
 
         {
           "title": "系统管理",
-          "href": "../projectPage/systemManager/userManager.html",
-          "icon": "fa fa-window-maximize",
-          "target": "_self"
+          "href": "",
+          "icon": "fa fa-desktop",
+          "target": "_self",
+          "child": [
+            {
+              "title": "用户管理",
+              "href": "../projectPage/systemManager/userManager.html",
+              "icon": "fa fa-male",
+              "target": "_self"
+            },
+            {
+              "title": "角色管理",
+              "href": "../projectPage/bussinessOppo/allBussinessOppo.html",
+              "icon": "fa fa-gears",
+              "target": "_self"
+            },
+            {
+              "title": "角色权限",
+              "href": "../projectPage/systemManager/userManager.html",
+              "icon": "fa fa-gears",
+              "target": "_self"
+            }
+
+          ]
         },
 
         {
           "title": "客户管理",
           "href": "../projectPage/customerManager/customer.html",
-          "icon": "fa fa-window-maximize",
+          "icon": "fa fa-group",
           "target": "_self"
         },
 
         {
           "title": "商机管理",
           "href": "",
-          "icon": "fa fa-calendar",
+          "icon": "fa fa-paper-plane",
           "target": "_self",
           "child": [
             {
@@ -63,13 +84,13 @@
             {
               "title": "我的跟单",
               "href": "../projectPage/documentary/myDocumentary.html",
-              "icon": "fa fa-stumbleupon-circle",
+              "icon": "fa fa-tint",
               "target": "_self"
             },
             {
               "title": "全部跟单",
               "href": "../projectPage/documentary/allDocumentary.html",
-              "icon": "fa fa-viacoin",
+              "icon": "fa fa-tint",
               "target": "_self"
             }
           ]
@@ -77,25 +98,25 @@
         {
           "title": "全部讨论帖子",
           "href": "../projectPage/systemManager/forum.html",
-          "icon": "fa fa-file-text",
+          "icon": "fa fa-pencil-square-o",
           "target": "_self"
         },
         {
           "title": "合同管理",
           "href": "",
-          "icon": "fa fa-home",
+          "icon": "fa fa-tags",
           "target": "_self",
           "child": [
             {
               "title": "我的合同",
               "href": "../contract/selectMyCont.do",
-              "icon": "fa fa-hourglass-end",
+              "icon": "fa fa-tags",
               "target": "_self"
             },
             {
               "title": "全部合同",
               "href": "../projectPage/contract/allContract.html",
-              "icon": "fa fa-hourglass-end",
+              "icon": "fa fa-tags",
               "target": "_self"
             }
           ]
@@ -103,35 +124,16 @@
         {
           "title": "售后服务",
           "href": "../projectPage/afterSell/afterSell.html",
-          "icon": "fa fa-file-text",
+          "icon": "fa fa-puzzle-piece",
           "target": "_self"
         },
         {
           "title": "统计分析",
           "href": "../projectPage/statistics/statistics1.html",
-          "icon": "fa fa-file-text",
+          "icon": "fa fa-bar-chart",
           "target": "_self"
-        },
-        {
-          "title": "其它界面",
-          "href": "",
-          "icon": "fa fa-snowflake-o",
-          "target": "",
-          "child": [
-            {
-              "title": "按钮示例",
-              "href": "../page/button.html",
-              "icon": "fa fa-snowflake-o",
-              "target": "_self"
-            },
-            {
-              "title": "弹出层",
-              "href": "../page/layer.html",
-              "icon": "fa fa-shield",
-              "target": "_self"
-            }
-          ]
         }
+
       ]
     }
 

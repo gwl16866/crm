@@ -14,6 +14,10 @@
         body {
             background-color: #ffffff;
         }
+        #sub{
+            position: absolute;
+            left: 600px;
+        }
     </style>
 </head>
 <body>
@@ -184,8 +188,32 @@
     <br>
     <br>
     <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="layui-form-item" id="sub">
+
+        <input type="hidden" th:value="${a.aid}" id="js">
+
+        <a th:if="${a.status ==1}">
+            <button  class="layui-btn layui-btn-danger" id="over">结束</button>
+            <button   class="layui-btn layui-btn-danger" id="chechu">撤除</button>
+        </a>
 
 
+    </div>
+    <br>
+    <br>
+    <br>
 
 </form>
 
@@ -203,6 +231,48 @@
         $("#but").click(function(){
             window.parent.location.reload();
 
+        });
+
+              $("#over").click(function(){
+                            $.ajax({
+                                type:"post",
+                                url:"afterSell/updateStatus.do?type=2&aid="+$("#js").val(),
+                                contentType:"application/json",
+                                success:function (data) {
+                                    if(data =='0'){
+                                        layer.msg("已结束",{
+                                            icon:1,
+                                            time:600
+                                        },function() {
+                                            window.parent.location.reload();
+                                        });
+                                    }
+
+                                }
+                            });
+
+                  window.parent.location.reload();
+              });
+
+        $("#chechu").click(function(){
+            $.ajax({
+                type:"post",
+                url:"afterSell/updateStatus.do?type=3&aid="+$("#js").val(),
+                contentType:"application/json",
+                success:function (data) {
+                    if(data =='0'){
+                        layer.msg("已撤除",{
+                            icon:1,
+                            time:600
+                        },function() {
+                            window.parent.location.reload();
+                        });
+                    }
+
+                }
+            });
+
+            window.parent.location.reload();
         });
 
 

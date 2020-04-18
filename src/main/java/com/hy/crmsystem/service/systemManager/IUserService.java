@@ -1,11 +1,13 @@
 package com.hy.crmsystem.service.systemManager;
 
+import com.hy.crmsystem.entity.systemManager.Dept;
 import com.hy.crmsystem.entity.systemManager.DeskMonth;
 import com.hy.crmsystem.entity.systemManager.DeskPojo;
 import com.hy.crmsystem.entity.systemManager.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -28,6 +30,8 @@ public interface IUserService extends IService<User> {
     public ArrayList<String> selectBussinessCounts();
     public ArrayList<String> selectContractCountsByMonth();
     public Integer selectCustomerCounts();
+    public List<Dept> queryDept();
+
 
 
 

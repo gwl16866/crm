@@ -95,7 +95,7 @@
         //电话正则表达式
         $("#phoneno").on('blur',function () {
             var p=/^((13[0-9])|(15[0-9])|(17[0-9])|(18[0-9]))\d{8}$/;
-            if (a.test($("#phoneno").val()) == false) {
+            if (p.test($("#phoneno").val()) == false) {
                 layer.msg("请输入正确电话号码", {icon: 6});
             }
         });
@@ -216,7 +216,7 @@
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">固定电话</label>
-            <input type="text" id="officeno" name="officeno" th:value="${cont.getOfficeno()}" required lay-verify="required"
+            <input type="text" id="officeno" oninput="if(value.length>11)value=value.slice(0,11)" name="officeno" th:value="${cont.getOfficeno()}" required lay-verify="required"
                    autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
@@ -224,7 +224,7 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">移动电话</label>
-            <input type="text" id="phoneno" name="phoneno" th:value="${cont.getPhoneno()}" required lay-verify="required"
+            <input type="text" id="phoneno" oninput="if(value.length>11)value=value.slice(0,11)" name="phoneno" th:value="${cont.getPhoneno()}" required lay-verify="required"
                    autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
@@ -255,7 +255,7 @@
         <label class="layui-form-label">相关附件</label>
         <div class="layui-input-block" type="text">
             <input type="file" name="file" id="uploadFile">
-            <input type="hidden" id="hidd" th:value="${cont.getFileName()}" name="fileName">
+            <input type="hidden" id="hidd" th:value="${cont.getFile()}" name="file">
         </div>
     </div>
     <div class="layui-form-item">

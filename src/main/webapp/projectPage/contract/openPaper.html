@@ -77,9 +77,16 @@
         });
         //电话正则表达式
         $("#applyPhone").on('blur', function () {
-            var p = /^((13[0-9])|(15[0-9])|(17[0-9])|(18[0-9]))\d{8}$/;
-            if (a.test($("#applyPhone").val()) == false) {
+            var p = /^1[345789]\d{9}$/;
+            if (p.test($("#applyPhone").val()) == false) {
                 layer.msg("请输入正确电话号码", {icon: 6});
+            }
+        });
+        //银行卡正则表达式
+        $("#account").on('blur', function () {
+            var p = /^(\d{16}|\d{19}|\d{17})$/;
+            if (p.test($("#account").val()) == false) {
+                layer.msg("请输入正确银行卡号", {icon: 6});
             }
         });
         //执行一个laydate实例
@@ -117,9 +124,21 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">主题</label>
-            <input type="text" name="theme" th:value="${'开票申请-'+user}" readonly="readonly" required lay-verify="required"
+            <input type="text" name="theme" th:value="${'开票申请-'+name}" readonly="readonly" required
+                   lay-verify="required"
                    autocomplete="off" class="layui-input"
                    style="width: 400px">
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">步骤</label>
+            <input readonly="readonly" th:value="${'  填单-责任人:'+name}" style="width: 400px" class="layui-input"
+                   type="text">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">详细地址</label>
+            <input type="text" name="address" autocomplete="off" class="layui-input" style="width: 400px">
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">结束时间</label>
@@ -129,30 +148,21 @@
             </div>
         </div>
     </div>
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">详细地址</label>
-            <input type="text" name="address" autocomplete="off" class="layui-input" style="width: 400px">
-        </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">步骤</label>
-            <input readonly="readonly" th:value="${'  填单-责任人:'+user}" style="width: 400px" class="layui-input" type="text"  >
-        </div>
-    </div>
     <hr>
     <font size="4">申请信息</font>
     <hr>
     <div class="layui-form-item">
+        <input type="hidden" name="applyOfDept" th:value="${user.getDeptId()}">
         <div class="layui-inline">
             <label class="layui-form-label">申请人姓名</label>
-            <input type="text" name="applyName" th:value="${user}" readonly="readonly" required lay-verify="required"
+            <input type="text" name="applyName" th:value="${name}" readonly="readonly" required lay-verify="required"
                    autocomplete="off" class="layui-input"
                    style="width: 400px">
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">所属部门</label>
-            <input type="text" name="applyOfDept" required lay-verify="required"
-                   autocomplete="off" class="layui-input" style="width: 400px">
+            <label class="layui-form-label">对方单位全称</label>
+            <input type="text" name="unitName" readonly="readonly" th:value="${cust.getCname()}"
+                   required lay-verify="required" autocomplete="off" class="layui-input" style="width: 400px">
         </div>
     </div>
     <div class="layui-form-item">
@@ -160,24 +170,6 @@
             <label class="layui-form-label">申请日期</label>
             <input type="text" id="applyTime" name="applyTime" required lay-verify="required"
                    autocomplete="off" class="layui-input" style="width: 400px">
-        </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">对方单位全称</label>
-            <input type="text" name="unitName"
-                   required lay-verify="required" autocomplete="off" class="layui-input" style="width: 400px">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">开票种类</label>
-            <div class="layui-inline">
-                <select name="ticketClass" style="width: 400px">
-                    <option value="利息收入">利息开票</option>
-                    <option value="投资收益">投资开票</option>
-                    <option value="主营业务收入">主营业开票</option>
-                    <option value="其他业务收入">其他业务开票</option>
-                </select>
-            </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">纳税人识别号</label>
@@ -188,12 +180,19 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">开户行及账号</label>
-            <input type="text" name="account"
+            <input type="text" name="account" id="account" oninput="if(value.length>11)value=value.slice(0,18)"
                    autocomplete="off" class="layui-input" style="width: 400px">
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">电话</label>
-            <input type="text" name="applyPhone" autocomplete="off" class="layui-input" style="width: 400px">
+            <label class="layui-form-label">开票种类</label>
+            <div class="layui-inline">
+                <select name="ticketClass" style="width: 400px">
+                    <option value="利息收入">利息开票</option>
+                    <option value="投资收益">投资开票</option>
+                    <option value="主营业务收入">主营业开票</option>
+                    <option value="其他业务收入">其他业务开票</option>
+                </select>
+            </div>
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
@@ -218,10 +217,16 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">相关附件</label>
-        <div class="layui-input-block" type="text">
-            <input type="file" name="file" id="uploadFile">
-            <input type="hidden" id="hidd" name="fileName">
+        <div class="layui-inline">
+            <label class="layui-form-label">电话</label>
+            <input type="text" name="applyPhone" oninput="if(value.length>11)value=value.slice(0,11)" autocomplete="off" class="layui-input" style="width: 400px">
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">相关附件</label>
+            <div class="layui-input-block" type="text">
+                <input type="file" name="file" id="uploadFile">
+                <input type="hidden" id="hidd" name="fileName">
+            </div>
         </div>
     </div>
     <div class="layui-form-item layui-form-text">

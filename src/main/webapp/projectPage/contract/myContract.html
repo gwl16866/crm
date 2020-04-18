@@ -156,7 +156,6 @@
         </div>
     </div>
 </div>
-
 <div id="search">
     <form class="layui-form layui-form-pane">
         <div class="layui-form-item">
@@ -537,6 +536,16 @@
         });
         //下拉框
         form.on('select(condition)', function (data) {
+            if (data.value==1){
+                $("#keyword").empty();
+                $("#keyword").append("<input type=\"text\" name=\"keyword\"  required lay-verify=\"required\" placeholder=\"请输入名称\"\n" +
+                    "                           autocomplete=\"off\" class=\"layui-input\" style=\"width: 400px\">");
+            }
+            if (data.value==2){
+                $("#keyword").empty();
+                $("#keyword").append("<input type=\"text\" name=\"keyword\"  required lay-verify=\"required\" placeholder=\"请输入编号\"\n" +
+                    "                           autocomplete=\"off\" class=\"layui-input\" style=\"width: 400px\">");
+            }
             if (data.value == 3) {
                 $("#keyword").empty();
                 $("#keyword").append(" <select name=\"keyword\"  style=\"width: 200px;\">\n" +

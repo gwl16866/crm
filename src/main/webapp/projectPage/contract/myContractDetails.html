@@ -66,12 +66,12 @@
             elem: '#serviceTime'
         });
         //删除合同
-        $("body").on("click",".delete-btn",function () {
-            layer.confirm('真的删除行么',function () {
+        $("body").on("click", ".delete-btn", function () {
+            layer.confirm('真的删除行么', function () {
                 $.ajax({
-                    type:"post",
-                    url:'contract/deleteContract.do?cid='+$("#cid").val(),
-                    success:function (msg) {
+                    type: "post",
+                    url: 'contract/deleteContract.do?cid=' + $("#cid").val(),
+                    success: function (msg) {
                         if (msg == 1) {
                             layer.msg("删除成功", {icon: 6});
                             window.location.href = "contract/selectMyCont.do";
@@ -83,7 +83,21 @@
                     }
                 })
             })
-        })
+        });
+        //下载文件
+        $("body").on("click", "#download", function () {
+            $.ajax({
+                type: "post",
+                url: 'contract/downloadFile.do?cid=' + $("#cid").val() + "&file=" + $("#fileName").val(),
+                success: function (msg) {
+                    if (msg == 1) {
+                        layer.msg("成功", {icon: 6});
+                    } else {
+                        layer.msg("失败", {icon: 6});
+                    }
+                }
+            })
+        });
 
     });
 </script>
@@ -99,9 +113,9 @@
         <button type="button" id="updateContract" class="layui-btn" lay-submit="" lay-filter="update">
             <i class="layui-icon layui-icon-edit">编辑</i>
         </button>
-       <!-- <button type="button" class="layui-btn delete-btn">
-            <i class="layui-icon layui-icon-delete">删除</i>
-        </button>-->
+        <!-- <button type="button" class="layui-btn delete-btn">
+             <i class="layui-icon layui-icon-delete">删除</i>
+         </button>-->
         <button type="button" class="layui-btn data-add-btn">
             <i class="layui-icon layui-icon-left"></i> 返回
         </button>
@@ -244,8 +258,10 @@
     <div class="layui-form-item">
         <label class="layui-form-label">相关附件</label>
         <div class="layui-input-block" type="text">
-            <input type="file" disabled="disabled" name="file" id="uploadFile">
-            <input type="hidden" th:value="${c.getFileName()}" name="fileName">
+            <!--<input type="file" disabled="disabled" name="file" id="uploadFile">-->
+            <input type="text" id="fileName" disabled="disabled" th:value="${c.getFile()}" name="file"
+                   class="layui-input" style="width: 400px">
+            <button type="button" id="download">查看</button>
         </div>
     </div>
     <div class="layui-form-item">
@@ -270,11 +286,6 @@
             <textarea name="process" disabled="disabled" th:text="${c.getProcess()}" placeholder="【收款方式和时间】？？？"
                       class="layui-textarea"
                       lay-verify="content"></textarea>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-
         </div>
     </div>
 </form>

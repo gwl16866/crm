@@ -1,11 +1,14 @@
 package com.hy.crmsystem.mapper.systemManager;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.hy.crmsystem.controller.systemManager.UserDao;
+import com.hy.crmsystem.entity.systemManager.DeskPojo;
 import com.hy.crmsystem.entity.systemManager.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectProvider;
+import com.hy.crmsystem.entity.systemManager.UserDept;
+import org.apache.ibatis.annotations.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>

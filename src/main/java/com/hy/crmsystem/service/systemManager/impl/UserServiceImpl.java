@@ -1,13 +1,21 @@
 package com.hy.crmsystem.service.systemManager.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.hy.crmsystem.entity.systemManager.User;
+import com.hy.crmsystem.entity.systemManager.*;
+import com.hy.crmsystem.mapper.bussinessOppo.BusinessoppoMapper;
+import com.hy.crmsystem.mapper.contract.ContractMapper;
+import com.hy.crmsystem.mapper.customerManager.CustomerMapper;
+import com.hy.crmsystem.mapper.statistics.ReturnmoneydetailsMapper;
+import com.hy.crmsystem.mapper.systemManager.DeptMapper;
 import com.hy.crmsystem.mapper.systemManager.LoginMapper;
 import com.hy.crmsystem.mapper.systemManager.UserMapper;
 import com.hy.crmsystem.service.systemManager.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -32,6 +40,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private ReturnmoneydetailsMapper returnmoneydetailsMapper;
     @Autowired
     private CustomerMapper customerMapper;
+    @Autowired
+    private DeptMapper deptMapper;
 
     public List<UserDept> selectAllUser(UserDept user) {
         return userMapper.selectAllUser(user);

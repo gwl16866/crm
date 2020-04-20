@@ -88,5 +88,15 @@ private IBusinessoppoService businessoppoService;
 
         return i;
     }
+    @ResponseBody
+    @RequestMapping("/selectCount.do")
+    public String selectCount(String type){
+        return   businessoppoService.selectCount(type);
+    }
+    @ResponseBody
+    @RequestMapping("/selectNewCount.do")
+    public Integer selectNewCount(String type){
+        return  businessoppoService.selectNewCount(type);
+    }
 
 }

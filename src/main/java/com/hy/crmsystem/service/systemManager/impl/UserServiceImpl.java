@@ -6,6 +6,7 @@ import com.hy.crmsystem.mapper.bussinessOppo.BusinessoppoMapper;
 import com.hy.crmsystem.mapper.contract.ContractMapper;
 import com.hy.crmsystem.mapper.customerManager.CustomerMapper;
 import com.hy.crmsystem.mapper.statistics.ReturnmoneydetailsMapper;
+import com.hy.crmsystem.mapper.systemManager.DeptMapper;
 import com.hy.crmsystem.mapper.systemManager.LoginMapper;
 import com.hy.crmsystem.mapper.systemManager.UserMapper;
 import com.hy.crmsystem.service.systemManager.IUserService;
@@ -39,6 +40,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private ReturnmoneydetailsMapper returnmoneydetailsMapper;
     @Autowired
     private CustomerMapper customerMapper;
+    @Autowired
+    private DeptMapper deptMapper;
 
     public List<UserDept> selectAllUser(UserDept user) {
         return userMapper.selectAllUser(user);
@@ -56,6 +59,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     public User selectDengLuRen(Object name){
         return userMapper.selectDengLuRen(name);
+    }
+    public String selectname(String username){
+        return userMapper.selectname(username);
+    }
+
+    public void add(User user){
+         userMapper.Add(user);
+    }
+
+    public List<Dept> select(){
+      return deptMapper.selectdept();
     }
 
     @Override

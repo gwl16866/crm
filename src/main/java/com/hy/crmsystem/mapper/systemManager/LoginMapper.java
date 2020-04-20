@@ -8,4 +8,6 @@ public interface LoginMapper extends BaseMapper<User> {
     @Select("select * from user where user_name=#{value}")
     public User selectUser(String username);
 
+
+
 }

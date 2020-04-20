@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * <p>
@@ -30,7 +30,7 @@ public class Documentary implements Serializable {
     private Integer bid;
 
     @TableField("documentary_time")
-    private Date documentaryTime;
+    private java.sql.Date documentaryTime;
 
     @TableField("documentary_class")
     private String documentaryClass;
@@ -66,6 +66,14 @@ public class Documentary implements Serializable {
 
     public void setBid(Integer bid) {
         this.bid = bid;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Date getDocumentaryTime() {

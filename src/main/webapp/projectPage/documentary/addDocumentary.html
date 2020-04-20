@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>首页二</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <style>
+        .layui-card {border:1px solid #f2f2f2;border-radius:5px;}
+        .icon {margin-right:10px;color:#1aa094;}
+        .icon-cray {color:#ffb800!important;}
+        .icon-blue {color:#1e9fff!important;}
+        .icon-tip {color:#ff5722!important;}
+        .layuimini-qiuck-module {text-align:center;margin-top: 10px}
+        .layuimini-qiuck-module a i {display:inline-block;width:100%;height:60px;line-height:60px;text-align:center;border-radius:2px;font-size:30px;background-color:#F8F8F8;color:#333;transition:all .3s;-webkit-transition:all .3s;}
+        .layuimini-qiuck-module a cite {position:relative;top:2px;display:block;color:#666;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;font-size:14px;}
+        .welcome-module {width:100%;height:210px;}
+        .panel {background-color:#fff;border:1px solid transparent;border-radius:3px;-webkit-box-shadow:0 1px 1px rgba(0,0,0,.05);box-shadow:0 1px 1px rgba(0,0,0,.05)}
+        .panel-body {padding:10px}
+        .panel-title {margin-top:0;margin-bottom:0;font-size:12px;color:inherit}
+        .label {display:inline;padding:.2em .6em .3em;font-size:75%;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25em;margin-top: .3em;}
+        .layui-red {color:red}
+        .main_btn > p {height:40px;}
+        .layui-bg-number {background-color:#F8F8F8;}
+        .layuimini-notice:hover {background:#f6f6f6;}
+        .layuimini-notice {padding:7px 16px;clear:both;font-size:12px !important;cursor:pointer;position:relative;transition:background 0.2s ease-in-out;}
+        .layuimini-notice-title,.layuimini-notice-label {
+            padding-right: 70px !important;text-overflow:ellipsis!important;overflow:hidden!important;white-space:nowrap!important;}
+        .layuimini-notice-title {line-height:28px;font-size:14px;}
+        .layuimini-notice-extra {position:absolute;top:50%;margin-top:-8px;right:16px;display:inline-block;height:16px;color:#999;}
+
+
+
+        #tab{
+            position: absolute;
+            top: 100px;
+        }
+        #search{
+            position: absolute;
+            top:40px;
+            left:250px
+        }
+        #f{
+            position: absolute;
+            top: 37px;
+            left:80px;
+        }
+        #img{
+            position: absolute;
+            top: 30px;
+            left:10px;
+        }
+        #add-user-layer{
+            position: absolute;
+            top: 150px;
+        }
+        #add-user-layer1{
+            position: absolute;
+            top: 400px;
+        }
+        .layui-form-select{width: 190px;}
+    </style>
+</head>
+<body>
+<button class="layui-btn layui-btn-sm data-add-btn" id="but"> 返回 </button>
+<div id="add-user-layer" style="display: block; padding: 20px">
+    <form class="layui-form" action="" method="post" id="add-user-form">
+            <div class="layui-inline">
+                <label class="layui-form-label">跟单主题:</label>
+                <div class="layui-input-inline">
+                    <select class="layui-form-select" name="theme" id="gen"  lay-filter="selectId">
+                    </select>
+                </div>
+            </div>
+        <div id="tab">
+            <table class="layui-hide" id="tableId" lay-filter="tableId"></table>
+        </div>
+    </form>
+</div>
+<div id="add-user-layer1" style="display: block; padding: 20px">
+    <form class="layui-form" action="" method="post" id="add-user-form1">
+    <div id="u636" class="ax_default box_1">
+        <div id="u636_div" class=""></div>
+        <div id="u636_text" class="text ">
+            <p><span>新增跟单信息</span></p>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">跟单时间:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="documentaryTime" id="date" lay-verify="documentaryTime" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">跟单分类:</label>
+            <div class="layui-input-inline">
+                <select class="layui-form-select" name="documentaryClass" >
+                    <option value="0" selected >请选择</option>
+                    <option value="电话沟通">电话沟通</option>
+                    <option value="邮件联系">邮件联系</option>
+                    <option value="网上交流">网上交流</option>
+                    <option value="产品送样">产品送样</option>
+                    <option value="上面拜访">上面拜访</option>
+                    <option value="客户招待">客户招待</option>
+                    <option value="其他">其他</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">跟单人:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="documentaryPeople" autocomplete="off" id="gendanr" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">详细内容:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="detail" lay-verify="required|detail" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">附件:</label>
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn" id="test3" name="file" ><i class="layui-icon"></i>上传文件</button>
+            <input type="hidden" name="file" id="hi"/>
+        </div>
+    </div>
+    <div class="layui-form-item"  style="text-align: center">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="add-submit">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+    </form>
+</div>
+<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['jquery','table', 'layer','form','upload','laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,laydate = layui.laydate,
+            $ = layui.$,
+            jquery = layui.jquery,
+            table = layui.table,
+            upload = layui.upload,
+            layuimini = layui.layuimini;
+        $("#but").click(function(){
+            window.parent.location.reload();
+        });
+        $.ajax({
+            type: "post",
+            url: "../../documentary/selectBname.do",
+            contentType: "application/json",
+            success: function (datas) {
+                var s = "<option value='0'>请选择</option>";
+                for (var j = 0; j < datas.length; j++) {
+                    s += "<option value='" + datas[j].bid + "'>" + datas[j].bname + "</option>";
+                }
+                /*  s += "</select>";*/
+                $("#gen").append(s);
+                layui.form.render();
+            },
+        });
+
+      /*  laydate.render({
+            elem: '#date'
+        });*/
+        form.on('select(selectId)', function (date) {
+      /*   $("#gen").empty();
+            var name = obj.value;*/
+            table.render({
+                width:1120,
+                elem: '#tableId',
+                url: '../../documentary/selectTheme.do?theme='+date.value,
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [[
+                    {type: "checkbox", fixed: "left"},
+                    {field: 'documentaryTime', title: '跟单时间', sort: true},
+                    {field: 'documentaryClass', title: '跟单分类'},
+                    {field: 'documentaryPeople',  title: '跟单人', sort: true},
+                    {field: 'detail',  title: '详细内容'},
+                    {field: 'file', title: '附件'},
+                ]],
+
+            });
+
+        });
+        //指定允许上传的文件类型
+        upload.render({
+            elem: '#test3'
+            ,url: '../../afterSell/uploadFile.do' //改成您自己的上传接口
+            ,accept: 'file' //普通文件
+            ,done: function(res){
+                $("#hi").val(res.filename);
+                layer.msg('上传成功');
+                console.log(res);
+            }
+        });
+        laydate.render({
+            elem: '#date'
+        });
+
+
+        // 添加用户表单提交
+        form.on('submit(add-submit)', function(data) {
+            // ajax方式添加用户
+            $.ajax({
+                url: "../../documentary/insert.do",
+                type: "post",
+                data: data.field,
+                dataType: 'json',
+                success: function(data) {
+                    if (data == 0) {
+                        layer.closeAll();
+                        layer.msg('添加成功');
+                        window.location.href="/crmsystem/projectPage/documentary/myDocumentary.html";
+                        table.reload('test');
+                        $("#add-user-form1")[0].reset();
+                    } else {
+                        layer.msg('添加失败');
+                    }
+                },
+            });
+            // 阻止表单跳转
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

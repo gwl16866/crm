@@ -28,4 +28,5 @@ public List<Kehuiganlizonghe> listQueryAll(@Param("kehuiganlizonghe") Kehuiganli
 
     public Moneyinfor selectMoneyinfor(String cid);
 
+    public String selectCount(String type);
 }

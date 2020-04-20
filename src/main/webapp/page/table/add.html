@@ -12,7 +12,7 @@
     <script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 </head>
 <body>
-
+<button class="layui-btn layui-btn-sm data-add-btn" id="but"> 返回 </button>
 <div id="add-user-layer" style="display: block; padding: 20px">
     <form class="layui-form" action="" method="post" id="add-user-form">
                         <h1>基本信息</h1>
@@ -259,6 +259,12 @@
         //创建一个编辑器
         var editIndex = layedit.build('LAY_demo_editor');
 
+        $("#but").click(function(){
+            window.parent.location.reload();
+        });
+
+
+
         // 添加用户表单提交
         form.on('submit(add-submit)', function(data) {
             // ajax方式添加用户
@@ -273,6 +279,7 @@
 
                         layer.closeAll();
                         layer.msg('添加成功');
+                        window.location.href="/crmsystem/projectPage/customerManager/customer.html";
                         table.reload('test');
                         $("#add-user-form")[0].reset();
                     } else {

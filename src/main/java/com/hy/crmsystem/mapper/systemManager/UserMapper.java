@@ -24,6 +24,11 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("select * from user where user_name=#{name}")
     public User selectDengLuRen(Object name);
 
+    @Select("SELECT user_name FROM user where user_name=#{username}")
+     public  String selectname(String username);
+
+
+
     //查询所有
     @SelectProvider(type = UserDao.class,method = "selectAllUser")
     public List<UserDept> selectAllUser(UserDept user);

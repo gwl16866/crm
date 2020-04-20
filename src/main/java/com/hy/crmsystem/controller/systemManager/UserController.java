@@ -120,7 +120,7 @@ public class UserController {
        Integer size1= userService.selectCountRolePermission(rid);
        Integer size2= userService.selectCountUserRole(rid);
 
-       if(size1 != 0 && size2 != 0){
+       if(size1 != 0 || size2 != 0){
            return "2";
        }else {
            userService.deleteRole(rid);
@@ -133,18 +133,46 @@ public class UserController {
         //所有角色
         List<Role> RoleList =  userService.queryAllRole(new Role());
         //拥有角色
-        List<Role> HaveRoleList =  userService.queryHaveRole(uid);
+        List<Integer> HaveRoleList =  userService.queryHaveRole(uid);
         model.addAttribute("allRoles",RoleList);
-        model.addAttribute("some",HaveRoleList);
+        model.addAttribute("someRoles",HaveRoleList);
+        model.addAttribute("uid",uid);
         return "/projectPage/systemManager/setRole";
     }
 
+
+    //修改用户角色
     @ResponseBody
     @RequestMapping("/updateRoleUid.do")
-    public String updateRoleUid() {
-           System.out.println();
-           return "null";
+    public String updateRoleUid(@RequestParam("rids") String[] rids,@RequestParam("uid") Integer uid) {
+           //先删除
+           userService.deleteUserRoleByUid(uid);
+           //再添加角色
+           userService.updateRoleIdByUid(rids,uid);
+           return "1";
     }
+
+    //新增角色
+    @ResponseBody
+    @RequestMapping("/addRole.do")
+    public String addRole(String roleName) {
+        userService.addRole(roleName);
+        return "1";
+    }
+
+    //给用户设置权限
+    @ResponseBody
+    @RequestMapping("/setUserRole.do")
+    public String setUserRole(Integer uid) {
+        //查询一级权限
+        List<Permission> first = userService.queryFirstPermission();
+        //根据uid查他的用户权限
+        List<Userhand> userHaveHand = userService.userHaveHand(uid);
+
+
+        return "1";
+    }
+
 
 
 

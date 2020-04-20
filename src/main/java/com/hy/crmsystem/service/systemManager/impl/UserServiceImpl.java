@@ -403,7 +403,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public List<Role> queryHaveRole(Integer uid) {
+    public List<Integer> queryHaveRole(Integer uid) {
         return userMapper.queryHaveRole(uid);
     }
 
@@ -430,6 +430,32 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public Integer selectCountRolePermission(Integer rid) {
         return userMapper.selectCountRolePermission(rid);
+    }
+
+    @Override
+    public void addRole(String name) {
+        userMapper.addRole(name);
+
+    }
+
+    @Override
+    public void updateRoleIdByUid(String[] rid, Integer uid) {
+        userMapper.updateRoleIdByUid(rid,uid);
+    }
+
+    @Override
+    public void deleteUserRoleByUid(Integer uid) {
+        userMapper.deleteUserRoleByUid(uid);
+    }
+
+    @Override
+    public List<Permission> queryFirstPermission() {
+        return userMapper.queryFirstPermission();
+    }
+
+    @Override
+    public List<Userhand> userHaveHand(Integer uid) {
+        return userMapper.userHaveHand(uid);
     }
 
 

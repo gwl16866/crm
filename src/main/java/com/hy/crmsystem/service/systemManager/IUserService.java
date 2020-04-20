@@ -29,12 +29,17 @@ public interface IUserService extends IService<User> {
     public Integer selectCustomerCounts();
     public List<Dept> queryDept();
     public List<Role> queryAllRole(Role role);
-    public List<Role> queryHaveRole(Integer uid);
+    public List<Integer> queryHaveRole(Integer uid);
     public Role queryRoleById(Integer rid);
     public void updateRole(Role role);
     public void deleteRole(Integer rid);
     public Integer selectCountUserRole(Integer rid);
     public Integer selectCountRolePermission(Integer rid);
+    public void addRole(String name);
+    public void updateRoleIdByUid(String rid[],Integer uid);
+    public void deleteUserRoleByUid(Integer uid);
+    public List<Permission> queryFirstPermission();
+    public List<Userhand> userHaveHand(Integer uid);
 
 
 

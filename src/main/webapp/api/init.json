@@ -5,7 +5,7 @@
   "homeInfo": {
     "title": "首页",
     "icon": "fa fa-home",
-    "href": "../page/welcome-2.html?mpi=m-p-i-0"
+    "href": "../page/welcome-2.html"
   },
 
   "logoInfo": {
@@ -37,14 +37,7 @@
               "href": "../projectPage/systemManager/role.html",
               "icon": "fa fa-gears",
               "target": "_self"
-            },
-            {
-              "title": "角色权限",
-              "href": "../projectPage/systemManager/userManager.html",
-              "icon": "fa fa-gears",
-              "target": "_self"
             }
-
           ]
         },
 

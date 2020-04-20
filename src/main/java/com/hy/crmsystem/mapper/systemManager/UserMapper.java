@@ -65,7 +65,7 @@ public interface UserMapper extends BaseMapper<User> {
     public List<Role> queryAllRole(Role role);
 
     @Select("SELECT r.rid AS rid,r.role_name AS roleName FROM role r,userrole ur,USER u WHERE r.rid=ur.rid AND u.uid=ur.uid AND u.uid=#{uid}")
-    public List<Role> queryHaveRole(Integer uid);
+    public List<Integer> queryHaveRole(Integer uid);
 
 
     @Select("select * from role where rid =#{rid}")
@@ -82,5 +82,29 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("select count(*) from rolepermission where rid =#{rid}")
     public Integer selectCountRolePermission(Integer rid);
+
+    @Insert("insert into role(role_name) values(#{name})")
+    public void addRole(String name);
+
+    @UpdateProvider(type = UserDao.class,method = "updateRoleIdByUid")
+    public void updateRoleIdByUid(@Param("rids") String[] rids,@Param("uid") Integer uid);
+
+    @Delete("delete from userrole where uid=#{uid}")
+    public void deleteUserRoleByUid(Integer uid);
+
+
+    /**
+     * //查询一级权限
+     * @return
+     */
+    @Select("select pid,permission_name as permissionName from permission where parent_id is null")
+    public List<Permission> queryFirstPermission();
+
+    /**
+     * uid 查询用户权限
+     */
+    @Select("select uid,pid from userhand where uid =#{uid}")
+    public List<Userhand> userHaveHand(Integer uid);
+
 
 }

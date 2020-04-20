@@ -31,13 +31,10 @@
         top:335px;
     }
     #checks1{
-        position: absolute;
-        left: 195px;
-    }
-    #checks{
-        position: absolute;
-        left: 195px;
-    }
+             position: absolute;
+             left: 20px;
+         }
+
 </style>
 <script type="text/javascript">
     $(function () {
@@ -59,19 +56,18 @@
         form.render();
         //监听提交
         form.on('submit(formDemo)', function (data) {
-            var obj = document.getElementsByName("rid");
-            var manyRid = "";
-            var i = 0;
-            for(i in obj){
-                if(obj[i].checked){
-                    manyRid += obj[i].value+",";
-                }
-            }
+            //获取checkbox数据,组装成数组!!!!!!
+            var noRepeatUploadBanks =[];
+            $('input[name="rid"]:checked').each(function(index, domEle){
+                noRepeatUploadBanks.push($(this).val());
+            });
+
             $.ajax({
                 url: 'systemManager/updateRoleUid.do',
                 type: 'POST',
                 dataType: 'json',
-                data: manyRid,
+                data: {rids: noRepeatUploadBanks,uid:$("#uid").val()},
+                traditional: true,
                 success: function (msg) {
                     if (msg == 1) {
                         layer.msg("修改成功", {icon: 1,time:1000},function () {
@@ -81,7 +77,7 @@
                             parent.location.reload();
                         });
                     } else {
-                        layer.msg("修改失败", {icon: 6});
+                        layer.msg("修改失败", {icon: 2});
                     }
                 }
             });
@@ -92,33 +88,16 @@
 <h2 align="center">角色</h2>
 <br>
 <form class="layui-form">
-    <input type="hidden"  name="uid">
+    <input type="hidden"  id="uid" th:value="${uid}">
 
-    <!--有部分权限 有值-->
-    <div th:if="${#lists.size(some)}">
+    <div id="checks1">
 
-        <DIV class="layui-form-item" id="checks1">
-            <DIV class="layui-input-block" th:each="all:${allRoles}">
-                <input TYPE="checkbox" NAME="rid" th:title="${all.roleName}" th:value="${all.rid}" th:each="s:${some}"  th:checked="${all.rid} == ${s.rid}">
-            </DIV>
-        </DIV>
+        <!-- roleList:所有角色信息 ；userRoleList:用户已有角色id列表-->
+        <!--<input th:each="role:${roleList}"  type="checkbox"  th:value="${role.id}" th:checked="${#lists.contains(userRoleList, role.id)}" th:text="${role.role_name}">-->
+        <input type="checkbox" name="rid" th:each="all:${allRoles}" th:value="${all.rid}"   th:checked="${#lists.contains(someRoles,all.rid)}" th:title="${all.roleName}">
 
 
     </div>
-    <!--无部分权限 无值-->
-    <div th:unless="${#lists.size(some)}">
-        <DIV class="layui-form-item" id="checks">
-            <DIV class="layui-input-block" th:each="all:${allRoles}">
-
-                <input TYPE="checkbox" NAME="rid" th:title="${all.roleName}" th:value="${all.rid}">
-
-            </DIV>
-        </DIV>
-    </div>
-
-
-
-
 
     <div class="layui-form-item" id="le">
         <div class="layui-input-block">

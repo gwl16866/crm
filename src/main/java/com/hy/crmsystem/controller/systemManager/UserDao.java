@@ -3,6 +3,7 @@ package com.hy.crmsystem.controller.systemManager;
 import com.hy.crmsystem.entity.systemManager.Role;
 import com.hy.crmsystem.entity.systemManager.UserDept;
 import com.mysql.jdbc.StringUtils;
+import org.apache.ibatis.annotations.Param;
 
 public class UserDao {
     public String selectAllUser(UserDept user) {
@@ -21,6 +22,19 @@ public class UserDao {
         StringBuffer sql = new StringBuffer("select * from role where 1=1 ");
         if ( !StringUtils.isNullOrEmpty(role.getRoleName())) {
             sql.append(" and role_name like '%" + role.getRoleName() + "%'");
+        }
+        return sql.toString();
+    }
+
+    public String updateRoleIdByUid(@Param("rids") String[] rids, @Param("uid") Integer uid) {
+        StringBuffer sql = new StringBuffer("insert into userrole (uid,rid) values");
+        for(int i=0;i<rids.length;i++){
+            sql.append("(");
+            sql.append(uid+",");
+            sql.append(rids[i]+")");
+            if(i<rids.length-1){
+                sql.append(",");
+            }
         }
         return sql.toString();
     }

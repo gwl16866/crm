@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -60,12 +59,17 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/updateUser.do")
     public String updateUser(User user) {
-        Object salt = ByteSource.Util.bytes(user.getUsername());
-        System.out.println("修改"+salt);
-        Object simpleHash = new SimpleHash("MD5", user.getPassword(), salt, 1024);
-        System.out.println(simpleHash);
-        user.setPassword(String.valueOf(simpleHash));
-        userService.updateUser(user);
+        System.out.println("+++++++++++++++++++++++++++++++++++" + user.getPassword());
+        if (user.getPassword() == null || user.getPassword().equals("")) {
+            System.out.println("++++++++++++++++++++++++++++++++++++++==========" + user.getPassword());
+            userService.NoupdateUserPassword(user);
+        } else {
+            //密码加盐
+            Object salt = ByteSource.Util.bytes(user.getUsername());
+            Object simpleHash = new SimpleHash("MD5", user.getPassword(), salt, 1024);
+            user.setPassword(String.valueOf(simpleHash));
+            userService.updateUser(user);
+        }
         return "1";
     }
 
@@ -108,7 +112,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/updateRole.do")
     public String updateRole(Role role) {
-      userService.updateRole(role);
+        userService.updateRole(role);
         return "1";
     }
 
@@ -117,8 +121,8 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/deleteRole.do")
     public String deleteRole(Integer rid) {
-       Integer size1= userService.selectCountRolePermission(rid);
-       Integer size2= userService.selectCountUserRole(rid);
+        Integer size1 = userService.selectCountRolePermission(rid);
+        Integer size2 = userService.selectCountUserRole(rid);
 
        if(size1 != 0 || size2 != 0){
            return "2";
@@ -172,9 +176,5 @@ public class UserController {
 
         return "1";
     }
-
-
-
-
 
 }

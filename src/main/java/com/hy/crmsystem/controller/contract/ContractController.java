@@ -7,6 +7,7 @@ import com.hy.crmsystem.entity.contract.ContractCust;
 import com.hy.crmsystem.entity.contract.Openpaper;
 import com.hy.crmsystem.entity.contract.Returnmoneydetails;
 import com.hy.crmsystem.entity.customerManager.Customer;
+import com.hy.crmsystem.entity.systemManager.Dept;
 import com.hy.crmsystem.entity.systemManager.LayuiData;
 import com.hy.crmsystem.entity.systemManager.User;
 import com.hy.crmsystem.service.contract.impl.ContractServiceImpl;
@@ -146,6 +147,8 @@ public class ContractController {
     @RequestMapping("/contractDetails.do")
     public String contractDetails(String contractNum, Model model) {
         ContractCust contractList = contractService.contractDetails(contractNum);
+        List<Dept> depts = userService.queryDept();
+        model.addAttribute("depts", depts);
         model.addAttribute("c", contractList);
         return "projectPage/contract/contractDetails";
     }
@@ -154,6 +157,8 @@ public class ContractController {
     @RequestMapping("/myContractDetails.do")
     public String myContractDetails(String contractNum, Model model) {
         ContractCust contractList = contractService.contractDetails(contractNum);
+        List<Dept> depts = userService.queryDept();
+        model.addAttribute("depts", depts);
         model.addAttribute("c", contractList);
         return "projectPage/contract/myContractDetails";
     }
@@ -162,6 +167,8 @@ public class ContractController {
     @RequestMapping("/updateContract.do")
     public String updateContract(String contractNum, Model model) {
         ContractCust contractList = contractService.contractDetails(contractNum);
+        List<Dept> depts = userService.queryDept();
+        model.addAttribute("depts", depts);
         model.addAttribute("cont", contractList);
         return "projectPage/contract/updateContract";
     }
@@ -170,8 +177,17 @@ public class ContractController {
     @RequestMapping("/updateMyContract.do")
     public String updateMyContract(String contractNum, Model model) {
         ContractCust contractList = contractService.contractDetails(contractNum);
+        List<Dept> depts = userService.queryDept();
+        model.addAttribute("depts", depts);
         model.addAttribute("cont", contractList);
         return "projectPage/contract/updateMyContract";
+    }
+
+    //查询部门
+    @ResponseBody
+    @RequestMapping("/queryDept.do")
+    public List<Dept> queryDept() {
+        return userService.queryDept();
     }
 
     //修改合同

@@ -25,7 +25,6 @@ public class  User implements Serializable {
     @TableField("dept_id")
     private Integer deptId;
 
-
     @TableField("user_name")
     private String username;
 
@@ -34,6 +33,16 @@ public class  User implements Serializable {
     private Integer age;
 
     private Integer sex;
+
+    private Integer status;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public Integer getUid() {
         return uid;
@@ -91,6 +100,7 @@ public class  User implements Serializable {
                 ", password='" + password + '\'' +
                 ", age=" + age +
                 ", sex=" + sex +
+                ", status=" + status +
                 '}';
     }
 }

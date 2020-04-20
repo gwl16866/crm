@@ -69,6 +69,7 @@ public class ShiroRealm extends AuthorizingRealm {
         // 根据用户名查询数据库
        QueryWrapper<User> queryWrapper=new QueryWrapper();
         queryWrapper.eq("user_name",username);
+        queryWrapper.eq("status",1);
         User user=UserService.getOne(queryWrapper);
 
         if(user == null){

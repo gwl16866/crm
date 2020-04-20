@@ -49,6 +49,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public User selectUserByUid(Integer uid) {
         return userMapper.selectUserByUid(uid);
     }
+
+
+
+
+
+    //不修改密码
+    public void NoupdateUserPassword(User user) {
+        userMapper.NoupdateUserPassword(user);
+    }
+
+    //修改用户
     public void updateUser(User user) {
         userMapper.updateUser(user);
     }
@@ -403,7 +414,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public List<Integer> queryHaveRole(Integer uid) {
+    public List<Role> queryHaveRole(Integer uid) {
         return userMapper.queryHaveRole(uid);
     }
 

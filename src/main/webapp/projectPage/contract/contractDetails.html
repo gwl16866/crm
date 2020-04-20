@@ -84,21 +84,6 @@
                 })
             })
         });
-        //下载文件
-        $("body").on("click", "#download", function () {
-            $.ajax({
-                type: "post",
-                url:'D:\\jar\\apache-tomcat-8.0.35-windows-x64\\apache-tomcat-8.0.35\\webapps\\crmsystem\\imgs\\'+$("#fileName").val(),
-                /*url: 'contract/downloadFile.do?cid=' + $("#cid").val() + "&file=" + $("#fileName").val(),*/
-               /* success: function (msg) {
-                    if (msg == 1) {
-                        layer.msg("成功", {icon: 6});
-                    } else {
-                        layer.msg("失败", {icon: 6});
-                    }
-                }*/
-            })
-        });
      });
 </script>
 <form class="layui-form">
@@ -260,16 +245,18 @@
         <div class="layui-input-block" type="text">
             <input type="text" id="fileName" disabled="disabled" th:value="${c.getFile()}" name="file"
                    class="layui-input" style="width: 400px">
-            <button type="button" id="download">查看</button>
+            <a th:href="@{'/imgs/'+${c.getFile()}}">查看</a>
         </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">合同所属部门</label>
-            <input type="text" disabled="disabled" name="ofdept" th:value="${c.getOfdept()}" required
-                   lay-verify="required"
-                   autocomplete="off" class="layui-input"
-                   style="width: 400px">
+            <div class="layui-inline">
+            <select id='depts' name='deptId' class='layui-form-select'>
+                <option th:value="${dept.deptId}" th:each="dept : ${depts}" th:text="${dept.deptName}"
+                        th:selected="${dept.deptId == c.getOfdept()}"></option>
+            </select>
+            </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">关联人员</label>

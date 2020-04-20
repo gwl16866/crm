@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * <p>
@@ -35,10 +34,10 @@ public class BusinessoppoServiceImpl extends ServiceImpl<BusinessoppoMapper, Bus
         return businessoppoMapper.queryAllList(accountsPage,businessoppo);
     }
 
-    @Override
+  /*  @Override
     public List<Businessoppo> listQueryAll(@Param("businessoppo") Businessoppo businessoppo) {
         return businessoppoMapper.listQueryAll(businessoppo);
-    }
+    }*/
 
     @Override
     public  Businessoppo selectByName(String bid) {
@@ -64,8 +63,8 @@ public class BusinessoppoServiceImpl extends ServiceImpl<BusinessoppoMapper, Bus
         return String.valueOf(c);
     }
 
-    @Override
+/*    @Override
     public Integer selectNewCount(String type) {
         return businessoppoMapper.selectNewCount(type);
-    }
+    }*/
 }

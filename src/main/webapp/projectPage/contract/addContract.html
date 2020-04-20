@@ -143,7 +143,22 @@
                     }
                 }
             });
-        })
+        });
+        //部门
+        $.ajax({
+            type: 'post',
+            url: '../../contract/queryDept.do',
+            contentType: 'application/json',
+            success: function (data) {
+                var str = "<option value='0'>请选择部门</option>";
+                for (var i = 0; i < data.length; i++) {
+                    str += "<option value='" + data[i].deptId + "'>" + data[i].deptName + "</option>"
+                }
+                $("#depts").html(str);
+                //重新渲染
+                layui.form.render("select");
+            }
+        });
     });
 </script>
 <form class="layui-form">
@@ -175,7 +190,6 @@
             <label class="layui-form-label">所属行业</label>
             <div class="layui-inline">
                 <select id="cindustry" name="cindustry" class="layui-form-select">
-                    <option value="0">请选择行业</option>
                     <option value="IT">IT</option>
                     <option value="酒店旅游">酒店旅游</option>
                 </select>
@@ -281,8 +295,10 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">合同所属部门</label>
-            <input type="text" name="ofdept"  autocomplete="off" class="layui-input"
-                   style="width: 400px">
+            <div class="layui-inline">
+            <select id='depts' name='deptId' class='select'>
+            </select>
+            </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">关联人员</label>

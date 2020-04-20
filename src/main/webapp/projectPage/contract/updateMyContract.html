@@ -261,9 +261,12 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">合同所属部门</label>
-            <input type="text" name="ofdept" th:value="${cont.getOfdept()}" required lay-verify="required"
-                   autocomplete="off" class="layui-input"
-                   style="width: 400px">
+            <div class="layui-inline">
+            <select id='depts' name='deptId' class='layui-form-select'>
+                <option th:value="${dept.deptId}" th:each="dept : ${depts}" th:text="${dept.deptName}"
+                        th:selected="${dept.deptId == cont.getOfdept()}"></option>
+            </select>
+            </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">关联人员</label>

@@ -10,62 +10,183 @@
     <link rel="stylesheet" href="../../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
     <link rel="stylesheet" href="../../css/public.css" media="all">
     <style>
-        .layui-card {border:1px solid #f2f2f2;border-radius:5px;}
-        .icon {margin-right:10px;color:#1aa094;}
-        .icon-cray {color:#ffb800!important;}
-        .icon-blue {color:#1e9fff!important;}
-        .icon-tip {color:#ff5722!important;}
-        .layuimini-qiuck-module {text-align:center;margin-top: 10px}
-        .layuimini-qiuck-module a i {display:inline-block;width:100%;height:60px;line-height:60px;text-align:center;border-radius:2px;font-size:30px;background-color:#F8F8F8;color:#333;transition:all .3s;-webkit-transition:all .3s;}
-        .layuimini-qiuck-module a cite {position:relative;top:2px;display:block;color:#666;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;font-size:14px;}
-        .welcome-module {width:100%;height:210px;}
-        .panel {background-color:#fff;border:1px solid transparent;border-radius:3px;-webkit-box-shadow:0 1px 1px rgba(0,0,0,.05);box-shadow:0 1px 1px rgba(0,0,0,.05)}
-        .panel-body {padding:10px}
-        .panel-title {margin-top:0;margin-bottom:0;font-size:12px;color:inherit}
-        .label {display:inline;padding:.2em .6em .3em;font-size:75%;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25em;margin-top: .3em;}
-        .layui-red {color:red}
-        .main_btn > p {height:40px;}
-        .layui-bg-number {background-color:#F8F8F8;}
-        .layuimini-notice:hover {background:#f6f6f6;}
-        .layuimini-notice {padding:7px 16px;clear:both;font-size:12px !important;cursor:pointer;position:relative;transition:background 0.2s ease-in-out;}
-        .layuimini-notice-title,.layuimini-notice-label {
-            padding-right: 70px !important;text-overflow:ellipsis!important;overflow:hidden!important;white-space:nowrap!important;}
-        .layuimini-notice-title {line-height:28px;font-size:14px;}
-        .layuimini-notice-extra {position:absolute;top:50%;margin-top:-8px;right:16px;display:inline-block;height:16px;color:#999;}
-        #card{
+        .layui-card {
+            border: 1px solid #f2f2f2;
+            border-radius: 5px;
+        }
+
+        .icon {
+            margin-right: 10px;
+            color: #1aa094;
+        }
+
+        .icon-cray {
+            color: #ffb800 !important;
+        }
+
+        .icon-blue {
+            color: #1e9fff !important;
+        }
+
+        .icon-tip {
+            color: #ff5722 !important;
+        }
+
+        .layuimini-qiuck-module {
+            text-align: center;
+            margin-top: 10px
+        }
+
+        .layuimini-qiuck-module a i {
+            display: inline-block;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            border-radius: 2px;
+            font-size: 30px;
+            background-color: #F8F8F8;
+            color: #333;
+            transition: all .3s;
+            -webkit-transition: all .3s;
+        }
+
+        .layuimini-qiuck-module a cite {
+            position: relative;
+            top: 2px;
+            display: block;
+            color: #666;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .welcome-module {
+            width: 100%;
+            height: 210px;
+        }
+
+        .panel {
+            background-color: #fff;
+            border: 1px solid transparent;
+            border-radius: 3px;
+            -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .05)
+        }
+
+        .panel-body {
+            padding: 10px
+        }
+
+        .panel-title {
+            margin-top: 0;
+            margin-bottom: 0;
+            font-size: 12px;
+            color: inherit
+        }
+
+        .label {
+            display: inline;
+            padding: .2em .6em .3em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25em;
+            margin-top: .3em;
+        }
+
+        .layui-red {
+            color: red
+        }
+
+        .main_btn > p {
+            height: 40px;
+        }
+
+        .layui-bg-number {
+            background-color: #F8F8F8;
+        }
+
+        .layuimini-notice:hover {
+            background: #f6f6f6;
+        }
+
+        .layuimini-notice {
+            padding: 7px 16px;
+            clear: both;
+            font-size: 12px !important;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.2s ease-in-out;
+        }
+
+        .layuimini-notice-title, .layuimini-notice-label {
+            padding-right: 70px !important;
+            text-overflow: ellipsis !important;
+            overflow: hidden !important;
+            white-space: nowrap !important;
+        }
+
+        .layuimini-notice-title {
+            line-height: 28px;
+            font-size: 14px;
+        }
+
+        .layuimini-notice-extra {
+            position: absolute;
+            top: 50%;
+            margin-top: -8px;
+            right: 16px;
+            display: inline-block;
+            height: 16px;
+            color: #999;
+        }
+
+        #card {
             position: absolute;
             width: 300px;
             top: 300px;
         }
-        #tab{
+
+        #tab {
             position: absolute;
-            top:92px;
-            left:250px;
+            top: 92px;
+            left: 250px;
         }
-        #card{
+
+        #card {
             position: absolute;
             width: 220px;
             height: 500px;
             top: 100px;
         }
-        #search{
+
+        #search {
             position: absolute;
-            top:20px;
-            left:250px
+            top: 20px;
+            left: 250px
         }
-        #f{
+
+        #f {
             position: absolute;
             top: 37px;
-            left:80px;
+            left: 80px;
         }
-        #img{
+
+        #img {
             position: absolute;
             top: 30px;
-            left:10px;
+            left: 10px;
         }
-        .layui-form-select{width: 190px;}
 
-
+        .layui-form-select {
+            width: 190px;
+        }
 
     </style>
 </head>
@@ -81,76 +202,40 @@
     <div class="layui-card-body layui-text">
 
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title" id="wsj">
-                <a href="javascript:void(0)">我负责的商机</a>
-                <span class="layui-badge layui-bg-cyan" id="span1"></span>
-            </div>
-        </div>
-        <div class="layuimini-notice">
-            <div class="layuimini-notice-title" id="wcj">
-                <a href="javascript:void(0)">我参与的商机</a>
-                <span class="layui-badge layui-bg-cyan" id="span2"></span>
-            </div>
-        </div>
-        <div class="layuimini-notice">
-            <div class="layuimini-notice-title" id="wgj">
-                <a href="javascript:void(0)">我关注的商机</a>
-                <span class="layui-badge layui-bg-cyan" id="span3"></span>
-            </div>
-        </div>
-        <div class="layuimini-notice">
-            <div class="layuimini-notice-title" id="qwgd">
-                <a href="javascript:void(0)">七 天 未 跟单</a>
-                <span class="layui-badge layui-bg-cyan" id="span4"></span>
-            </div>
-        </div>
-        <div class="layuimini-notice">
-            <div class="layuimini-notice-title" id="ssgd">
-                <a href="javascript:void(0)">三十天未跟单</a>
-                <span class="layui-badge layui-bg-cyan" id="span5"></span>
-            </div>
-        </div>
-
-        <div class="layuimini-notice" id="bzxz">
             <div class="layuimini-notice-title">
-                <a href="javascript:void(0)">本周新增</a>
-                <span class="layui-badge layui-bg-cyan" id="span6"></span></div>
+                <a href="javascript:;" id="bzxz">本周新增</a></div>
         </div>
-
-
-        <div class="layuimini-notice" id="byxz">
+        <div class="layuimini-notice" >
             <div class="layuimini-notice-title">
-                <a href="javascript:void(0)">本月新增</a>
-                <span class="layui-badge layui-bg-cyan" id="span7"></span></div>
+                <a href="javascript:;" id="byxz">本月新增</a></div>
         </div>
-
-
-        <div class="layuimini-notice" id="bjdxz">
+        <div class="layuimini-notice" >
             <div class="layuimini-notice-title">
-                <a href="javascript:void(0)">本季新增</a>
-                <span class="layui-badge layui-bg-cyan" id="span8"></span></div>
+                <a href="javascript:;" id="bjdxz">本季新增</a></div>
         </div>
-
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title" id="ycj">
-                <a href="javascript:void(0)">已成交</a>
-                <span class="layui-badge layui-bg-cyan" id="span9"></span>
+            <div class="layuimini-notice-title" >
+                <a href="javascript:;" id="qwgd">七天未跟单</a></div>
+        </div>
+        <div class="layuimini-notice">
+            <div class="layuimini-notice-title" >
+                <a href="javascript:;" id="ssgd">三十天未跟单</a></div>
+        </div>
+        <div class="layuimini-notice">
+            <div class="layuimini-notice-title" >
+                <a href="javascript:;" id="ycj">已成交</a>
             </div>
         </div>
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title" id="ydd">
-                <a href="javascript:void(0)">已丢单</a>
-                <span class="layui-badge layui-bg-cyan" id="span10"></span>
+            <div class="layuimini-notice-title" >
+                <a href="javascript:;" id="ydd">已丢单</a>
             </div>
         </div>
         <div class="layuimini-notice">
-            <div class="layuimini-notice-title" id="yez">
-                <a href="javascript:void(0)">已搁置</a>
-                <span class="layui-badge layui-bg-cyan" id="span11"></span>
+            <div class="layuimini-notice-title" >
+                <a href="javascript:;" id="yez">已搁置</a>
             </div>
         </div>
-
-
     </div>
 </div>
 
@@ -171,13 +256,6 @@
                     <input type="text" name="status" autocomplete="off" class="layui-input">
                 </div>
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">商机负责人</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="bprincipal" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-
 
             <div class="layui-inline">
                 <label class="layui-form-label">预成交金额</label>
@@ -198,68 +276,120 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm data-add-btn"> 新增商机 </button>
+        <button class="layui-btn layui-btn-sm data-add-btn"> 新增商机</button>
     </div>
 </script>
 
 <div id="tab">
     <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 </div>
-
+<script src="../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
     $(function () {
-
-        //查询count
+        //本周新增
         $.ajax({
-            type:"post",
-            url:"../../bussinessOppo/selectCount.do?type="+"9",
-            contentType:"application/json",
-            success:function (data) {
-                $("#span1").append(data);
+            type: "post",
+            dataType: "json",
+            url: "../../bussinessOppo/queryAll.do?status=6",
+            success: function (data) {
+                $("#bzxz").append("<span class='layui-badge layui-bg-cyan'>" + data.count + "</span>")
+            },
+            error: function () {
+                alert("出错啦");
             }
         });
+        //本月新增
         $.ajax({
-            type:"post",
-            url:"../../bussinessOppo/selectCount.do?type="+"10",
-            contentType:"application/json",
-            success:function (data) {
-                $("#span2").append(data);
+            type: "post",
+            dataType: "json",
+            url: "../../bussinessOppo/queryAll.do?status=7",
+            success: function (data) {
+                $("#byxz").append("<span class='layui-badge layui-bg-cyan'>" + data.count + "</span>")
+            },
+            error: function () {
+                alert("出错啦");
             }
         });
+        //本季新增
         $.ajax({
-            type:"post",
-            url:"../../bussinessOppo/selectCount.do?type="+"6",
-            contentType:"application/json",
-            success:function (data) {
-                $("#span3").append(data);
+            type: "post",
+            dataType: "json",
+            url: "../../bussinessOppo/queryAll.do?status=8",
+            success: function (data) {
+                $("#bjdxz").append("<span class='layui-badge layui-bg-cyan'>" + data.count + "</span>")
+            },
+            error: function () {
+                alert("出错啦");
             }
         });
+        //七天
         $.ajax({
-            type:"post",
-            url:"../../bussinessOppo/selectNewCount.do?type="+"7",
-            contentType:"application/json",
-            success:function (data) {
-                $("#span4").append(data);
+            type: "post",
+            dataType: "json",
+            url: "../../bussinessOppo/queryAll.do?status=4",
+            success: function (data) {
+                $("#qwgd").append("<span class='layui-badge layui-bg-cyan'>" + data.count + "</span>")
+            },
+            error: function () {
+                alert("出错啦");
             }
         });
+        //三十天
         $.ajax({
-            type:"post",
-            url:"../../afterSell/selectNewCount.do?type="+"8",
-            contentType:"application/json",
-            success:function (data) {
-                $("#span5").append(data);
+            type: "post",
+            dataType: "json",
+            url: "../../bussinessOppo/queryAll.do?status=5",
+            success: function (data) {
+                $("#ssgd").append("<span class='layui-badge layui-bg-cyan'>" + data.count + "</span>")
+            },
+            error: function () {
+                alert("出错啦");
             }
         });
-
+        //成交
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "../../bussinessOppo/queryAll.do?status=9",
+            success: function (data) {
+                $("#ycj").append("<span class='layui-badge layui-bg-cyan'>" + data.count + "</span>")
+            },
+            error: function () {
+                alert("出错啦");
+            }
+        });
+        //丢单
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "../../bussinessOppo/queryAll.do?status=10",
+            success: function (data) {
+                $("#ydd").append("<span class='layui-badge layui-bg-cyan'>" + data.count + "</span>")
+            },
+            error: function () {
+                alert("出错啦");
+            }
+        });
+        //搁置
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "../../bussinessOppo/queryAll.do?status=11",
+            success: function (data) {
+                $("#yez").append("<span class='layui-badge layui-bg-cyan'>" + data.count + "</span>")
+            },
+            error: function () {
+                alert("出错啦");
+            }
+        });
     });
 </script>
-
-
-
-
 <script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script type="text/html" id="time">
+    {{layui.util.toDateString(d.signedTime,'yyyy-MM-dd')}}
+</script>
 <script>
-    layui.use(['jquery','table', 'layer','form','upload'], function () {
+    layui.use(['jquery', 'table', 'layer', 'form', 'upload'], function () {
         var $ = layui.jquery,
             layuimini = layui.layuimini;
         var table = layui.table;
@@ -267,13 +397,13 @@
         var form = layui.form;
         var upload = layui.upload;
         table.render({
-            width:1120,
+            width: 1120,
             elem: '#currentTableId'
-            ,url:'../../bussinessOppo/queryAll.do'
-            ,toolbar: '#toolbarDemo'
-            ,limits: [3, 6, 9, 12, 15, 100]
-            ,limit: 3
-            ,page:true,
+            , url: '../../bussinessOppo/queryAll.do'
+            , toolbar: '#toolbarDemo'
+            , limits: [3, 6, 9, 12, 15, 100]
+            , limit: 3
+            , page: true,
             defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
                 layEvent: 'LAYTABLE_TIPS',
@@ -281,19 +411,24 @@
             }],
             cols: [[
                 {type: "checkbox", fixed: "left"},
-                {field: 'bname', title: '商机名称', sort: true,templet:'<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'},
+                {
+                    field: 'bname',
+                    title: '商机名称',
+                    sort: true,
+                    templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                },
                 {field: 'status', title: '商机阶段'},
                 {field: 'bpredictMoney', title: '预计成交金额', sort: true},
                 {field: 'bprincipal', title: '商机负责人'},
-                {field: 'lastTime', title: '最后跟单'},
-                {field: '讨论', title: '讨论版',templet:'<div><a href="">讨论</a></div>'}
+                {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
             ]]
 
         });
         $("#ycj").click(function () {
             table.render({
-                width:1120,
+                width: 1120,
                 elem: '#currentTableId',
                 url: '../../bussinessOppo/queryAll.do?status=9',
                 toolbar: '#toolbarDemo',
@@ -302,16 +437,23 @@
                     layEvent: 'LAYTABLE_TIPS',
                     icon: 'layui-icon-tips'
                 }],
-                cols: [[
+                cols: [
+                    [
                     {type: "checkbox", fixed: "left"},
-                    {field: 'bname', title: '商机名称', sort: true,templet:'<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'},
+                    {
+                        field: 'bname',
+                        title: '商机名称',
+                        sort: true,
+                        templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                    },
                     {field: 'status', title: '商机阶段'},
                     {field: 'bpredictMoney', title: '预计成交金额', sort: true},
                     {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单'},
-                    {field: '讨论', title: '讨论版',templet:'<div><a href="">讨论</a></div>'}
+                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                    {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
-                ]],
+                ]
+                ],
                 limits: [3, 6, 9, 12, 15, 20],
                 limit: 3,
                 page: true
@@ -319,7 +461,7 @@
         });
         $("#ydd").click(function () {
             table.render({
-                width:1120,
+                width: 1120,
                 elem: '#currentTableId',
                 url: '../../bussinessOppo/queryAll.do?status=10',
                 toolbar: '#toolbarDemo',
@@ -330,12 +472,17 @@
                 }],
                 cols: [[
                     {type: "checkbox", fixed: "left"},
-                    {field: 'bname', title: '商机名称', sort: true,templet:'<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'},
+                    {
+                        field: 'bname',
+                        title: '商机名称',
+                        sort: true,
+                        templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                    },
                     {field: 'status', title: '商机阶段'},
                     {field: 'bpredictMoney', title: '预计成交金额', sort: true},
                     {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单'},
-                    {field: '讨论', title: '讨论版',templet:'<div><a href="">讨论</a></div>'}
+                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                    {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
                 ]],
                 limits: [3, 6, 9, 12, 15, 20],
@@ -345,7 +492,7 @@
         });
         $("#yez").click(function () {
             table.render({
-                width:1120,
+                width: 1120,
                 elem: '#currentTableId',
                 url: '../../bussinessOppo/queryAll.do?status=11',
                 toolbar: '#toolbarDemo',
@@ -356,12 +503,17 @@
                 }],
                 cols: [[
                     {type: "checkbox", fixed: "left"},
-                    {field: 'bname', title: '商机名称', sort: true,templet:'<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'},
+                    {
+                        field: 'bname',
+                        title: '商机名称',
+                        sort: true,
+                        templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                    },
                     {field: 'status', title: '商机阶段'},
                     {field: 'bpredictMoney', title: '预计成交金额', sort: true},
                     {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单'},
-                    {field: '讨论', title: '讨论版',templet:'<div><a href="">讨论</a></div>'},
+                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                    {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'},
 
                 ]],
                 limits: [3, 6, 9, 12, 15, 20],
@@ -371,7 +523,7 @@
         });
         $("#bzxz").click(function () {
             table.render({
-                width:1120,
+                width: 1120,
                 elem: '#currentTableId',
                 url: '../../bussinessOppo/queryAll.do?status=6',
                 toolbar: '#toolbarDemo',
@@ -382,12 +534,17 @@
                 }],
                 cols: [[
                     {type: "checkbox", fixed: "left"},
-                    {field: 'bname', title: '商机名称', sort: true,templet:'<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'},
+                    {
+                        field: 'bname',
+                        title: '商机名称',
+                        sort: true,
+                        templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                    },
                     {field: 'status', title: '商机阶段'},
                     {field: 'bpredictMoney', title: '预计成交金额', sort: true},
                     {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单'},
-                    {field: '讨论', title: '讨论版',templet:'<div><a href="">讨论</a></div>'}
+                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                    {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
                 ]],
                 limits: [3, 6, 9, 12, 15, 20],
@@ -397,7 +554,7 @@
         });
         $("#byxz").click(function () {
             table.render({
-                width:1120,
+                width: 1120,
                 elem: '#currentTableId',
                 url: '../../bussinessOppo/queryAll.do?status=7',
                 toolbar: '#toolbarDemo',
@@ -408,12 +565,17 @@
                 }],
                 cols: [[
                     {type: "checkbox", fixed: "left"},
-                    {field: 'bname', title: '商机名称', sort: true,templet:'<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'},
+                    {
+                        field: 'bname',
+                        title: '商机名称',
+                        sort: true,
+                        templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                    },
                     {field: 'status', title: '商机阶段'},
                     {field: 'bpredictMoney', title: '预计成交金额', sort: true},
                     {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单'},
-                    {field: '讨论', title: '讨论版',templet:'<div><a href="">讨论</a></div>'}
+                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                    {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
                 ]],
                 limits: [3, 6, 9, 12, 15, 20],
@@ -423,7 +585,7 @@
         });
         $("#bjdxz").click(function () {
             table.render({
-                width:1120,
+                width: 1120,
                 elem: '#currentTableId',
                 url: '../../bussinessOppo/queryAll.do?status=8',
                 toolbar: '#toolbarDemo',
@@ -434,12 +596,79 @@
                 }],
                 cols: [[
                     {type: "checkbox", fixed: "left"},
-                    {field: 'bname', title: '商机名称', sort: true,templet:'<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'},
+                    {
+                        field: 'bname',
+                        title: '商机名称',
+                        sort: true,
+                        templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                    },
                     {field: 'status', title: '商机阶段'},
                     {field: 'bpredictMoney', title: '预计成交金额', sort: true},
                     {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单'},
-                    {field: '讨论', title: '讨论版',templet:'<div><a href="">讨论</a></div>'}
+                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                    {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
+
+                ]],
+                limits: [3, 6, 9, 12, 15, 20],
+                limit: 3,
+                page: true
+            });
+        });
+        $("#qwgd").click(function () {
+            table.render({
+                width: 1120,
+                elem: '#currentTableId',
+                url: '../../bussinessOppo/queryAll.do?status=4',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [[
+                    {type: "checkbox", fixed: "left"},
+                    {
+                        field: 'bname',
+                        title: '商机名称',
+                        sort: true,
+                        templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                    },
+                    {field: 'status', title: '商机阶段'},
+                    {field: 'bpredictMoney', title: '预计成交金额', sort: true},
+                    {field: 'bprincipal', title: '商机负责人'},
+                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                    {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
+
+                ]],
+                limits: [3, 6, 9, 12, 15, 20],
+                limit: 3,
+                page: true
+            });
+        });
+        $("#ssgd").click(function () {
+            table.render({
+                width: 1120,
+                elem: '#currentTableId',
+                url: '../../bussinessOppo/queryAll.do?status=5',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [[
+                    {type: "checkbox", fixed: "left"},
+                    {
+                        field: 'bname',
+                        title: '商机名称',
+                        sort: true,
+                        templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                    },
+                    {field: 'status', title: '商机阶段'},
+                    {field: 'bpredictMoney', title: '预计成交金额', sort: true},
+                    {field: 'bprincipal', title: '商机负责人'},
+                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                    {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
                 ]],
                 limits: [3, 6, 9, 12, 15, 20],
@@ -449,24 +678,10 @@
         });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        form.on('submit(query-submit)', function(data) {
+        form.on('submit(query-submit)', function (data) {
 //执行重载
             table.reload('currentTableId', {
-                where:data.field
+                where: data.field
             });
             return false;
             /*  });*/
@@ -492,7 +707,7 @@
                 title: '添加用户',
                 type: 2,
                 shade: 0.2,
-                maxmin:true,
+                maxmin: true,
                 shadeClose: true,
                 area: ['100%', '100%'],
                 content: '../../projectPage/bussinessOppo/addBussinessOppo.html',
@@ -524,7 +739,7 @@
                     title: '编辑用户',
                     type: 2,
                     shade: 0.2,
-                    maxmin:true,
+                    maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
                     content: '../../page/table/edit.html',
@@ -543,14 +758,5 @@
 
     });
 </script>
-
-
-
-
-
-
-
-
-
 </body>
 </html>

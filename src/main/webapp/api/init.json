@@ -34,7 +34,7 @@
             },
             {
               "title": "角色管理",
-              "href": "../projectPage/bussinessOppo/allBussinessOppo.html",
+              "href": "../projectPage/systemManager/role.html",
               "icon": "fa fa-gears",
               "target": "_self"
             },

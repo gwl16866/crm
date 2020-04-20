@@ -3,7 +3,7 @@
 <head>
     <base th:href="${#request.getContextPath()}+'/'">
     <meta charset="utf-8">
-    <title>论坛</title>
+    <title>修改</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -19,6 +19,11 @@
         position: absolute;
         top: 15px;
         left: 1200px
+    }
+    #sub{
+        position: absolute;
+        left: 140px;
+        top:230px;
     }
 </style>
 <script type="text/javascript">
@@ -42,7 +47,7 @@
         //监听提交
         form.on('submit(formDemo)', function (data) {
             $.ajax({
-                url: 'systemManager/updateUser.do',
+                url: 'systemManager/updateRole.do',
                 type: 'POST',
                 dataType: 'json',
                 data: data.field,
@@ -54,8 +59,9 @@
                             parent.layer.close(index);
                             parent.location.reload();
                         });
+
                     } else {
-                        layer.msg("修改失败", {icon: 6});
+                        layer.msg("修改失败", {icon: 2});
                     }
                 }
             });
@@ -64,63 +70,27 @@
     });
 </script>
 <form class="layui-form">
-    <input type="hidden" th:value="${user.getUid()}" name="uid">
+    <input type="hidden" th:value="${role.getRid()}" name="rid">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">用户名</label>
+            <label class="layui-form-label">角色：</label>
             <div class="layui-inline">
-            <input type="text" name="username" th:value="${user.getUsername()}" readonly="readonly"  required lay-verify="required"
+            <input type="text" name="roleName" th:value="${role.getRoleName()}"   required lay-verify="required"
                    autocomplete="off" class="layui-input" style="width: 400px">
             </div>
         </div>
     </div>
 
-    <div class="layui-form-item">
-    <div class="layui-inline">
-        <label class="layui-form-label">年龄</label>
-        <div class="layui-inline">
-            <input type="text" name="age" th:value="${user.age}"  required lay-verify="required|number"
-                   autocomplete="off" class="layui-input" style="width: 400px">
-        </div>
-    </div>
-</div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">性别</label>
-        <div class="layui-input-block">
-            <input type="radio" name="sex" value="1" title="男" th:checked="${user.sex ==1}">
-            <input type="radio" name="sex" value="2" title="女" th:checked="${user.sex ==2}">
-        </div>
-    </div>
 
 
 
 
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">重置密码</label>
-            <div class="layui-inline">
-            <input type="text" value="**********" required lay-verify="required" autocomplete="off"
-                   class="layui-input" style="width: 400px">
-                <input type="hidden" name="password" th:value="${user.password}">
-            </div>
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">部门</label>
-            <div class="layui-inline">
-                <select id='depts' name='deptId' class='layui-form-select'>
-                    <option th:value="${dept.deptId}" th:each="dept : ${depts}" th:text="${dept.deptName}" th:selected="${dept.deptId == user.deptId}"  ></option>
-                </select>
-            </div>
-        </div>
-    </div>
-
-
-
-    <div class="layui-form-item">
+    <div class="layui-form-item" id="sub">
         <div class="layui-input-block">
             <button type="submit" class="layui-btn" lay-submit="" lay-filter="formDemo">提交</button>
             <button type="button" class="layui-btn data-add-btn"> 返回</button>

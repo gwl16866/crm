@@ -20,6 +20,24 @@
         top: 15px;
         left: 1200px
     }
+    #le{
+        position: absolute;
+        left: -100px;
+        top:335px;
+    }
+    #ri{
+        position: absolute;
+        right: 10px;
+        top:335px;
+    }
+    #checks1{
+        position: absolute;
+        left: 195px;
+    }
+    #checks{
+        position: absolute;
+        left: 195px;
+    }
 </style>
 <script type="text/javascript">
     $(function () {
@@ -41,11 +59,19 @@
         form.render();
         //监听提交
         form.on('submit(formDemo)', function (data) {
+            var obj = document.getElementsByName("rid");
+            var manyRid = "";
+            var i = 0;
+            for(i in obj){
+                if(obj[i].checked){
+                    manyRid += obj[i].value+",";
+                }
+            }
             $.ajax({
-                url: 'systemManager/updateUser.do',
+                url: 'systemManager/updateRoleUid.do',
                 type: 'POST',
                 dataType: 'json',
-                data: data.field,
+                data: manyRid,
                 success: function (msg) {
                     if (msg == 1) {
                         layer.msg("修改成功", {icon: 1,time:1000},function () {
@@ -63,69 +89,50 @@
         });
     });
 </script>
+<h2 align="center">角色</h2>
+<br>
 <form class="layui-form">
-    <input type="hidden" th:value="${user.getUid()}" name="uid">
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">用户名</label>
-            <div class="layui-inline">
-            <input type="text" name="username" th:value="${user.getUsername()}" readonly="readonly"  required lay-verify="required"
-                   autocomplete="off" class="layui-input" style="width: 400px">
-            </div>
-        </div>
+    <input type="hidden"  name="uid">
+
+    <!--有部分权限 有值-->
+    <div th:if="${#lists.size(some)}">
+
+        <DIV class="layui-form-item" id="checks1">
+            <DIV class="layui-input-block" th:each="all:${allRoles}">
+                <input TYPE="checkbox" NAME="rid" th:title="${all.roleName}" th:value="${all.rid}" th:each="s:${some}"  th:checked="${all.rid} == ${s.rid}">
+            </DIV>
+        </DIV>
+
+
+    </div>
+    <!--无部分权限 无值-->
+    <div th:unless="${#lists.size(some)}">
+        <DIV class="layui-form-item" id="checks">
+            <DIV class="layui-input-block" th:each="all:${allRoles}">
+
+                <input TYPE="checkbox" NAME="rid" th:title="${all.roleName}" th:value="${all.rid}">
+
+            </DIV>
+        </DIV>
     </div>
 
-    <div class="layui-form-item">
-    <div class="layui-inline">
-        <label class="layui-form-label">年龄</label>
-        <div class="layui-inline">
-            <input type="text" name="age" th:value="${user.age}"  required lay-verify="required|number"
-                   autocomplete="off" class="layui-input" style="width: 400px">
-        </div>
-    </div>
-</div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">性别</label>
+
+
+
+    <div class="layui-form-item" id="le">
         <div class="layui-input-block">
-            <input type="radio" name="sex" value="1" title="男" th:checked="${user.sex ==1}">
-            <input type="radio" name="sex" value="2" title="女" th:checked="${user.sex ==2}">
-        </div>
-    </div>
-
-
-
-
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">重置密码</label>
-            <div class="layui-inline">
-            <input type="text" value="**********" required lay-verify="required" autocomplete="off"
-                   class="layui-input" style="width: 400px">
-                <input type="hidden" name="password" th:value="${user.password}">
-            </div>
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">部门</label>
-            <div class="layui-inline">
-                <select id='depts' name='deptId' class='layui-form-select'>
-                    <option th:value="${dept.deptId}" th:each="dept : ${depts}" th:text="${dept.deptName}" th:selected="${dept.deptId == user.deptId}"  ></option>
-                </select>
-            </div>
-        </div>
-    </div>
-
-
-
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button type="submit" class="layui-btn" lay-submit="" lay-filter="formDemo">提交</button>
             <button type="button" class="layui-btn data-add-btn"> 返回</button>
         </div>
     </div>
+
+    <div class="layui-form-item" id="ri">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="formDemo">提交</button>
+        </div>
+    </div>
+
+
 </form>
 </body>
 </html>

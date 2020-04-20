@@ -41,23 +41,12 @@
         }
     </style>
 </head>
-<script type="text/javascript">
-    $(function () {
-        $.ajax({
-            type:"post",
-            url:"../../systemManager/queryDept.do",
-            contentType:"application/json",
-            success:function (datas) {
-                var s="<option value='0'>请选择</option>";
-                for (var j=0;j<datas.length;j++){
-                    s+="<option value='"+datas[j].deptId+"'>"+datas[j].deptName+"</option>";
-                }
-                $("#depts").append(s);
-                layui.form.render();
-            }
-        });
-
-    });
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button type="button" class="layui-btn refresh-btn">
+            <i class="layui-icon layui-icon-refresh"></i> 刷新
+        </button>
+    </div>
 </script>
 <body>
 <div class="layuimini-container">
@@ -68,17 +57,9 @@
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">用户姓名</label>
+                            <label class="layui-form-label">角色名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="username" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">用户部门</label>
-                            <div class="layui-input-inline">
-                                <select name="deptId" class="layui-form-select" id="depts">
-
-                                </select>
+                                <input type="text" name="roleName" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -90,37 +71,19 @@
                 </form>
             </div>
         </fieldset>
-        <script type="text/html" id="toolbarDemo">
-            <div class="layui-btn-container">
-                <button type="button" class="layui-btn refresh-btn">
-                    <i class="layui-icon layui-icon-refresh"></i> 刷新
-                </button>
-            </div>
-        </script>
         <div id="tab">
             <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
         </div>
         <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-xs data-count-edit" lay-event="role">角色</a>
-            <a class="layui-btn layui-btn-xs data-count-edit" lay-event="permiss">权限</a>
             <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
-            <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
-
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
         </script>
     </div>
 </div>
 <script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 
-<script type="text/html" id="Bar_sex">
-    {{#  if(d.sex == 1 ){ }}
-    男
-    {{#  } else { }}
-    女
-    {{#  } }}
-</script>
-
 <script type="text/html" id="xuhao">
-        {{d.LAY_TABLE_INDEX+1}}
+    {{d.LAY_TABLE_INDEX+1}}
 </script>
 
 <script>
@@ -133,7 +96,7 @@
         table.render({
             width:1320,
             elem: '#currentTableId',
-            url: '../../systemManager/selectAllUser.do',
+            url: '../../systemManager/queryAllRole.do',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
@@ -141,15 +104,12 @@
                 icon: 'layui-icon-tips'
             }],
             cols: [[
-                {title: 'ID',width:211, sort: true,templet:'#xuhao'},
-                {field: 'username',width:211,  title: '用户名'},
-                {field: 'deptName',width:211,  title: '部门'},
-                {field: 'sex',width:211,  title: '性别',templet : '#Bar_sex'},
-                {field: 'age',width:211,  title: '年龄', sort: true},
-                {title: '操作',width:250,  templet: '#currentTableBar', fixed: "right", align: "center"}
+                { title: 'ID', sort: true,templet: "#xuhao"},
+                {field: 'roleName',  title: '角色名称'},
+                {title: '操作',  templet: '#currentTableBar', fixed: "right", align: "center"}
             ]],
-            limits: [3, 6, 9, 12, 50, 100],
-            limit: 3,
+            limits: [5, 10, 15, 20, 50, 100],
+            limit: 5,
             page: true
         });
         // 监听搜索操作
@@ -164,61 +124,38 @@
             var data = obj.data;
             if (obj.event === 'edit') {
                 var index = layer.open({
-                    title: '编辑用户',
+                    title: '编辑角色',
                     type: 2,
                     shade: 0.2,
                     maxmin: true,
                     shadeClose: true,
                     area: ['50%', '70%'],
-                    content: '../../systemManager/selectUserByUid.do?uid='+data.uid,
+                    content: '../../systemManager/selectRoleByUid.do?rid='+data.rid,
                 });
             } else if (obj.event === 'delete') {
-                layer.confirm('真的删除??',function () {
+                layer.confirm('真的删除么??',function () {
                     $.ajax({
                         type:"post",
-                        url:'../../systemManager/deleteUser.do?uid='+data.uid,
+                        url:'../../systemManager/deleteRole.do?rid='+data.rid,
                         success:function (msg) {
                             if (msg == 1) {
                                 layer.msg("删除成功", {icon: 1,time:1000},function () {
                                     window.location.reload();
                                 });
                             } else {
-                                layer.msg("删除失败", {icon: 2});
+                                layer.msg("已被使用", {icon: 2,time:1000});
                             }
                         }
                     })
                 })
-            }else if (obj.event === 'role') {
-                var index = layer.open({
-                    title: '设置角色',
-                    type: 2,
-                    shade: 0.2,
-                    maxmin: true,
-                    shadeClose: true,
-                    area: ['50%', '70%'],
-                    content: '../../systemManager/setRole.do?uid='+data.uid,
-                });
-
-
-
-
-
-
-
-            }else if (obj.event === 'permiss') {
-
-
-
-
-
-
-
             }
         });
+
         //刷新页面
         $("body").on("click",'.refresh-btn', function () {
             window.location.reload();
         });
+
     });
 </script>
 </body>

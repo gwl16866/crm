@@ -1,6 +1,8 @@
 package com.hy.crmsystem.controller.systemManager;
 
+import com.hy.crmsystem.entity.systemManager.Role;
 import com.hy.crmsystem.entity.systemManager.UserDept;
+import com.mysql.jdbc.StringUtils;
 
 public class UserDao {
     public String selectAllUser(UserDept user) {
@@ -13,4 +15,16 @@ public class UserDao {
         }
         return sql.toString();
     }
+
+
+    public String selectAllRole(Role role) {
+        StringBuffer sql = new StringBuffer("select * from role where 1=1 ");
+        if ( !StringUtils.isNullOrEmpty(role.getRoleName())) {
+            sql.append(" and role_name like '%" + role.getRoleName() + "%'");
+        }
+        return sql.toString();
+    }
+
+
+
 }

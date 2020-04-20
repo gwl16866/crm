@@ -16,7 +16,7 @@ import java.io.Serializable;
  * @since 2020-04-02
  */
 @TableName("user")
-public class User implements Serializable {
+public class  User implements Serializable {
 
 
     @TableId(value = "uid", type = IdType.AUTO)

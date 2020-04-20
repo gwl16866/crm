@@ -25,6 +25,7 @@
                 <property name="hashAlgorithmName" value="MD5"></property>
                 <!--加密次数-->
                 <property name="hashIterations" value="1024"></property>
+                <!--<property name="storedCredentialsHexEncoded" value="true"></property>-->
             </bean>
         </property>
     </bean>

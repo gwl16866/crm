@@ -2,10 +2,7 @@ package com.hy.crmsystem.mapper.systemManager;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hy.crmsystem.controller.systemManager.UserDao;
-import com.hy.crmsystem.entity.systemManager.Dept;
-import com.hy.crmsystem.entity.systemManager.DeskPojo;
-import com.hy.crmsystem.entity.systemManager.User;
-import com.hy.crmsystem.entity.systemManager.UserDept;
+import com.hy.crmsystem.entity.systemManager.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.ArrayList;
@@ -58,4 +55,27 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("select * from dept")
     public List<Dept> queryDept();
+
+    @SelectProvider(type = UserDao.class,method = "selectAllRole")
+    public List<Role> queryAllRole(Role role);
+
+    @Select("SELECT r.rid AS rid,r.role_name AS roleName FROM role r,userrole ur,USER u WHERE r.rid=ur.rid AND u.uid=ur.uid AND u.uid=#{uid}")
+    public List<Role> queryHaveRole(Integer uid);
+
+
+    @Select("select * from role where rid =#{rid}")
+    public Role queryRoleById(Integer rid);
+
+    @Update("update role set role_name=#{roleName} where rid =#{rid}")
+    public void updateRoleById(Role role);
+
+    @Update("delete from role where rid =#{rid}")
+    public void deleteRoleById(Integer rid);
+
+    @Select("select count(*) from userrole where rid =#{rid}")
+    public Integer selectCountUserRole(Integer rid);
+
+    @Select("select count(*) from rolepermission where rid =#{rid}")
+    public Integer selectCountRolePermission(Integer rid);
+
 }

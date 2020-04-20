@@ -383,5 +383,40 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return userMapper.queryDept();
     }
 
+    @Override
+    public List<Role> queryAllRole(Role role) {
+        return userMapper.queryAllRole(role);
+    }
+
+    @Override
+    public List<Role> queryHaveRole(Integer uid) {
+        return userMapper.queryHaveRole(uid);
+    }
+
+    @Override
+    public Role queryRoleById(Integer rid) {
+        return userMapper.queryRoleById(rid);
+    }
+
+    @Override
+    public void updateRole(Role role) {
+        userMapper.updateRoleById(role);
+    }
+
+    @Override
+    public void deleteRole(Integer rid) {
+        userMapper.deleteRoleById(rid);
+    }
+
+    @Override
+    public Integer selectCountUserRole(Integer rid) {
+        return userMapper.selectCountUserRole(rid);
+    }
+
+    @Override
+    public Integer selectCountRolePermission(Integer rid) {
+        return userMapper.selectCountRolePermission(rid);
+    }
+
 
 }

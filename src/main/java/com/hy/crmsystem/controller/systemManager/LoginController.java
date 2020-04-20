@@ -41,7 +41,7 @@ public class LoginController {
             model.addAttribute("message", "密码错误");
             return "page/error";
         }
-        return "index.html";
+        return "index";
     }
 
     @RequestMapping("/register.do")
@@ -53,7 +53,8 @@ public class LoginController {
             //密码
             Object password=psw;
             //盐值
-            Object salt= ByteSource.Util.bytes(user);
+            ByteSource salt= ByteSource.Util.bytes(user);
+            System.out.println("注册"+salt);
             Object simpleHash=new SimpleHash("MD5",password,salt,1024);
             User infor=new User();
             infor.setUsername(user);

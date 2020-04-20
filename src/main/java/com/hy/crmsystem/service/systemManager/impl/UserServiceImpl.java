@@ -414,7 +414,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public List<Role> queryHaveRole(Integer uid) {
+    public List<Integer> queryHaveRole(Integer uid) {
         return userMapper.queryHaveRole(uid);
     }
 

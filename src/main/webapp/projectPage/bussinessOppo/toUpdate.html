@@ -14,7 +14,7 @@
     <script src="lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
 </head>
 <body>
-<button class="layui-btn layui-btn-sm data-add-btn" id="but"> 返回 </button>
+<button class="layui-btn layui-btn-sm data-add-btn" id="but">返回</button>
 <div id="add-user-layer" style="display: block; padding: 20px">
     <form class="layui-form" action="" method="post" id="add-user-form">
         <input type="hidden" name="bid" th:value="${bus.bid}">
@@ -28,9 +28,9 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">优先级:</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="priority" value="1" title="1" checked="" th:checked="${bus.priority eq 1}">
-                    <input type="radio" name="priority" value="2" title="2" th:checked="${bus.priority eq 2}">
-                    <input type="radio" name="priority" value="3" title="3" th:checked="${bus.priority eq 3}">
+                    <input type="radio" name="priority" value="1" title="1" th:checked="${bus.priority} == 1">
+                    <input type="radio" name="priority" value="2" title="2" th:checked="${bus.priority}== 2">
+                    <input type="radio" name="priority" value="3" title="3" th:checked="${bus.priority} == 3">
                 </div>
             </div>
         </div>
@@ -220,7 +220,6 @@
         <div class="layui-form-item"  style="text-align: center">
             <div class="layui-form-item">
                 <button class="layui-btn" lay-submit lay-filter="demo2">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
 
@@ -231,10 +230,11 @@
     layui.use(['form','layer', 'laydate','upload'], function(){
         var form = layui.form,layer= layui.layer,upload=layui.upload  ,laydate = layui.laydate , $ = layui.$;
 
-        $("#but").click(function(){
-            window.parent.location.reload();
+        $("body").on("click", '.data-add-btn', function () {
+            window.location.href = "projectPage/bussinessOppo/allBussinessOppo.html";
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
         });
-
 
         form.on('submit(demo2)', function(data){
             var da=data.field;
@@ -244,23 +244,15 @@
                 data:da,
                 success:function (data) {
                     if(data == 0){
-                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        setTimeout(function () {
-                            parent.layer.close(index);
-                        },1100);
-
-                        layer.msg("修改成功，1秒关闭",{
-                            icon:1,
-                            time:1000
-                        },function() {
-                            //do...
-                            parent.location.reload();
-                        });
-                        window.location.href="/crmsystem/projectPage/bussinessOppo/myBussinessOppo.html"
+                        window.location.href = "projectPage/bussinessOppo/allBussinessOppo.html";
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    }else {
+                        layer.msg("添加失败", {icon: 6});
                     }
                 }
             });
-           /* return true; *///阻止表单跳转。如果需要表单跳转，去掉这段即可。
+           return false;
         });
 
         //指定允许上传的文件类型

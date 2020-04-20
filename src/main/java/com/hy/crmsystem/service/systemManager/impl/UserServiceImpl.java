@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author Mr.Gao
@@ -46,30 +46,39 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public List<UserDept> selectAllUser(UserDept user) {
         return userMapper.selectAllUser(user);
     }
+
     public User selectUserByUid(Integer uid) {
         return userMapper.selectUserByUid(uid);
     }
+
+    //不修改密码
+    public void NoupdateUserPassword(User user) {
+        userMapper.NoupdateUserPassword(user);
+    }
+
+    //修改用户
     public void updateUser(User user) {
         userMapper.updateUser(user);
     }
-    public void deleteUser(Integer uid){
+
+    public void deleteUser(Integer uid) {
         userMapper.deleteUser(uid);
     }
 
-
-    public User selectDengLuRen(Object name){
+    public User selectDengLuRen(Object name) {
         return userMapper.selectDengLuRen(name);
     }
-    public String selectname(String username){
+
+    public String selectname(String username) {
         return userMapper.selectname(username);
     }
 
-    public void add(User user){
-         userMapper.Add(user);
+    public void add(User user) {
+        userMapper.Add(user);
     }
 
-    public List<Dept> select(){
-      return deptMapper.selectdept();
+    public List<Dept> select() {
+        return deptMapper.selectdept();
     }
 
     @Override
@@ -94,296 +103,296 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public ArrayList<String> selectMoneyByMonth() {
-        DeskMonth dm=new DeskMonth();
+        DeskMonth dm = new DeskMonth();
         ArrayList<DeskPojo> d = userMapper.seleMoneyByMonth();
 
-        for(int i=0;i<d.size();i++){
-            if(d.get(i).getMonth().equals("01")){
+        for (int i = 0; i < d.size(); i++) {
+            if (d.get(i).getMonth().equals("01")) {
                 dm.setOne(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("02")){
+            if (d.get(i).getMonth().equals("02")) {
                 dm.setTwo(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("03")){
+            if (d.get(i).getMonth().equals("03")) {
                 dm.setThree(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("04")){
+            if (d.get(i).getMonth().equals("04")) {
                 dm.setFour(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("05")){
+            if (d.get(i).getMonth().equals("05")) {
                 dm.setFive(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("06")){
+            if (d.get(i).getMonth().equals("06")) {
                 dm.setSix(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("07")){
+            if (d.get(i).getMonth().equals("07")) {
                 dm.setSeven(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("08")){
+            if (d.get(i).getMonth().equals("08")) {
                 dm.setEight(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("09")){
+            if (d.get(i).getMonth().equals("09")) {
                 dm.setNine(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("10")){
+            if (d.get(i).getMonth().equals("10")) {
                 dm.setTen(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("11")){
+            if (d.get(i).getMonth().equals("11")) {
                 dm.setEleven(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("12")){
+            if (d.get(i).getMonth().equals("12")) {
                 dm.setTwelve(d.get(i).getVal());
             }
         }
         ArrayList<String> arr = new ArrayList<>();
-            arr.add(0,dm.getOne());
-            arr.add(1,dm.getTwo());
-            arr.add(2,dm.getThree());
-            arr.add(3,dm.getFour());
-            arr.add(4,dm.getFive());
-            arr.add(5,dm.getSix());
-            arr.add(6,dm.getSeven());
-            arr.add(7,dm.getEight());
-            arr.add(8,dm.getNine());
-            arr.add(9,dm.getTen());
-            arr.add(10,dm.getEleven());
-            arr.add(11,dm.getTwelve());
+        arr.add(0, dm.getOne());
+        arr.add(1, dm.getTwo());
+        arr.add(2, dm.getThree());
+        arr.add(3, dm.getFour());
+        arr.add(4, dm.getFive());
+        arr.add(5, dm.getSix());
+        arr.add(6, dm.getSeven());
+        arr.add(7, dm.getEight());
+        arr.add(8, dm.getNine());
+        arr.add(9, dm.getTen());
+        arr.add(10, dm.getEleven());
+        arr.add(11, dm.getTwelve());
         return arr;
     }
 
     @Override
     public ArrayList<String> selectSumUsers() {
-        DeskMonth dm=new DeskMonth();
+        DeskMonth dm = new DeskMonth();
         ArrayList<DeskPojo> d = userMapper.selectSumUsers();
 
-        for(int i=0;i<d.size();i++){
-            if(d.get(i).getMonth().equals("01")){
+        for (int i = 0; i < d.size(); i++) {
+            if (d.get(i).getMonth().equals("01")) {
                 dm.setOne(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("02")){
+            if (d.get(i).getMonth().equals("02")) {
                 dm.setTwo(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("03")){
+            if (d.get(i).getMonth().equals("03")) {
                 dm.setThree(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("04")){
+            if (d.get(i).getMonth().equals("04")) {
                 dm.setFour(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("05")){
+            if (d.get(i).getMonth().equals("05")) {
                 dm.setFive(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("06")){
+            if (d.get(i).getMonth().equals("06")) {
                 dm.setSix(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("07")){
+            if (d.get(i).getMonth().equals("07")) {
                 dm.setSeven(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("08")){
+            if (d.get(i).getMonth().equals("08")) {
                 dm.setEight(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("09")){
+            if (d.get(i).getMonth().equals("09")) {
                 dm.setNine(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("10")){
+            if (d.get(i).getMonth().equals("10")) {
                 dm.setTen(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("11")){
+            if (d.get(i).getMonth().equals("11")) {
                 dm.setEleven(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("12")){
+            if (d.get(i).getMonth().equals("12")) {
                 dm.setTwelve(d.get(i).getVal());
             }
         }
         ArrayList<String> arr = new ArrayList<>();
-        arr.add(0,dm.getOne());
-        arr.add(1,dm.getTwo());
-        arr.add(2,dm.getThree());
-        arr.add(3,dm.getFour());
-        arr.add(4,dm.getFive());
-        arr.add(5,dm.getSix());
-        arr.add(6,dm.getSeven());
-        arr.add(7,dm.getEight());
-        arr.add(8,dm.getNine());
-        arr.add(9,dm.getTen());
-        arr.add(10,dm.getEleven());
-        arr.add(11,dm.getTwelve());
+        arr.add(0, dm.getOne());
+        arr.add(1, dm.getTwo());
+        arr.add(2, dm.getThree());
+        arr.add(3, dm.getFour());
+        arr.add(4, dm.getFive());
+        arr.add(5, dm.getSix());
+        arr.add(6, dm.getSeven());
+        arr.add(7, dm.getEight());
+        arr.add(8, dm.getNine());
+        arr.add(9, dm.getTen());
+        arr.add(10, dm.getEleven());
+        arr.add(11, dm.getTwelve());
         return arr;
     }
 
     @Override
     public ArrayList<String> selectSumCustomer() {
-        DeskMonth dm=new DeskMonth();
+        DeskMonth dm = new DeskMonth();
         ArrayList<DeskPojo> d = userMapper.selectSumCustomer();
 
-        for(int i=0;i<d.size();i++){
-            if(d.get(i).getMonth().equals("01")){
+        for (int i = 0; i < d.size(); i++) {
+            if (d.get(i).getMonth().equals("01")) {
                 dm.setOne(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("02")){
+            if (d.get(i).getMonth().equals("02")) {
                 dm.setTwo(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("03")){
+            if (d.get(i).getMonth().equals("03")) {
                 dm.setThree(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("04")){
+            if (d.get(i).getMonth().equals("04")) {
                 dm.setFour(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("05")){
+            if (d.get(i).getMonth().equals("05")) {
                 dm.setFive(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("06")){
+            if (d.get(i).getMonth().equals("06")) {
                 dm.setSix(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("07")){
+            if (d.get(i).getMonth().equals("07")) {
                 dm.setSeven(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("08")){
+            if (d.get(i).getMonth().equals("08")) {
                 dm.setEight(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("09")){
+            if (d.get(i).getMonth().equals("09")) {
                 dm.setNine(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("10")){
+            if (d.get(i).getMonth().equals("10")) {
                 dm.setTen(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("11")){
+            if (d.get(i).getMonth().equals("11")) {
                 dm.setEleven(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("12")){
+            if (d.get(i).getMonth().equals("12")) {
                 dm.setTwelve(d.get(i).getVal());
             }
         }
         ArrayList<String> arr = new ArrayList<>();
-        arr.add(0,dm.getOne());
-        arr.add(1,dm.getTwo());
-        arr.add(2,dm.getThree());
-        arr.add(3,dm.getFour());
-        arr.add(4,dm.getFive());
-        arr.add(5,dm.getSix());
-        arr.add(6,dm.getSeven());
-        arr.add(7,dm.getEight());
-        arr.add(8,dm.getNine());
-        arr.add(9,dm.getTen());
-        arr.add(10,dm.getEleven());
-        arr.add(11,dm.getTwelve());
+        arr.add(0, dm.getOne());
+        arr.add(1, dm.getTwo());
+        arr.add(2, dm.getThree());
+        arr.add(3, dm.getFour());
+        arr.add(4, dm.getFive());
+        arr.add(5, dm.getSix());
+        arr.add(6, dm.getSeven());
+        arr.add(7, dm.getEight());
+        arr.add(8, dm.getNine());
+        arr.add(9, dm.getTen());
+        arr.add(10, dm.getEleven());
+        arr.add(11, dm.getTwelve());
         return arr;
     }
 
     @Override
     public ArrayList<String> selectBussinessCounts() {
-        DeskMonth dm=new DeskMonth();
+        DeskMonth dm = new DeskMonth();
         ArrayList<DeskPojo> d = userMapper.selectBussinessCounts();
 
-        for(int i=0;i<d.size();i++){
-            if(d.get(i).getMonth().equals("01")){
+        for (int i = 0; i < d.size(); i++) {
+            if (d.get(i).getMonth().equals("01")) {
                 dm.setOne(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("02")){
+            if (d.get(i).getMonth().equals("02")) {
                 dm.setTwo(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("03")){
+            if (d.get(i).getMonth().equals("03")) {
                 dm.setThree(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("04")){
+            if (d.get(i).getMonth().equals("04")) {
                 dm.setFour(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("05")){
+            if (d.get(i).getMonth().equals("05")) {
                 dm.setFive(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("06")){
+            if (d.get(i).getMonth().equals("06")) {
                 dm.setSix(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("07")){
+            if (d.get(i).getMonth().equals("07")) {
                 dm.setSeven(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("08")){
+            if (d.get(i).getMonth().equals("08")) {
                 dm.setEight(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("09")){
+            if (d.get(i).getMonth().equals("09")) {
                 dm.setNine(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("10")){
+            if (d.get(i).getMonth().equals("10")) {
                 dm.setTen(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("11")){
+            if (d.get(i).getMonth().equals("11")) {
                 dm.setEleven(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("12")){
+            if (d.get(i).getMonth().equals("12")) {
                 dm.setTwelve(d.get(i).getVal());
             }
         }
         ArrayList<String> arr = new ArrayList<>();
-        arr.add(0,dm.getOne());
-        arr.add(1,dm.getTwo());
-        arr.add(2,dm.getThree());
-        arr.add(3,dm.getFour());
-        arr.add(4,dm.getFive());
-        arr.add(5,dm.getSix());
-        arr.add(6,dm.getSeven());
-        arr.add(7,dm.getEight());
-        arr.add(8,dm.getNine());
-        arr.add(9,dm.getTen());
-        arr.add(10,dm.getEleven());
-        arr.add(11,dm.getTwelve());
+        arr.add(0, dm.getOne());
+        arr.add(1, dm.getTwo());
+        arr.add(2, dm.getThree());
+        arr.add(3, dm.getFour());
+        arr.add(4, dm.getFive());
+        arr.add(5, dm.getSix());
+        arr.add(6, dm.getSeven());
+        arr.add(7, dm.getEight());
+        arr.add(8, dm.getNine());
+        arr.add(9, dm.getTen());
+        arr.add(10, dm.getEleven());
+        arr.add(11, dm.getTwelve());
         return arr;
     }
 
     @Override
     public ArrayList<String> selectContractCountsByMonth() {
-        DeskMonth dm=new DeskMonth();
+        DeskMonth dm = new DeskMonth();
         ArrayList<DeskPojo> d = userMapper.selectContractCounts();
 
-        for(int i=0;i<d.size();i++){
-            if(d.get(i).getMonth().equals("01")){
+        for (int i = 0; i < d.size(); i++) {
+            if (d.get(i).getMonth().equals("01")) {
                 dm.setOne(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("02")){
+            if (d.get(i).getMonth().equals("02")) {
                 dm.setTwo(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("03")){
+            if (d.get(i).getMonth().equals("03")) {
                 dm.setThree(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("04")){
+            if (d.get(i).getMonth().equals("04")) {
                 dm.setFour(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("05")){
+            if (d.get(i).getMonth().equals("05")) {
                 dm.setFive(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("06")){
+            if (d.get(i).getMonth().equals("06")) {
                 dm.setSix(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("07")){
+            if (d.get(i).getMonth().equals("07")) {
                 dm.setSeven(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("08")){
+            if (d.get(i).getMonth().equals("08")) {
                 dm.setEight(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("09")){
+            if (d.get(i).getMonth().equals("09")) {
                 dm.setNine(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("10")){
+            if (d.get(i).getMonth().equals("10")) {
                 dm.setTen(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("11")){
+            if (d.get(i).getMonth().equals("11")) {
                 dm.setEleven(d.get(i).getVal());
             }
-            if(d.get(i).getMonth().equals("12")){
+            if (d.get(i).getMonth().equals("12")) {
                 dm.setTwelve(d.get(i).getVal());
             }
         }
         ArrayList<String> arr = new ArrayList<>();
-        arr.add(0,dm.getOne());
-        arr.add(1,dm.getTwo());
-        arr.add(2,dm.getThree());
-        arr.add(3,dm.getFour());
-        arr.add(4,dm.getFive());
-        arr.add(5,dm.getSix());
-        arr.add(6,dm.getSeven());
-        arr.add(7,dm.getEight());
-        arr.add(8,dm.getNine());
-        arr.add(9,dm.getTen());
-        arr.add(10,dm.getEleven());
-        arr.add(11,dm.getTwelve());
+        arr.add(0, dm.getOne());
+        arr.add(1, dm.getTwo());
+        arr.add(2, dm.getThree());
+        arr.add(3, dm.getFour());
+        arr.add(4, dm.getFive());
+        arr.add(5, dm.getSix());
+        arr.add(6, dm.getSeven());
+        arr.add(7, dm.getEight());
+        arr.add(8, dm.getNine());
+        arr.add(9, dm.getTen());
+        arr.add(10, dm.getEleven());
+        arr.add(11, dm.getTwelve());
         return arr;
     }
 
@@ -431,6 +440,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public Integer selectCountRolePermission(Integer rid) {
         return userMapper.selectCountRolePermission(rid);
     }
-
 
 }

@@ -51,7 +51,11 @@ public class Businessoppo implements Serializable {
     @TableField("bof_dept")
     private String bofDept;
 
-    private String bprincipal;
+    //商机负责人
+    private Integer bprincipal;
+
+    @TableField("user_name")
+    private String username;
 
     @TableField("bjoin_man")
     private String bjoinMan;
@@ -61,6 +65,7 @@ public class Businessoppo implements Serializable {
     private String priority;
 
     private Integer status;
+
     @TableField("last_time")
     private Date lastTime;
 
@@ -113,6 +118,14 @@ public class Businessoppo implements Serializable {
 
     public void setBlinkman(String blinkman) {
         this.blinkman = blinkman;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Integer getBdept() {
@@ -179,11 +192,15 @@ public class Businessoppo implements Serializable {
         this.bofDept = bofDept;
     }
 
-    public String getBprincipal() {
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Integer getBprincipal() {
         return bprincipal;
     }
 
-    public void setBprincipal(String bprincipal) {
+    public void setBprincipal(Integer bprincipal) {
         this.bprincipal = bprincipal;
     }
 
@@ -244,7 +261,8 @@ public class Businessoppo implements Serializable {
                 ", bneed='" + bneed + '\'' +
                 ", bfile='" + bfile + '\'' +
                 ", bofDept='" + bofDept + '\'' +
-                ", bprincipal='" + bprincipal + '\'' +
+                ", bprincipal=" + bprincipal +
+                ", username='" + username + '\'' +
                 ", bjoinMan='" + bjoinMan + '\'' +
                 ", battention='" + battention + '\'' +
                 ", priority='" + priority + '\'' +

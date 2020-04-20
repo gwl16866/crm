@@ -276,7 +276,6 @@
                 ,limit: 3
                 ,page:true
                 ,cols: [[
-                    {type: "checkbox", width: 50, fixed: "left"},
                     {field: 'cname', width: 120, title: '客户名称', sort: true,templet:'<div><a href="../../customerManager/selectEmpById.do?cid={{d.cid}}">{{d.cname}}</a></div>'},
                     {field: 'bussinessCount', width: 120, title: '商机数',templet:'<div><a href="/projectPage/bussinessOppo/myBussinessOppo.html">{{d.bussinessCount}}</a></div>'},
                     {field: 'bpredictMoney', width: 120, title: '预计成交金额', sort: true},
@@ -301,8 +300,7 @@
         });
 
         // 监听添加操作
-        $(".data-add-btn").on("click", function () {
-
+        $("body").on("click", '.data-add-btn',function () {
             var index = layer.open({
                 title: '添加用户',
                 type: 2,

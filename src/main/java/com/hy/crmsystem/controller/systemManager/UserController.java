@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +22,6 @@ import java.util.List;
  *
  * @author Mr.Gao
  * @since 2020-04-02
- *
  */
 @Controller
 @RequestMapping("/systemManager")
@@ -60,12 +58,17 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/updateUser.do")
     public String updateUser(User user) {
-        Object salt = ByteSource.Util.bytes(user.getUsername());
-        System.out.println("修改"+salt);
-        Object simpleHash = new SimpleHash("MD5", user.getPassword(), salt, 1024);
-        System.out.println(simpleHash);
-        user.setPassword(String.valueOf(simpleHash));
-        userService.updateUser(user);
+        System.out.println("+++++++++++++++++++++++++++++++++++" + user.getPassword());
+        if (user.getPassword() == null || user.getPassword().equals("")) {
+            System.out.println("++++++++++++++++++++++++++++++++++++++==========" + user.getPassword());
+            userService.NoupdateUserPassword(user);
+        } else {
+            //密码加盐
+            Object salt = ByteSource.Util.bytes(user.getUsername());
+            Object simpleHash = new SimpleHash("MD5", user.getPassword(), salt, 1024);
+            user.setPassword(String.valueOf(simpleHash));
+            userService.updateUser(user);
+        }
         return "1";
     }
 
@@ -82,13 +85,12 @@ public class UserController {
         return userService.queryDept();
     }
 
-
     @ResponseBody
     @RequestMapping("/queryAllRole.do")
     public LayuiData queryAllRole(Role role
-             , @RequestParam(value = "page", required = true, defaultValue = "1") int page
+            , @RequestParam(value = "page", required = true, defaultValue = "1") int page
             , @RequestParam(value = "limit", required = true, defaultValue = "5") int pageSize) {
-       List<Role> RoleList =  userService.queryAllRole(role);
+        List<Role> RoleList = userService.queryAllRole(role);
         Page pageHelper = PageHelper.startPage(page, pageSize, true);
         LayuiData layuiData = new LayuiData();
         layuiData.setMsg("");
@@ -108,45 +110,40 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/updateRole.do")
     public String updateRole(Role role) {
-      userService.updateRole(role);
+        userService.updateRole(role);
         return "1";
     }
-
-
 
     @ResponseBody
     @RequestMapping("/deleteRole.do")
     public String deleteRole(Integer rid) {
-       Integer size1= userService.selectCountRolePermission(rid);
-       Integer size2= userService.selectCountUserRole(rid);
+        Integer size1 = userService.selectCountRolePermission(rid);
+        Integer size2 = userService.selectCountUserRole(rid);
 
-       if(size1 != 0 && size2 != 0){
-           return "2";
-       }else {
-           userService.deleteRole(rid);
-           return "1";
-       }
+        if (size1 != 0 && size2 != 0) {
+            return "2";
+        } else {
+            userService.deleteRole(rid);
+            return "1";
+        }
     }
 
     @RequestMapping("/setRole.do")
-    public String setRole(Model model,Integer uid) {
+    public String setRole(Model model, Integer uid) {
         //所有角色
-        List<Role> RoleList =  userService.queryAllRole(new Role());
+        List<Role> RoleList = userService.queryAllRole(new Role());
         //拥有角色
-        List<Role> HaveRoleList =  userService.queryHaveRole(uid);
-        model.addAttribute("allRoles",RoleList);
-        model.addAttribute("some",HaveRoleList);
+        List<Role> HaveRoleList = userService.queryHaveRole(uid);
+        model.addAttribute("allRoles", RoleList);
+        model.addAttribute("some", HaveRoleList);
         return "/projectPage/systemManager/setRole";
     }
 
     @ResponseBody
     @RequestMapping("/updateRoleUid.do")
     public String updateRoleUid() {
-           System.out.println();
-           return "null";
+        System.out.println();
+        return "null";
     }
-
-
-
 
 }

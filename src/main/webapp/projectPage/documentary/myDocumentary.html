@@ -171,10 +171,9 @@
 
 
         // 监听添加操作
-        $(".data-add-btn").on("click", function () {
-
+        $("body").on("click",'.data-add-btn', function () {
             var index = layer.open({
-                title: '添加用户',
+                title: '添加跟单',
                 type: 2,
                 shade: 0.2,
                 maxmin:true,

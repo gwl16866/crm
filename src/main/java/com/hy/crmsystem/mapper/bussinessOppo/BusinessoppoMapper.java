@@ -5,16 +5,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
 import com.hy.crmsystem.entity.customerManager.Customer;
-import com.hy.crmsystem.entity.customerManager.Kehuiganlizonghe;
-import com.hy.crmsystem.entity.customerManager.Moneyinfor;
-import com.hy.crmsystem.mapper.afterSell.SqlProvider;
-import com.hy.crmsystem.mapper.customerManager.SqlProvider1;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
-
-import java.util.List;
 
 /**
  * <p>
@@ -30,13 +24,8 @@ public interface BusinessoppoMapper extends BaseMapper<Businessoppo> {
     @SelectProvider(type = SqlProvider2.class,method = "select_businessoppo_like")
     IPage<Businessoppo> queryAllList(@Param("page") Page<Businessoppo> page, @Param("businessoppo") Businessoppo businessoppo);
 
-    @SelectProvider(type = SqlProvider2.class,method = "select_businessoppo_like")
-    public List<Businessoppo> listQueryAll(@Param("businessoppo") Businessoppo businessoppo);
-
-
-
-
-
+    /*@SelectProvider(type = SqlProvider2.class,method = "select_businessoppo_like")
+    public List<Businessoppo> listQueryAll(@Param("businessoppo") Businessoppo businessoppo);*/
 
     @Select("select * from businessoppo where bid=#{value}")
     public Businessoppo selectByName(String bid);
@@ -45,10 +34,10 @@ public interface BusinessoppoMapper extends BaseMapper<Businessoppo> {
     public Customer selectBusinessoppo(String bid);
 
 
-    /**
+/*    *//**
      * 查询新增条数
-     */
+     *//*
     @SelectProvider(type = SqlProvider2.class,method = "selectNewCount")
-    public Integer selectNewCount(@Param("type")String type);
+    public Integer selectNewCount(@Param("type")String type);*/
 
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author Mr.Gao
@@ -25,12 +25,10 @@ public interface UserMapper extends BaseMapper<User> {
     public User selectDengLuRen(Object name);
 
     @Select("SELECT user_name FROM user where user_name=#{username}")
-     public  String selectname(String username);
-
-
+    public String selectname(String username);
 
     //查询所有
-    @SelectProvider(type = UserDao.class,method = "selectAllUser")
+    @SelectProvider(type = UserDao.class, method = "selectAllUser")
     public List<UserDept> selectAllUser(UserDept user);
 
     @Select("select * from user where  uid=#{uid}")
@@ -38,6 +36,10 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Update("update user set status=2 where uid=#{uid}")
     public void deleteUser(Integer uid);
+
+    //不修改密码
+    @Update("update user set dept_id=#{deptId},age=#{age},sex=#{sex} where uid=#{uid}")
+    public void NoupdateUserPassword(User user);
 
     @Update("update user set password=#{password},dept_id=#{deptId},age=#{age},sex=#{sex} where uid=#{uid}")
     public void updateUser(User user);
@@ -51,7 +53,6 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("SELECT COUNT(*)val,DATE_FORMAT(insert_date,'%m') month FROM customer GROUP BY DATE_FORMAT(insert_date,'%Y%m') ORDER BY DATE_FORMAT(insert_date,'%Y%m')")
     public ArrayList<DeskPojo> selectSumCustomer();
 
-
     @Select("SELECT COUNT(*)val,DATE_FORMAT(insert_date,'%m') month FROM businessoppo GROUP BY DATE_FORMAT(insert_date,'%Y%m') ORDER BY DATE_FORMAT(insert_date,'%Y%m')")
     public ArrayList<DeskPojo> selectBussinessCounts();
 
@@ -61,12 +62,11 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("select * from dept")
     public List<Dept> queryDept();
 
-    @SelectProvider(type = UserDao.class,method = "selectAllRole")
+    @SelectProvider(type = UserDao.class, method = "selectAllRole")
     public List<Role> queryAllRole(Role role);
 
     @Select("SELECT r.rid AS rid,r.role_name AS roleName FROM role r,userrole ur,USER u WHERE r.rid=ur.rid AND u.uid=ur.uid AND u.uid=#{uid}")
     public List<Role> queryHaveRole(Integer uid);
-
 
     @Select("select * from role where rid =#{rid}")
     public Role queryRoleById(Integer rid);

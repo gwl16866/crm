@@ -3,7 +3,7 @@
 <head>
     <base th:href="${#request.getContextPath()}+'/'">
     <meta charset="utf-8">
-    <title>所有合同</title>
+    <title>我的合同</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -183,16 +183,16 @@
 </div>
 <script type="text/html" id="rM">
     {{#  if(d.returnMoney == null){ }}
-    <a href=" contract/returnMoney.do?contractNum={{d.contractNum}}" class="layui-table-link">0[+]</a>
+    <a href=" contract/MyReturnMoney.do?contractNum={{d.contractNum}}" class="layui-table-link">0[+]</a>
     {{#  } else { }}
-    <a href=" contract/returnMoney.do?contractNum={{d.contractNum}}" class="layui-table-link">{{d.returnMoney}}[+]</a>
+    <a href=" contract/MyReturnMoney.do?contractNum={{d.contractNum}}" class="layui-table-link">{{d.returnMoney}}[+]</a>
     {{#  } }}
 </script>
 <script type="text/html" id="cf">
     {{#  if(d.openMoney == null){ }}
-    <a href=" contract/openPaper.do?contractNum={{d.contractNum}}" class="layui-table-link">0[+]</a>
+    <a href=" contract/MyOpenPaper.do?contractNum={{d.contractNum}}" class="layui-table-link">0[+]</a>
     {{#  } else { }}
-    <a href=" contract/openPaper.do?contractNum={{d.contractNum}}" class="layui-table-link">{{d.openMoney}}[+]</a>
+    <a href=" contract/MyOpenPaper.do?contractNum={{d.contractNum}}" class="layui-table-link">{{d.openMoney}}[+]</a>
     {{#  } }}
 </script>
 <script type="text/html" id="toolbarDemo">

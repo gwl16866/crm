@@ -3,7 +3,7 @@
 <head>
     <base th:href="${#request.getContextPath()}+'/'">
     <meta charset="utf-8">
-    <title>开票</title>
+    <title>我的开票</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -25,7 +25,7 @@
     $(function () {
         //返回上一个页面
         $("body").on("click", '.data-add-btn', function () {
-            window.location.href = "projectPage/contract/allContract.html";
+            window.location.href = "contract/selectMyCont.do";
             var index = parent.layer.getFrameIndex(window.name);
             parent.layer.close(index);
         });
@@ -53,7 +53,7 @@
                 success: function (msg) {
                     if (msg == 1) {
                         //关闭当前页面并打开主页面
-                        window.location.href = "projectPage/contract/allContract.html";
+                        window.location.href = "contract/selectMyCont.do";
                     } else {
                         layer.msg("添加失败", {icon: 6});
                     }
@@ -180,7 +180,7 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">开户行及账号</label>
-            <input type="text" name="account" id="account" oninput="if(value.length>11)value=value.slice(0,18)"
+            <input type="text" name="account" id="account" oninput="if(value.length>18)value=value.slice(0,18)"
                    autocomplete="off" class="layui-input" style="width: 400px">
         </div>
         <div class="layui-inline">
@@ -219,7 +219,9 @@
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">电话</label>
-            <input type="text" name="applyPhone"  id="applyPhone" oninput="if(value.length>11)value=value.slice(0,11)" autocomplete="off" class="layui-input" style="width: 400px">
+            <input type="text" name="applyPhone" id="applyPhone"
+                   oninput="if(value.length>11)value=value.slice(0,11)" autocomplete="off"
+                   class="layui-input" style="width: 400px">
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">相关附件</label>

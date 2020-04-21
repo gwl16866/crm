@@ -1,16 +1,11 @@
 package com.hy.crmsystem.mapper.documentary;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hy.crmsystem.entity.afterSell.ThemeBo;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
 import com.hy.crmsystem.entity.documentary.Documentary;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.hy.crmsystem.mapper.bussinessOppo.SqlProvider2;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -36,4 +31,11 @@ public interface DocumentaryMapper extends BaseMapper<Documentary> {
     @Select("SELECT documentary_time,documentary_class,documentary_people,detail,file FROM documentary where theme=#{theme}")
     public List<Documentary> selectTheme(String theme);
 
+    //根据商机查询跟单
+    @Select("select * from documentary where bid=#{bid}")
+    public List<Documentary> selectDocByBus(Integer bid);
+
+    //添加跟单时修改最后时间
+    @Update("update businessoppo set last_time=now() where bid=#{bid}")
+    public void updateBusTime(Integer bid);
 }

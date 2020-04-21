@@ -385,8 +385,12 @@
     });
 </script>
 <script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
-<script type="text/html" id="time">
-    {{layui.util.toDateString(d.signedTime,'yyyy-MM-dd')}}
+<script type="text/html" id="zuihogendan">
+    {{#  if(d.lastTime == null){ }}
+    <a href="../../documentary/selectDocByBus.do?bid={{d.bid}}" class="layui-table-link">暂无跟单</a>
+    {{#  } else { }}
+    <a href="../../documentary/selectDocByBus.do?bid={{d.bid}}" class="layui-table-link">{{layui.util.toDateString(d.lastTime,'yyyy-MM-dd')}}</a>
+    {{#  } }}
 </script>
 <script>
     layui.use(['jquery', 'table', 'layer', 'form', 'upload'], function () {
@@ -420,7 +424,7 @@
                 {field: 'status', title: '商机阶段'},
                 {field: 'bpredictMoney', title: '预计成交金额', sort: true},
                 {field: 'bprincipal', title: '商机负责人'},
-                {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
                 {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
             ]]
@@ -449,7 +453,7 @@
                     {field: 'status', title: '商机阶段'},
                     {field: 'bpredictMoney', title: '预计成交金额', sort: true},
                     {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                    {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
                     {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
                 ]
@@ -481,7 +485,7 @@
                     {field: 'status', title: '商机阶段'},
                     {field: 'bpredictMoney', title: '预计成交金额', sort: true},
                     {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                    {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
                     {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
                 ]],
@@ -512,7 +516,7 @@
                     {field: 'status', title: '商机阶段'},
                     {field: 'bpredictMoney', title: '预计成交金额', sort: true},
                     {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                    {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
                     {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'},
 
                 ]],
@@ -543,7 +547,7 @@
                     {field: 'status', title: '商机阶段'},
                     {field: 'bpredictMoney', title: '预计成交金额', sort: true},
                     {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                    {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
                     {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
                 ]],
@@ -574,7 +578,7 @@
                     {field: 'status', title: '商机阶段'},
                     {field: 'bpredictMoney', title: '预计成交金额', sort: true},
                     {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                    {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
                     {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
                 ]],
@@ -605,7 +609,7 @@
                     {field: 'status', title: '商机阶段'},
                     {field: 'bpredictMoney', title: '预计成交金额', sort: true},
                     {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                    {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
                     {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
                 ]],
@@ -636,7 +640,7 @@
                     {field: 'status', title: '商机阶段'},
                     {field: 'bpredictMoney', title: '预计成交金额', sort: true},
                     {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                    {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
                     {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
                 ]],
@@ -667,7 +671,7 @@
                     {field: 'status', title: '商机阶段'},
                     {field: 'bpredictMoney', title: '预计成交金额', sort: true},
                     {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
+                    {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
                     {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
                 ]],
@@ -701,7 +705,7 @@
         });
 
         // 监听添加操作
-        $(".data-add-btn").on("click", function () {
+        $("body").on("click", '.data-add-btn',function () {
 
             var index = layer.open({
                 title: '添加用户',

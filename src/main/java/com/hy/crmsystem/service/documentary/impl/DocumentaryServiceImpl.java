@@ -2,12 +2,11 @@ package com.hy.crmsystem.service.documentary.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
-import com.hy.crmsystem.entity.customerManager.Kehuiganlizonghe;
 import com.hy.crmsystem.entity.documentary.Documentary;
 import com.hy.crmsystem.mapper.documentary.DocumentaryMapper;
 import com.hy.crmsystem.service.documentary.IDocumentaryService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +47,16 @@ public class DocumentaryServiceImpl extends ServiceImpl<DocumentaryMapper, Docum
     @Override
     public List<Documentary> selectTheme(String theme) {
         return documentaryMapper.selectTheme(theme);
+    }
+
+    @Override
+    public List<Documentary> selectDocByBus(Integer bid) {
+        return documentaryMapper.selectDocByBus(bid);
+    }
+
+    @Override
+    public void updateBusTime(Integer bid) {
+         documentaryMapper.updateBusTime(bid);
     }
 
 }

@@ -199,14 +199,16 @@
                     content: '../../systemManager/setRole.do?uid='+data.uid,
                 });
 
-
-
-
-
-
-
             }else if (obj.event === 'permiss') {
-
+                var index = layer.open({
+                    title: '用户权限',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['100%', '100%'],
+                    content: '../../systemManager/setUserRole.do?uid='+data.uid,
+                });
 
 
 

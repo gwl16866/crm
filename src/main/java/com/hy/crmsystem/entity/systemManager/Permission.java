@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -24,6 +25,21 @@ public class Permission implements Serializable {
     @TableField("permission_name")
     private String permissionName;
 
+    @TableField("parent_id")
+    private String parentId;
+
+    private String url;
+
+    private List<Permission> menuPermission;
+
+    public List<Permission> getMenuPermission() {
+        return menuPermission;
+    }
+
+    public void setMenuPermission(List<Permission> menuPermission) {
+        this.menuPermission = menuPermission;
+    }
+
     public Integer getPid() {
         return pid;
     }
@@ -40,11 +56,29 @@ public class Permission implements Serializable {
         this.permissionName = permissionName;
     }
 
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "Permission{" +
-        "pid=" + pid +
-        ", permission_name=" + permissionName +
-        "}";
+                "pid=" + pid +
+                ", permissionName='" + permissionName + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", url='" + url + '\'' +
+                '}';
     }
 }

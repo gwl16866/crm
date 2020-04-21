@@ -46,6 +46,9 @@
         <button type="button" class="layui-btn refresh-btn">
             <i class="layui-icon layui-icon-refresh"></i> 刷新
         </button>
+        <button type="button" class="layui-btn add-role-btn">
+            <i class="layui-icon layui-icon-addition"></i> 新增
+        </button>
     </div>
 </script>
 <body>
@@ -154,6 +157,18 @@
         //刷新页面
         $("body").on("click",'.refresh-btn', function () {
             window.location.reload();
+        });
+        //新增role
+        $("body").on("click",'.add-role-btn', function () {
+            var index = layer.open({
+                title: '新增角色',
+                type: 2,
+                shade: 0.2,
+                maxmin: true,
+                shadeClose: true,
+                area: ['50%', '70%'],
+                content: '../../projectPage/systemManager/addRole.html',
+            });
         });
 
     });

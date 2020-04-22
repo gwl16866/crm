@@ -36,12 +36,17 @@
     });
 </script>
 <script>
-    layui.use(['form', 'layedit', 'upload', 'laydate'], function () {
-        var form = layui.form;//只有执行了这一步，部分表单元素才会自动修饰成功
-        var layedit = layui.layedit,
-            $ = layui.jquery;
-        var upload = layui.upload;
-        var laydate = layui.laydate;
+    layui.config({
+    }).extend({
+        selectN:'layui/layui_extends/selectN',
+        selectM:'layui/layui_extends/selectM',
+    }).use(['form', 'layedit','selectM', 'upload', 'laydate'], function () {
+        var form = layui.form,
+            layedit = layui.layedit,
+            selectM = layui.selectM,
+            $ = layui.jquery,
+            upload = layui.upload,
+            laydate = layui.laydate;
         form.render();
         //监听提交
         form.on('submit(formDemo)', function (data) {
@@ -62,6 +67,19 @@
                 }
             });
             return false;
+        });
+        //多选标签-基本配置
+        selectM({
+            //元素容器【必填】
+            elem: '#relevancePeople'
+            //候选数据【必填】
+            ,data: 'afterSell/selectUser.do'
+            ,max:3//可以选几个
+            ,width:400
+            ,delimiter:','//
+            ,field:{idName:'username',titleName:'username'}
+            //添加验证
+            ,verify:'required'
         });
         //执行一个laydate实例
         laydate.render({
@@ -123,10 +141,10 @@
         </div>
     </div>
     <div class="layui-form-item">
+        <input type="hidden" name="relevanceDept" th:value="${cont.getOfdept()}">
         <div class="layui-inline">
-            <label class="layui-form-label">登记人</label>
-            <input type="text" name="writePeople" required lay-verify="required"
-                   autocomplete="off" class="layui-input" style="width: 400px">
+            <label class="layui-form-label">关联人员</label>
+            <div class="layui-input-block" id="relevancePeople" name="relevancePeople"></div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">收款方式</label>
@@ -139,10 +157,10 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <input type="hidden" name="relevanceDept" th:value="${cont.getOfdept()}">
         <div class="layui-inline">
-            <label class="layui-form-label">关联人员</label>
-            <input type="text" name="relevancePeople" autocomplete="off" class="layui-input" style="width: 400px">
+            <label class="layui-form-label">登记人</label>
+            <input type="text" name="writePeople" th:value="${name}" readonly="readonly"
+                   autocomplete="off" class="layui-input" style="width: 400px">
         </div>
         <div class="layui-inline">
             <input type="hidden" name="cid" th:value="${cont.getCid()}">

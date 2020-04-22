@@ -40,9 +40,13 @@ public interface ContractMapper extends BaseMapper<Contract> {
     @Select("select * from customer where cname=#{cname}")
     public Customer selectCustomer(String cname);
 
-    //帖子详情
+    //汇款详情
+    @Select("select c.*,r.* from contract c,customer r where c.customer_id=r.cid and c.cid=#{cid}")
+    public ContractCust contractDetails(Integer cid);
+
+    //我的汇款详情
     @Select("select c.*,r.* from contract c,customer r where c.customer_id=r.cid and c.contract_num=#{contractNum}")
-    public ContractCust contractDetails(String contractNum);
+    public ContractCust contractDetailsMy(String contractNum);
 
     //修改合同未还款
     @Update("update contract set remain_money=remain_money-#{returnMoney} where cid=#{cid}")

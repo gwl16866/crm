@@ -67,7 +67,7 @@ public class Businessoppo implements Serializable {
     private Integer status;
 
     @TableField("last_time")
-    private Date lastTime;
+    private String lastTime;
 
     public String getBname() {
         return bname;
@@ -235,11 +235,11 @@ public class Businessoppo implements Serializable {
         this.status = status;
     }
 
-    public Date getLastTime() {
+    public String getLastTime() {
         return lastTime;
     }
 
-    public void setLastTime(Date lastTime) {
+    public void setLastTime(String lastTime) {
         this.lastTime = lastTime;
     }
 

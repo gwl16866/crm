@@ -39,11 +39,14 @@ public class BusinessoppoController {
     @Autowired
     private ICustomerService customerService;
 
+    //全部商机
     @RequestMapping(value = "/queryAll.do")
     @ResponseBody
     public LayuiData query(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "3") Integer limit, Businessoppo businessoppo, HttpSession session) {
 
         IPage list1 = businessoppoService.pages(page, limit, businessoppo, session);
+
+
         LayuiData layUiData = new LayuiData();
         layUiData.setCode(0);
         layUiData.setMsg("");

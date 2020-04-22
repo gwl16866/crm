@@ -1,10 +1,9 @@
 package com.hy.crmsystem.service.documentary;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
-import com.hy.crmsystem.entity.customerManager.Kehuiganlizonghe;
-import com.hy.crmsystem.entity.documentary.Documentary;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
+import com.hy.crmsystem.entity.documentary.Documentary;
 import org.apache.ibatis.annotations.Param;
 
 import javax.servlet.http.HttpSession;
@@ -25,4 +24,6 @@ public interface IDocumentaryService extends IService<Documentary> {
     public List<Documentary> listQueryAll(@Param("documentary") Documentary documentary);
     public List<Businessoppo> selectBname();
     public List<Documentary> selectTheme(String theme);
+    public List<Documentary> selectDocByBus(Integer bid);
+    public void updateBusTime(Integer bid);
 }

@@ -206,12 +206,12 @@
                 ,cols: [[
                     {type: "checkbox", width: 50, fixed: "left"},
                     {field: 'cname', width: 120, title: '客户名称', sort: true,templet:'<div><a href="../../customerManager/selectEmpById.do?cid={{d.cid}}">{{d.cname}}</a></div>'},
-                    {field: 'bussinessCount', width: 120, title: '商机数',templet:'<div><a href="/projectPage/bussinessOppo/myBussinessOppo.html">{{d.bussinessCount}}</a></div>'},
+                    {field: 'bussinessCount', width: 120, title: '商机数',templet:'<div><a href="../../customerManager/selectById.do?cid={{d.cid}}">{{d.bussinessCount}}</a></div>'},
                     {field: 'bpredictMoney', width: 120, title: '预计成交金额', sort: true},
-                    {field: 'contractCount', width: 120, title: '合同数',templet:'<div><a href="../../page/table/add.html" style="background-color: #00b7ee">{{d.contractCount}}</a></div>'},
+                    {field: 'contractCount', width: 120, title: '合同数',templet:'<div><a href="../../customerManager/selectById1.do?cid={{d.cid}}">{{d.contractCount}}</a></div>'},
                     {field: 'contractMoney',width: 120, title: '合同金额'},
                     {field: 'returnMoney', width: 120, title: '回款额'},
-                    {field: 'caftersaleCount', width: 120, title: '售后服务数',templet:'<div><a href="../../page/table/add.html" style="background-color: #00b7ee">{{d.caftersaleCount}}</a></div>'},
+                    {field: 'caftersaleCount', width: 120, title: '售后服务数',templet:'<div><a href="../../customerManager/selectById2.do?cid={{d.cid}}" style="background-color: #00b7ee">{{d.caftersaleCount}}</a></div>'},
                     {field: 'serviceScore', width: 120, title: '服务均分'}
                 ]]
 

@@ -3,6 +3,10 @@ package com.hy.crmsystem.mapper.customerManager;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hy.crmsystem.entity.afterSell.Aftersell;
+import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
+import com.hy.crmsystem.entity.contract.Contract;
+import com.hy.crmsystem.entity.customerManager.AftersellShu;
 import com.hy.crmsystem.entity.customerManager.Customer;
 import com.hy.crmsystem.entity.customerManager.Kehuiganlizonghe;
 import com.hy.crmsystem.entity.customerManager.Moneyinfor;
@@ -50,4 +54,23 @@ public interface CustomerMapper extends BaseMapper<Customer> {
 
     @Select("select max(cid) cid from customer")
     public Customer selectMaxCustomer();
+
+    @Select("select bid from businessoppo where cid=#{value}")
+    public List<String> select(String cid);
+
+    @SelectProvider(type = SqlProvider1.class,method = "select1")
+    public List<Businessoppo> select1(@Param("bid") String[] bid);
+
+    @Select("select cid from contract where customer_id=#{value}")
+    public List<String> selectBy(String cid);
+
+    @SelectProvider(type = SqlProvider1.class,method = "select2")
+    public List<Contract> select2(@Param("cid") String[] cid);
+
+    @Select("select aid from aftersell where customer_id=#{value}")
+    public List<String> selectBy1(String cid);
+
+    @SelectProvider(type = SqlProvider1.class,method = "select3")
+    public List<AftersellShu> select3(@Param("aid") String[] aid);
+
 }

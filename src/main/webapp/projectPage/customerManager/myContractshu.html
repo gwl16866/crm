@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath()}+'/'">
+    <meta charset="utf-8">
+    <title>所有合同</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="css/public.css" media="all">
+    <style>
+        .layuimini-qiuck-module a i {
+            display: inline-block;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            border-radius: 2px;
+            font-size: 30px;
+            background-color: #F8F8F8;
+            color: #333;
+            transition: all .3s;
+            -webkit-transition: all .3s;
+        }
+
+        .layuimini-qiuck-module a cite {
+            position: relative;
+            top: 2px;
+            display: block;
+            color: #666;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .main_btn > p {
+            height: 40px;
+        }
+
+        #tab {
+            position: absolute;
+            top: 92px;
+            left: 250px;
+        }
+
+        #search {
+            position: absolute;
+            top: 40px;
+            left: 290px
+        }
+
+        .layui-form-select {
+            width: 190px;
+        }
+    </style>
+</head>
+<body>
+<script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<div id="search">
+    <form class="layui-form layui-form-pane">
+        <input type="hidden" name="cid" th:each="con:${list1}" th:value="${con}" id="cid"/>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">条件:</label>
+                <div class="layui-input-inline">
+                    <select name="condition" lay-filter="condition" class="layui-form-select">
+                        <option value=1>按合同全称</option>
+                        <option value=2>按合同编号</option>
+                        <option value=3>按所属行业</option>
+                    </select>
+                </div>
+                <div class="layui-inline"  id="keyword" >
+                    <input type="text" name="keyword"required lay-verify="required" placeholder="请输入关键字"
+                           autocomplete="off" class="layui-input" style="width: 400px">
+                </div>
+                <div class="layui-inline">
+                    <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn">
+                        <i class="layui-icon"></i> 搜 索
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/html" id="rM">
+    {{#  if(d.returnMoney == null){ }}
+    <a href=" contract/returnMoney.do?contractNum={{d.contractNum}}" class="layui-table-link">0[+]</a>
+    {{#  } else { }}
+    <a href=" contract/returnMoney.do?contractNum={{d.contractNum}}" class="layui-table-link">{{d.returnMoney}}[+]</a>
+    {{#  } }}
+</script>
+<script type="text/html" id="cf">
+    {{#  if(d.openMoney == null){ }}
+    <a href=" contract/openPaper.do?contractNum={{d.contractNum}}" class="layui-table-link">0[+]</a>
+    {{#  } else { }}
+    <a href=" contract/openPaper.do?contractNum={{d.contractNum}}" class="layui-table-link">{{d.openMoney}}[+]</a>
+    {{#  } }}
+</script>
+<script type="text/html" id="time">
+    {{layui.util.toDateString(d.signedTime,'yyyy-MM-dd')}}
+</script>
+<div id="tab">
+    <table class="layui-hide" id="currentTable" lay-filter="currentTable"></table>
+</div>
+<script>
+    layui.use(['form', 'table', 'laydate','jquery'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table,
+            layuimini = layui.layuimini;
+        laydate = layui.laydate;
+        var  noRepeat1=[];
+        $('input[name="cid"]').each(function (index,domEle) {
+            noRepeat1.push($("#cid").val());
+        });
+        table.render({
+            width: 1120,
+            elem: '#currentTable',
+            url: 'customerManager/select2.do?cid='+noRepeat1,
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            cols: [
+                [
+                    {field: 'contractName', title: '合同全称',templet:'<div><a href="contract/myContractDetails.do?contractNum={{d.contractNum}}" style="color: #1E9FFF">{{d.contractName}}</a></div> '},
+                    {field: 'contractNum', title: '合同编号'},
+                    {field: 'contractMoney', title: '合同金额', sort: true},
+                    {field: 'returnMoney', title: '汇款额',templet:'#rM'},
+                    {field: 'openMoney', title: '开票额',templet:'#cf'},
+                    {field: 'signedTime', title: '签约日期', templet: '#time'}
+                ]
+            ],
+            limits: [6, 9, 25, 50, 100],
+            limit: 6,
+            page: true
+        });
+        //   监听submit并改同步提交为异步提交并重新渲染表格
+        form.on('submit(data-search-btn)', function (data) {
+            table.reload("currentTable", {
+                where: data.field
+            });
+            return false; //阻止表单跳转。
+        });
+
+        //刷新页面
+        $("body").on("click",'.refresh-btn', function () {
+            window.location.reload();
+        });
+        //下拉框
+        form.on('select(condition)', function (data) {
+            if (data.value==1){
+                $("#keyword").empty();
+                $("#keyword").append("<input type=\"text\" name=\"keyword\"  required lay-verify=\"required\" placeholder=\"请输入名称\"\n" +
+                    "                           autocomplete=\"off\" class=\"layui-input\" style=\"width: 400px\">");
+            }
+            if (data.value==2){
+                $("#keyword").empty();
+                $("#keyword").append("<input type=\"text\" name=\"keyword\"  required lay-verify=\"required\" placeholder=\"请输入编号\"\n" +
+                    "                           autocomplete=\"off\" class=\"layui-input\" style=\"width: 400px\">");
+            }
+            if (data.value == 3) {
+                $("#keyword").empty();
+                $("#keyword").append(" <select name=\"keyword\"  style=\"width: 200px;\">\n" +
+                    "                <option value=\"IT\">IT</option>\n" +
+                    "                <option value=\"酒店旅游\">酒店旅游</option>\n" +
+                    "            </select>");
+                form.render();
+            }
+        });
+    });
+</script>
+</body>
+</html>

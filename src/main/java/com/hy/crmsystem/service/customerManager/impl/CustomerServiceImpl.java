@@ -4,6 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hy.crmsystem.entity.afterSell.Aftersell;
+import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
+import com.hy.crmsystem.entity.contract.Contract;
+import com.hy.crmsystem.entity.customerManager.AftersellShu;
 import com.hy.crmsystem.entity.customerManager.Customer;
 import com.hy.crmsystem.entity.customerManager.Kehuiganlizonghe;
 import com.hy.crmsystem.entity.customerManager.Moneyinfor;
@@ -83,6 +87,33 @@ private MoneyinforMapper moneyinforMapper;
         }
         Integer c=customerMapper.selectCount(qr);
         return String.valueOf(c);
+    }
+
+    @Override
+    public List<String> select(String cid) {
+        return customerMapper.select(cid);
+    }
+
+    @Override
+    public List<String> selectBy(String cid) {
+        return customerMapper.selectBy(cid);
+    }
+    @Override
+    public List<String> selectBy1(String cid) {
+        return customerMapper.selectBy1(cid);
+    }
+
+    @Override
+    public List<Businessoppo> select1(@Param("bid")String[] bid) {
+        return customerMapper.select1(bid);
+    }
+    @Override
+    public List<Contract> select2(@Param("cid")String[] cid) {
+        return customerMapper.select2(cid);
+    }
+    @Override
+    public List<AftersellShu> select3(@Param("aid")String[] aid) {
+        return customerMapper.select3(aid);
     }
 
    /* @Override

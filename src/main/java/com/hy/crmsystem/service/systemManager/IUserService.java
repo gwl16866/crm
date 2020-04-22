@@ -40,8 +40,7 @@ public interface IUserService extends IService<User> {
     public void deleteUserRoleByUid(Integer uid);
     public List<Permission> queryFirstPermission();
     public List<Userhand> userHaveHand(Integer uid);
-
-
-
-
+    public List<Dept> select();
+    public String selectname(String username);
+    public void add(User user);
 }

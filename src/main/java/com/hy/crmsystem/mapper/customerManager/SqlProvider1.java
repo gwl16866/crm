@@ -37,4 +37,46 @@ public class SqlProvider1 {
 
         return buffer.toString();
     }*/
+   public String select1(@Param("bid") String[] bid) {
+       StringBuffer buffer = new StringBuffer("select bname,status,bpredict_money,bprincipal,last_time from businessoppo");
+       buffer.append(" where bid in");
+       buffer.append("(");
+       for(int i=0;i<bid.length;i++){
+           buffer.append(bid[i]);
+           if(i<bid.length-1){
+               buffer.append(",");
+           }
+       }
+       buffer.append(")");
+       return buffer.toString();
+   }
+   public String select2(@Param("cid") String[] cid) {
+       StringBuffer buffer = new StringBuffer("SELECT c.contract_name,c.contract_num,c.contract_money,r.return_money,SUM(o.ticket_money) openMoney,c.signed_time FROM contract c,returnmoneydetails r,openpaper o WHERE c.cid=r.cid AND c.cid=o.contract_file ");
+       buffer.append(" and c.cid in ");
+       buffer.append("(");
+       for(int i=0;i<cid.length;i++){
+           buffer.append(cid[i]);
+           if(i<cid.length-1){
+               buffer.append(",");
+           }
+       }
+       buffer.append(")");
+       return buffer.toString();
+   }
+   public String select3(@Param("aid") String[] aid) {
+       StringBuffer buffer = new StringBuffer("SELECT t.theme,a.service_type,a.starttime,a.service_people,a.service_score FROM aftersell a ,theme t WHERE a.theme_id=t.id  ");
+       buffer.append(" and a.aid in ");
+       buffer.append("(");
+       for(int i=0;i<aid.length;i++){
+           buffer.append(aid[i]);
+           if(i<aid.length-1){
+               buffer.append(",");
+           }
+       }
+       buffer.append(")");
+       return buffer.toString();
+   }
+
+
+
 }

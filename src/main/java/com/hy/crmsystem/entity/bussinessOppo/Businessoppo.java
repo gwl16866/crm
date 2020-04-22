@@ -69,7 +69,6 @@ public class Businessoppo implements Serializable {
     @TableField("last_time")
     private Date lastTime;
 
-
     public String getBname() {
         return bname;
     }

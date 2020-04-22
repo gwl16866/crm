@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
-    @Insert("insert into user values(#{username},#{password},#{age},#{sex})")
+    @Insert("insert into user(dept_id,user_name,password,age,sex) values(#{deptId},#{username},#{password},#{age},#{sex})")
     public void Add(User user);
 
     @Select("select * from user where user_name=#{name}")

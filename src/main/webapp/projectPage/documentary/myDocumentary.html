@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
+    <base th:href="${#request.getContextPath()}+'/'">
     <title>首页二</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
-    <link rel="stylesheet" href="../../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
-    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <link rel="stylesheet" href="lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="css/public.css" media="all">
     <style>
         .layui-card {border:1px solid #f2f2f2;border-radius:5px;}
         .icon {margin-right:10px;color:#1aa094;}
@@ -62,7 +63,7 @@
 </head>
 <body>
 <div id="img">
-    <img src="../../imgs/wx.png" style="height: 60px;width: 60px">
+    <img src="imgs/wx.png" style="height: 60px;width: 60px">
 </div>
 <div id="f">
     <font size="6">我的跟单</font>
@@ -112,12 +113,9 @@
 <div id="tab">
     <table class="layui-hide" id="tableId" lay-filter="tableId"></table>
 </div>
-
-
-
-
-
-<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<!--当前登录人ID-->
+<input type="hidden" th:value="${uid}" id="uid">
+<script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script>
     layui.use(['jquery','table','layer','form','upload'], function () {
         var $ = layui.jquery,
@@ -131,7 +129,7 @@
         table.render({
             width : 1300,
             elem: '#tableId',
-            url: '../../documentary/queryAll.do',
+            url: 'documentary/queryAll.do'+$("#uid").val(),
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
@@ -145,7 +143,7 @@
                     field: 'theme',
                     title: '跟单主题',
                     sort: true,
-                    templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.theme}}</a></div>'
+                    templet: '<div><a href="bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.theme}}</a></div>'
                 },
                 {field: 'documentaryPeople',  title: '跟单人', sort: true},
                 {field: 'detail',  title: '详细内容'},
@@ -184,7 +182,7 @@
                 maxmin:true,
                 shadeClose: true,
                 area: ['100%', '100%'],
-                content: '/crmsystem/projectPage/documentary/addDocumentary.html',
+                content: 'projectPage/documentary/addDocumentary.html',
             });
             $(window).on("resize", function () {
                 layer.full(index);

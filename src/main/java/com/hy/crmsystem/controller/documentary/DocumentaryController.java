@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
 import com.hy.crmsystem.entity.documentary.Documentary;
 import com.hy.crmsystem.entity.systemManager.LayuiData;
+import com.hy.crmsystem.entity.systemManager.User;
 import com.hy.crmsystem.mapper.documentary.DocumentaryMapper;
 import com.hy.crmsystem.service.bussinessOppo.impl.BusinessoppoServiceImpl;
 import com.hy.crmsystem.service.documentary.IDocumentaryService;
+import com.hy.crmsystem.service.systemManager.impl.UserServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +37,8 @@ public class DocumentaryController {
     private DocumentaryMapper documentaryMapper;
     @Autowired
     BusinessoppoServiceImpl businessoppoService;
-
+    @Autowired
+    UserServiceImpl userService;
 
     @RequestMapping(value = "/queryAll.do")
     @ResponseBody
@@ -97,6 +100,15 @@ public class DocumentaryController {
         model.addAttribute("doc",documentary);
         model.addAttribute("name",name);
         return "projectPage/documentary/documentaryDetails";
+    }
+    //我的商机
+    @RequestMapping("/selectMyBus1.do")
+    public String selectMyCont1(Model model) {
+        //查询登录人
+        Object name = SecurityUtils.getSubject().getPrincipal();
+        User u = userService.selectDengLuRen(name);
+        model.addAttribute("uid", u.getUid());
+        return "projectPage/documentary/myDocumentary";
     }
 
 

@@ -56,6 +56,7 @@
     </style>
 </head>
 <body>
+<button class="layui-btn layui-btn-sm data-add-btn" id="but"> 返回</button>
 <div id="search">
     <form class="layui-form layui-form-pane" action="">
         <input type="hidden" name="aid" th:each="after:${list1}" th:value="${after}" id="aid"/>
@@ -108,6 +109,9 @@
             table = layui.table,
             layuimini = layui.layuimini,
             laydate=layui.laydate;
+        $("#but").click(function () {
+            window.parent.location.reload();
+        });
         var  noRepeat2=[];
         $('input[name="aid"]').each(function (index,domEle) {
             noRepeat2.push($("#aid").val());

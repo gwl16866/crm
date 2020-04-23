@@ -34,7 +34,7 @@ public class Businessoppo implements Serializable {
 
     private String blinkman;
 
-    private Integer bdept;
+    private String bdept;
 
     private String bjob;
 
@@ -127,11 +127,11 @@ public class Businessoppo implements Serializable {
         this.username = username;
     }
 
-    public Integer getBdept() {
+    public String getBdept() {
         return bdept;
     }
 
-    public void setBdept(Integer bdept) {
+    public void setBdept(String bdept) {
         this.bdept = bdept;
     }
 

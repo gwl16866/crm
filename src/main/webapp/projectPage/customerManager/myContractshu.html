@@ -58,6 +58,7 @@
     </style>
 </head>
 <body>
+<button class="layui-btn layui-btn-sm data-add-btn" id="but"> 返回</button>
 <script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <div id="search">
     <form class="layui-form layui-form-pane">
@@ -112,6 +113,9 @@
             table = layui.table,
             layuimini = layui.layuimini;
         laydate = layui.laydate;
+        $("#but").click(function () {
+            window.parent.location.reload();
+        });
         var  noRepeat1=[];
         $('input[name="cid"]').each(function (index,domEle) {
             noRepeat1.push($("#cid").val());

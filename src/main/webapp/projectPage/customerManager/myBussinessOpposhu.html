@@ -163,6 +163,7 @@
     </style>
 </head>
 <body>
+<button class="layui-btn layui-btn-sm data-add-btn" id="but"> 返回</button>
 <div id="search">
     <form class="layui-form layui-form-pane" action="">
         <input type="hidden" name="bid" th:each="cuss:${cus}" th:value="${cuss}" id="bid"/>
@@ -229,6 +230,9 @@
         var layer = layui.layer;
         var form = layui.form;
         var upload = layui.upload;
+        $("#but").click(function () {
+            window.parent.location.reload();
+        });
         var noRepeat = [];
         $('input[name="bid"]').each(function (index, domEle) {
             noRepeat.push($(this).val());

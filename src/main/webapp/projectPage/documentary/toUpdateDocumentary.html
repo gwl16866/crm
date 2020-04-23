@@ -52,18 +52,18 @@
                 <div class="layui-input-inline">
                     <select name="cindustry">
                         <option value="1" selected>请选择</option>
-                        <option value="IT|互联网|通信|电子" th:selected="${cust.cindustry eq 'IT|互联网|通信|电子'}">IT|互联网|通信|电子</option>
-                        <option value="金融|银行|保险" th:selected="${cust.cindustry eq '金融|银行|保险'}">金融|银行|保险</option>
-                        <option value="房产|建筑建设|物业" th:selected="${cust.cindustry eq '房产|建筑建设|物业'}">房产|建筑建设|物业</option>
-                        <option value="广告|传媒|印刷出版" th:selected="${cust.cindustry eq '广告|传媒|印刷出版'}">广告|传媒|印刷出版</option>
-                        <option value="消费零售|贸易|交通物流" th:selected="${cust.cindustry eq '消费零售|贸易|交通物流'}">消费零售|贸易|交通物流</option>
-                        <option value="加工制造|仪表设备" th:selected="${cust.cindustry eq '加工制造|仪表设备'}">加工制造|仪表设备</option>
-                        <option value="管理咨询|教育科研|中介服务" th:selected="${cust.cindustry eq '管理咨询|教育科研|中介服务'}">管理咨询|教育科研|中介服务</option>
-                        <option value="医药生物|医疗保健" th:selected="${cust.cindustry eq '医药生物|医疗保健'}">医药生物|医疗保健</option>
-                        <option value="酒店旅游" th:selected="${cust.cindustry eq '酒店旅游'}">酒店旅游</option>
-                        <option value="能源矿产|石油化工" th:selected="${cust.cindustry eq '能源矿产|石油化工'}">能源矿产|石油化工</option>
-                        <option value="政府|非赢利机构|科研" th:selected="${cust.cindustry eq '政府|非赢利机构|科研'}">政府|非赢利机构|科研</option>
-                        <option value="其他" th:selected="${cust.cindustry eq '其他'}">其他</option>
+                        <option value="2">IT|互联网|通信|电子</option>
+                        <option value="3">金融|银行|保险</option>
+                        <option value="4">房产|建筑建设|物业</option>
+                        <option value="5">广告|传媒|印刷出版</option>
+                        <option value="6">消费零售|贸易|交通物流</option>
+                        <option value="7">加工制造|仪表设备</option>
+                        <option value="8">管理咨询|教育科研|中介服务</option>
+                        <option value="9">医药生物|医疗保健</option>
+                        <option value="10">酒店旅游</option>
+                        <option value="11">能源矿产|石油化工</option>
+                        <option value="12">政府|非赢利机构|科研</option>
+                        <option value="13">其他</option>
                     </select>
                 </div>
             </div>
@@ -256,7 +256,7 @@
                             //do...
                             parent.location.reload();
                         });
-                        window.location.href="/crmsystem/projectPage/bussinessOppo/myBussinessOppo.html"
+                        window.parent.location.reload();
                     }
                 }
             });

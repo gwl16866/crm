@@ -99,6 +99,10 @@ public class ContractController {
         //判断客户是否存在
         Customer cus = contractService.selectCustomer(customer.getCname());
         if (cus == null) {
+            customer.setClinkman(contract.getLinkman());
+            customer.setCofficeno(contract.getOfficeno());
+            customer.setCphonrno(contract.getPhoneno());
+            customer.setCemail(contract.getEmail());
             customerService.save(customer);
         }
         Customer c = customerService.selectMaxCustomer();

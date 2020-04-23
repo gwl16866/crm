@@ -41,6 +41,7 @@ public class ForumController {
         List<Article> list = forumService.selectForum(article, modules, keyword);
         for (Article a : list) {
             a.setCount(forumService.selectCountReply(a.getId()));
+
         }
         LayuiData layuiData = new LayuiData();
         layuiData.setCode(0);
@@ -56,7 +57,6 @@ public class ForumController {
     @RequestMapping("/addForum.do")
     public String addForum(Article article) {
         forumService.addForum(article);
-
         return "1";
     }
 

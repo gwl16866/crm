@@ -14,6 +14,10 @@ public class ContractDao {
         if (contract.getContractStatus() != null && contract.getContractStatus()<5) {
             sql.append(" and c.contract_status = '"+contract.getContractStatus()+"' ");
         }
+      /*  //已搁置 and YEARWEEK( DATE_FORMAT(c.signed_time,'%Y-%m-%d'),1) = YEARWEEK(NOW(),1)
+        if (contract.getContractStatus() != null && contract.getContractStatus()==4) {
+            sql.append(" and YEARWEEK( DATE_FORMAT(c.time,'%Y-%m-%d'),1) = YEARWEEK(NOW(),1) ");
+        }*/
         //本周
         if(contract.getContractStatus()!=null && contract.getContractStatus()==5){
             sql.append("  and YEARWEEK( DATE_FORMAT(c.signed_time,'%Y-%m-%d'),1) = YEARWEEK(NOW(),1)");

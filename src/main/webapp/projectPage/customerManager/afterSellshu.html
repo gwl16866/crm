@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath()}+'/'">
+    <meta charset="utf-8">
+    <title>首页二</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="css/public.css" media="all">
+    <script type="text/javascript" src="lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+    <style>
+        .layui-card {border:1px solid #f2f2f2;border-radius:5px;}
+        .icon {margin-right:10px;color:#1aa094;}
+        .icon-cray {color:#ffb800!important;}
+        .icon-blue {color:#1e9fff!important;}
+        .icon-tip {color:#ff5722!important;}
+        .layuimini-qiuck-module {text-align:center;margin-top: 10px}
+        .layuimini-qiuck-module a i {display:inline-block;width:100%;height:60px;line-height:60px;text-align:center;border-radius:2px;font-size:30px;background-color:#F8F8F8;color:#333;transition:all .3s;-webkit-transition:all .3s;}
+        .layuimini-qiuck-module a cite {position:relative;top:2px;display:block;color:#666;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;font-size:14px;}
+        .welcome-module {width:100%;height:210px;}
+        .panel {background-color:#fff;border:1px solid transparent;border-radius:3px;-webkit-box-shadow:0 1px 1px rgba(0,0,0,.05);box-shadow:0 1px 1px rgba(0,0,0,.05)}
+        .panel-body {padding:10px}
+        .panel-title {margin-top:0;margin-bottom:0;font-size:12px;color:inherit}
+        .label {display:inline;padding:.2em .6em .3em;font-size:75%;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25em;margin-top: .3em;}
+        .layui-red {color:red}
+        .main_btn > p {height:40px;}
+        .layui-bg-number {background-color:#F8F8F8;}
+        .layuimini-notice:hover {background:#f6f6f6;}
+        .layuimini-notice {padding:7px 16px;clear:both;font-size:12px !important;cursor:pointer;position:relative;transition:background 0.2s ease-in-out;}
+        .layuimini-notice-title,.layuimini-notice-label {
+            padding-right: 70px !important;text-overflow:ellipsis!important;overflow:hidden!important;white-space:nowrap!important;}
+        .layuimini-notice-title {line-height:28px;font-size:14px;}
+        .layuimini-notice-extra {position:absolute;top:50%;margin-top:-8px;right:16px;display:inline-block;height:16px;color:#999;}
+        #tab{
+            position: absolute;
+            top:92px;
+            center:100px;
+        }
+        #tab2{
+            position: absolute;
+            top:92px;
+            center:100px;
+        }
+
+        #search{
+            position: absolute;
+            top:40px;
+            left:290px
+        }
+
+        .layui-form-select{width: 190px;}
+
+    </style>
+</head>
+<body>
+<div id="search">
+    <form class="layui-form layui-form-pane" action="">
+        <input type="hidden" name="aid" th:each="after:${list1}" th:value="${after}" id="aid"/>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">条件:</label>
+                <div class="layui-input-inline">
+                    <select class="layui-form-select" name="types"  lay-filter="selectId">
+                        <option value="0" selected >请选择</option>
+                        <option value="1">按主题</option>
+                        <option value="2">按服务类型</option>
+                        <option value="3">按开始时间</option>
+                        <option value="4">按服务人员</option>
+                        <option value="5">按服务评分</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline" id="mains">
+                <!--<label class="layui-form-label">关键字</label>-->
+            </div>
+
+            <div class="layui-inline">
+                <button type="submit" class="layui-btn layui-btn-primary" lay-submit  lay-filter="data-search-btn"><i class="layui-icon"></i>模糊 搜 索</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/html" id="xuhao">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
+
+<script type="text/html" id="times">
+{{layui.util.toDateString(d.starttime,'yyyy-MM-dd')}}
+</script>
+
+<div id="tab">
+    <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+</div>
+
+<!--<div id="tab2">
+    <table class="layui-hide" id="currentTableId2" lay-filter="currentTableFilter2"></table>
+</div>-->
+
+<script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table','laydate'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table,
+            layuimini = layui.layuimini,
+            laydate=layui.laydate;
+        var  noRepeat2=[];
+        $('input[name="aid"]').each(function (index,domEle) {
+            noRepeat2.push($("#aid").val());
+        });
+        table.render({
+            width:1120,
+            elem: '#currentTableId',
+            url: 'customerManager/select3.do?aid='+noRepeat2,
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            cols: [
+                [
+                    { templet:function (d) {
+                            return "<a href='afterSell/selectOneAfterSell.do?theme="+d.theme+"'>"+d.theme+"</a>";
+                        },
+                        title: '主题',
+                        sort: true,
+                    },
+                {field: 'serviceType', title: '服务类型'},
+                {field: 'starttime',title: '服务人员'},
+                {field: 'servicePeople', title: '服务人员'},
+                {field: 'serviceScore', title: '服务评分'}
+            ]
+            ],
+            limits: [3, 6, 9, 12, 15, 20],
+            limit: 3,
+            page: true
+        });
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            //var result = JSON.stringify(data.field);
+            //执行重载
+            table.reload('currentTableId', {
+                where:data.field
+            });
+            return false;
+        });
+        //监听行单击事件（双击事件为：rowDouble）
+        table.on('row(currentTableFilter)', function(obj){
+            var data = obj.data;
+            var index = layer.open({
+                title: '查看售后',
+                type: 2,
+                shade: 0.2,
+                maxmin:true,
+                shadeClose: true,
+                area: ['100%', '100%'],
+                content: 'afterSell/selectOneAfterSell.do?theme='+data.theme,
+            });
+
+            //标注选中样式
+            //obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+        });
+
+        //监听form复选框选择
+        form.on('select(selectId)', function (obj) {
+            $("#mains").empty();
+           var name = obj.value;
+            if(name == 1){
+                $("#mains").empty();
+                var s= "<select id='theme' name='theme' class='layui-form-select'>";
+                // $("#mains").append(s);
+                $.ajax({
+                    type:"post",
+                    url:"afterSell/selectTheme.do",
+                    contentType:"application/json",
+                    success:function (datas) {
+                         s+="<option value='0'>请选择</option>";
+                        for (var j=0;j<datas.length;j++){
+                            s+="<option value='"+datas[j].id+"'>"+datas[j].theme+"</option>";
+                        }
+                        s+="</select>";
+                        $("#mains").append(s);
+                        layui.form.render();
+                    }
+                });
+            }else if(name == 2){
+                $("#mains").empty();
+                $("#div select").val("");
+                var str="<select id='serviceType' name='serviceType' class='layui-form-select'>"
+                    +"<option value='0'>"+'请选择'+"</option>"
+                    +"<option value='"+'主动关怀'+"'>"+'主动关怀'+"</option>"
+                    +"<option value='"+'实施或培训'+"'>"+'实施或培训'+"</option>"
+                    +"<option value='"+'业务咨询'+"'>"+'业务咨询'+"</option>"
+                    +"<option value='"+'故障申报'+"'>"+'故障申报'+"</option>"
+                    +"<option value='"+'其他'+"'>"+'其他'+"</option></select>";
+                $("#mains").append(str);
+                form.render();
+            }else if(name == 3){
+                $("#mains").empty();
+                var str="<input type='text' id='test1' class='layui-input' name='starttime' placeholder='yyyy-MM-dd'>";
+                $("#mains").append(str);
+                //常规用法
+                laydate.render({
+                    elem: '#test1'
+                });
+            }else if(name == 4){
+                $("#mains").empty();
+                var str= "<select id='servicePeople' name='servicePeople' class='layui-form-select'>";
+                // $("#mains").append(s);
+                //查询 user并赋值
+                $.ajax({
+                    type:"post",
+                    url:"../../afterSell/selectUser.do",
+                    contentType:"application/json",
+                    success:function (data) {
+                         str+="<option value='0'>请选择</option>";
+                        for (var i=0;i<data.length;i++){
+                            str+="<option value='"+data[i].username+"'>"+data[i].username+"</option>";
+                        }
+                        str+="</select>";
+                        $("#mains").append(str);
+                        layui.form.render();
+                    }
+                });
+            }else if(name == 5){
+                $("#mains").empty();
+                var str="<select id='serviceScore' name='serviceScore' class='layui-form-select'>"
+                    +"<option value='0'>"+'请选择'+"</option>"
+                    +"<option value='"+'1'+"'>"+'1'+"</option>"
+                    +"<option value='"+'2'+"'>"+'2'+"</option>"
+                    +"<option value='"+'3'+"'>"+'3'+"</option>"
+                    +"<option value='"+'4'+"'>"+'4'+"</option>"
+                    +"<option value='"+'5'+"'>"+'5'+"</option></select>";
+                $("#mains").append(str);
+                form.render();
+            }
+        });
+    });
+</script>
+</body>
+</html>

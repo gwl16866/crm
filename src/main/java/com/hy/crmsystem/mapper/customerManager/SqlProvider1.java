@@ -1,6 +1,8 @@
 package com.hy.crmsystem.mapper.customerManager;
 
+import com.hy.crmsystem.entity.afterSell.AftersellBo;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
+import com.hy.crmsystem.entity.contract.Contract;
 import com.hy.crmsystem.entity.customerManager.Kehuiganlizonghe;
 import com.mysql.jdbc.StringUtils;
 import org.apache.ibatis.annotations.Param;
@@ -37,4 +39,81 @@ public class SqlProvider1 {
 
         return buffer.toString();
     }*/
+   public String select1(@Param("bid") String[] bid,@Param("businessoppo") Businessoppo businessoppo) {
+       StringBuffer buffer = new StringBuffer("select bid,bname,status,bpredict_money,bprincipal,last_time from businessoppo");
+       buffer.append(" where bid in");
+       buffer.append("(");
+       for(int i=0;i<bid.length;i++){
+           buffer.append(bid[i]);
+           if(i<bid.length-1){
+               buffer.append(",");
+           }
+       }
+       buffer.append(")");
+       if (businessoppo.getBprincipal() != null) {
+           buffer.append(" and bprincipal = " + businessoppo.getBprincipal()+" ");
+       }
+//商机名称
+       if (!StringUtils.isNullOrEmpty(businessoppo.getBname())) {
+           buffer.append(" and bname like '%" + businessoppo.getBname() + "%'");
+       }
+       if (  null!=businessoppo.getStatus() && businessoppo.getStatus()<=3) {
+           buffer.append(" and status=" + businessoppo.getStatus()+"");
+       }
+       if (!StringUtils.isNullOrEmpty(businessoppo.getBpredictMoney())) {
+           buffer.append(" and bpredict_money like '%" + businessoppo.getBpredictMoney() + "%'");
+       }
+       return buffer.toString();
+   }
+   public String select2(@Param("cid") String[] cid,@Param("contract") Contract contract) {
+       StringBuffer buffer = new StringBuffer("SELECT c.cid,c.contract_name,c.contract_num,c.contract_money,r.return_money,SUM(o.ticket_money) openMoney,c.signed_time FROM contract c,returnmoneydetails r,openpaper o WHERE c.cid=r.cid AND c.cid=o.contract_file ");
+       buffer.append(" and c.cid in ");
+       buffer.append("(");
+       for(int i=0;i<cid.length;i++){
+           buffer.append(cid[i]);
+           if(i<cid.length-1){
+               buffer.append(",");
+           }
+       }
+       buffer.append(")");
+       //我的合同
+       if (contract.getUid() != null) {
+           buffer.append(" and c.uid = '"+contract.getUid()+"' ");
+       }
+       //状态
+       if (contract.getContractStatus() != null && contract.getContractStatus()<5) {
+           buffer.append(" and c.contract_status = '"+contract.getContractStatus()+"' ");
+       }
+       return buffer.toString();
+   }
+   public String select3(@Param("aid") String[] aid,@Param("aftersellBo") AftersellBo aftersellBo) {
+       StringBuffer buffer = new StringBuffer("SELECT t.id,t.theme,a.service_type,a.starttime,a.service_people,a.service_score,a.ststus FROM aftersell a ,theme t WHERE a.theme_id=t.id  ");
+       buffer.append(" and a.aid in ");
+       buffer.append("(");
+       for (int i = 0; i < aid.length; i++) {
+           buffer.append(aid[i]);
+           if (i < aid.length - 1) {
+               buffer.append(",");
+           }
+       }
+       buffer.append(")");
+       if (!StringUtils.isNullOrEmpty(aftersellBo.getTheme())) {
+           buffer.append(" and t.id = " + aftersellBo.getTheme() + "");
+       } else if (!StringUtils.isNullOrEmpty(aftersellBo.getServiceType())) {
+           buffer.append(" and ase.service_type = '" + aftersellBo.getServiceType() + "'");
+       } else if (!StringUtils.isNullOrEmpty(aftersellBo.getStarttime())) {
+           buffer.append(" and ase.starttime = '" + aftersellBo.getStarttime() + "'");
+       } else if (!StringUtils.isNullOrEmpty(aftersellBo.getServicePeople())) {
+           buffer.append(" and ase.service_people like '%" + aftersellBo.getServicePeople() + "%'");
+       } else if (!StringUtils.isNullOrEmpty(aftersellBo.getServiceScore())) {
+           buffer.append(" and ase.service_score = '" + aftersellBo.getServiceScore() + "'");
+       } else if (null != aftersellBo.getStatus() && aftersellBo.getStatus() <= 3) {
+           System.out.println("=========" + aftersellBo.getStatus());
+           buffer.append(" and ase.status = " + aftersellBo.getStatus() + "");
+
+       }
+       return buffer.toString();
+   }
+
+
 }

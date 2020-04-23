@@ -146,7 +146,7 @@ public class ContractController {
     //合同详情
     @RequestMapping("/contractDetails.do")
     public String contractDetails(String contractNum, Model model) {
-        ContractCust contractList = contractService.contractDetails(contractNum);
+        ContractCust contractList = contractService.contractDetailsMy(contractNum);
         List<Dept> depts = userService.queryDept();
         model.addAttribute("depts", depts);
         model.addAttribute("c", contractList);
@@ -156,7 +156,7 @@ public class ContractController {
     //我的合同详情
     @RequestMapping("/myContractDetails.do")
     public String myContractDetails(String contractNum, Model model) {
-        ContractCust contractList = contractService.contractDetails(contractNum);
+        ContractCust contractList = contractService.contractDetailsMy(contractNum);
         List<Dept> depts = userService.queryDept();
         model.addAttribute("depts", depts);
         model.addAttribute("c", contractList);
@@ -166,7 +166,7 @@ public class ContractController {
     //编辑合同
     @RequestMapping("/updateContract.do")
     public String updateContract(String contractNum, Model model) {
-        ContractCust contractList = contractService.contractDetails(contractNum);
+        ContractCust contractList = contractService.contractDetailsMy(contractNum);
         List<Dept> depts = userService.queryDept();
         model.addAttribute("depts", depts);
         model.addAttribute("cont", contractList);
@@ -176,7 +176,7 @@ public class ContractController {
     //编辑我的合同
     @RequestMapping("/updateMyContract.do")
     public String updateMyContract(String contractNum, Model model) {
-        ContractCust contractList = contractService.contractDetails(contractNum);
+        ContractCust contractList = contractService.contractDetailsMy(contractNum);
         List<Dept> depts = userService.queryDept();
         model.addAttribute("depts", depts);
         model.addAttribute("cont", contractList);
@@ -200,14 +200,32 @@ public class ContractController {
 
     //汇款页
     @RequestMapping("/returnMoney.do")
-    public String returnMoney(String contractNum, Model model) {
+    public String returnMoney(String contractNum,Integer cid, Model model) {
+        //查询当前登录人
+        Object name = SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("name",name);
         //查合同id
-        ContractCust contract = contractService.contractDetails(contractNum);
+        ContractCust cont = contractService.contractDetails(cid);
+        model.addAttribute("con", cont);
+        // 查询对方单位
+        Customer customer = customerService.selectByName(String.valueOf(cont.getCustomerId()));
+        model.addAttribute("cus", customer);
+        return "projectPage/contract/returnMoney";
+    }
+
+    //我的汇款页
+    @RequestMapping("/MyReturnMoney.do")
+    public String MyReturnMoney(String contractNum, Model model) {
+        //查询当前登录人
+        Object name = SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("name",name);
+        //查合同id
+        ContractCust contract = contractService.contractDetailsMy(contractNum);
         model.addAttribute("cont", contract);
         // 查询对方单位
         Customer customer = customerService.selectByName(String.valueOf(contract.getCustomerId()));
         model.addAttribute("cust", customer);
-        return "projectPage/contract/returnMoney";
+        return "projectPage/contract/myReturnMoney";
     }
 
     //添加汇款
@@ -219,7 +237,7 @@ public class ContractController {
         contractService.updateResidueMoney(contractCust);
         //查询合同未还款
         ContractCust cust = contractService.selectRemainMoney(contractCust.getCid());
-        if (cust.getRemainMoney().intValue() <= 1) {
+        if (cust.getRemainMoney().intValue() <= 0) {
             contractService.updateContractStatus(contractCust.getCid());
         }
         return "1";
@@ -229,7 +247,6 @@ public class ContractController {
     @ResponseBody
     @RequestMapping("/selectContractNum.do")
     public Integer selectContractNum(String contractNum) {
-
         Contract contract = contractService.selectContractNum(contractNum);
         if (null == contract) {
             return 2;
@@ -242,7 +259,7 @@ public class ContractController {
     @RequestMapping("/openPaper.do")
     public String openPaper(Model model, String contractNum) {
         //查合同id
-        ContractCust contract = contractService.contractDetails(contractNum);
+        ContractCust contract = contractService.contractDetailsMy(contractNum);
         model.addAttribute("cont", contract);
         // 查询对方单位
         Customer customer = customerService.selectByName(String.valueOf(contract.getCustomerId()));
@@ -253,6 +270,23 @@ public class ContractController {
         model.addAttribute("user", user);
         model.addAttribute("name", name);
         return "projectPage/contract/openPaper";
+    }
+
+    //我的开票
+    @RequestMapping("/MyOpenPaper.do")
+    public String MyOpenPaper(Model model, String contractNum) {
+        //查合同id
+        ContractCust contract = contractService.contractDetailsMy(contractNum);
+        model.addAttribute("cont", contract);
+        // 查询对方单位
+        Customer customer = customerService.selectByName(String.valueOf(contract.getCustomerId()));
+        model.addAttribute("cust", customer);
+        //查询登录人及部门
+        Object name = SecurityUtils.getSubject().getPrincipal();
+        User user = userService.selectDengLuRen(String.valueOf(name));
+        model.addAttribute("user", user);
+        model.addAttribute("name", name);
+        return "projectPage/contract/myOpenPaper";
     }
 
     //提交开票

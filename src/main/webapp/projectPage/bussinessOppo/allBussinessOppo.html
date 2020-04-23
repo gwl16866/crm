@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
+    <base th:href="${#request.getContextPath()}+'/'">
     <title>首页二</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
-    <link rel="stylesheet" href="../../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
-    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <link rel="stylesheet" href="lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="css/public.css" media="all">
     <style>
         .layui-card {
             border: 1px solid #f2f2f2;
@@ -192,10 +193,10 @@
 </head>
 <body>
 <div id="img">
-    <img src="../../imgs/wx.png" style="height: 60px;width: 60px">
+    <img src="imgs/wx.png" style="height: 60px;width: 60px">
 </div>
 <div id="f">
-    <font size="6">全部商机</font>
+    <font size="6">我的商机</font>
 </div>
 <div class="layui-card" id="card">
     <div class="layui-card-header"><i class="fa fa-bullhorn icon icon-tip"></i>所有分类</div>
@@ -213,14 +214,14 @@
             <div class="layuimini-notice-title">
                 <a href="javascript:;" id="bjdxz">本季新增</a></div>
         </div>
-        <div class="layuimini-notice">
-            <div class="layuimini-notice-title" >
-                <a href="javascript:;" id="qwgd">七天未跟单</a></div>
-        </div>
-        <div class="layuimini-notice">
-            <div class="layuimini-notice-title" >
-                <a href="javascript:;" id="ssgd">三十天未跟单</a></div>
-        </div>
+        <!-- <div class="layuimini-notice">
+             <div class="layuimini-notice-title" >
+                 <a href="javascript:;" id="qwgd">七天未跟单</a></div>
+         </div>
+         <div class="layuimini-notice">
+             <div class="layuimini-notice-title" >
+                 <a href="javascript:;" id="ssgd">三十天未跟单</a></div>
+         </div>-->
         <div class="layuimini-notice">
             <div class="layuimini-notice-title" >
                 <a href="javascript:;" id="ycj">已成交</a>
@@ -283,14 +284,14 @@
 <div id="tab">
     <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 </div>
-<script src="../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
     $(function () {
         //本周新增
         $.ajax({
             type: "post",
             dataType: "json",
-            url: "../../bussinessOppo/queryAll.do?status=6",
+            url: "bussinessOppo/queryAll.do?status=6&bprincipal="+$("#uid").val(),
             success: function (data) {
                 $("#bzxz").append("<span class='layui-badge layui-bg-cyan'>" + data.count + "</span>")
             },
@@ -302,7 +303,7 @@
         $.ajax({
             type: "post",
             dataType: "json",
-            url: "../../bussinessOppo/queryAll.do?status=7",
+            url: "bussinessOppo/queryAll.do?status=7&bprincipal="+$("#uid").val(),
             success: function (data) {
                 $("#byxz").append("<span class='layui-badge layui-bg-cyan'>" + data.count + "</span>")
             },
@@ -314,7 +315,7 @@
         $.ajax({
             type: "post",
             dataType: "json",
-            url: "../../bussinessOppo/queryAll.do?status=8",
+            url: "bussinessOppo/queryAll.do?status=8&bprincipal="+$("#uid").val(),
             success: function (data) {
                 $("#bjdxz").append("<span class='layui-badge layui-bg-cyan'>" + data.count + "</span>")
             },
@@ -326,7 +327,7 @@
         $.ajax({
             type: "post",
             dataType: "json",
-            url: "../../bussinessOppo/queryAll.do?status=4",
+            url: "bussinessOppo/queryAll.do?status=4&bprincipal="+$("#uid").val(),
             success: function (data) {
                 $("#qwgd").append("<span class='layui-badge layui-bg-cyan'>" + data.count + "</span>")
             },
@@ -338,7 +339,7 @@
         $.ajax({
             type: "post",
             dataType: "json",
-            url: "../../bussinessOppo/queryAll.do?status=5",
+            url: "bussinessOppo/queryAll.do?status=5&bprincipal="+$("#uid").val(),
             success: function (data) {
                 $("#ssgd").append("<span class='layui-badge layui-bg-cyan'>" + data.count + "</span>")
             },
@@ -350,7 +351,7 @@
         $.ajax({
             type: "post",
             dataType: "json",
-            url: "../../bussinessOppo/queryAll.do?status=9",
+            url: "bussinessOppo/queryAll.do?status=9&bprincipal="+$("#uid").val(),
             success: function (data) {
                 $("#ycj").append("<span class='layui-badge layui-bg-cyan'>" + data.count + "</span>")
             },
@@ -362,7 +363,7 @@
         $.ajax({
             type: "post",
             dataType: "json",
-            url: "../../bussinessOppo/queryAll.do?status=10",
+            url: "bussinessOppo/queryAll.do?status=10&bprincipal="+$("#uid").val(),
             success: function (data) {
                 $("#ydd").append("<span class='layui-badge layui-bg-cyan'>" + data.count + "</span>")
             },
@@ -374,7 +375,7 @@
         $.ajax({
             type: "post",
             dataType: "json",
-            url: "../../bussinessOppo/queryAll.do?status=11",
+            url: "bussinessOppo/queryAll.do?status=11&bprincipal="+$("#uid").val(),
             success: function (data) {
                 $("#yez").append("<span class='layui-badge layui-bg-cyan'>" + data.count + "</span>")
             },
@@ -384,10 +385,16 @@
         });
     });
 </script>
-<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
-<script type="text/html" id="time">
-    {{layui.util.toDateString(d.signedTime,'yyyy-MM-dd')}}
+<script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script type="text/html" id="zuihogendan">
+    {{#  if(d.lastTime == null){ }}
+    <a href="documentary/selectMyDocByBus.do?bid={{d.bid}}" class="layui-table-link">暂无跟单</a>
+    {{#  } else { }}
+    <a href="documentary/selectMyDocByBus.do?bid={{d.bid}}" class="layui-table-link">{{layui.util.toDateString(d.lastTime,'yyyy-MM-dd')}}</a>
+    {{#  } }}
 </script>
+<!--当前登录人ID-->
+<input type="hidden" th:value="${uid}" id="uid">
 <script>
     layui.use(['jquery', 'table', 'layer', 'form', 'upload'], function () {
         var $ = layui.jquery,
@@ -399,7 +406,7 @@
         table.render({
             width: 1120,
             elem: '#currentTableId'
-            , url: '../../bussinessOppo/queryAll.do'
+            , url: 'bussinessOppo/queryAll.do?bprincipal='+$("#uid").val()
             , toolbar: '#toolbarDemo'
             , limits: [3, 6, 9, 12, 15, 100]
             , limit: 3
@@ -409,28 +416,29 @@
                 layEvent: 'LAYTABLE_TIPS',
                 icon: 'layui-icon-tips'
             }],
-            cols: [[
-                {type: "checkbox", fixed: "left"},
-                {
-                    field: 'bname',
-                    title: '商机名称',
-                    sort: true,
-                    templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
-                },
-                {field: 'status', title: '商机阶段'},
-                {field: 'bpredictMoney', title: '预计成交金额', sort: true},
-                {field: 'bprincipal', title: '商机负责人'},
-                {field: 'lastTime', title: '最后跟单', templet: '#time'},
-                {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
+            cols: [
+                [
+                    {
+                        field: 'bname',
+                        title: '商机名称',
+                        sort: true,
+                        templet: '<div><a href="bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                    },
+                    {field: 'status', title: '商机阶段'},
+                    {field: 'bpredictMoney', title: '预计成交金额', sort: true},
+                    {field: 'bprincipal', title: '商机负责人'},
+                    {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
+                    {field: '讨论', title: '讨论版', templet: '<div><a href="bussinessOppo/selectById2.do?bid={{d.bid}}">讨论</a></div>'}
 
-            ]]
+                ]
+            ]
 
         });
         $("#ycj").click(function () {
             table.render({
                 width: 1120,
                 elem: '#currentTableId',
-                url: '../../bussinessOppo/queryAll.do?status=9',
+                url: 'bussinessOppo/queryAll.do?status=9&bprincipal='+$("#uid").val(),
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', {
                     title: '提示',
@@ -439,20 +447,20 @@
                 }],
                 cols: [
                     [
-                    {type: "checkbox", fixed: "left"},
-                    {
-                        field: 'bname',
-                        title: '商机名称',
-                        sort: true,
-                        templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
-                    },
-                    {field: 'status', title: '商机阶段'},
-                    {field: 'bpredictMoney', title: '预计成交金额', sort: true},
-                    {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
-                    {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
+                        {type: "checkbox", fixed: "left"},
+                        {
+                            field: 'bname',
+                            title: '商机名称',
+                            sort: true,
+                            templet: '<div><a href="bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                        },
+                        {field: 'status', title: '商机阶段'},
+                        {field: 'bpredictMoney', title: '预计成交金额', sort: true},
+                        {field: 'bprincipal', title: '商机负责人'},
+                        {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
+                        {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
-                ]
+                    ]
                 ],
                 limits: [3, 6, 9, 12, 15, 20],
                 limit: 3,
@@ -463,28 +471,30 @@
             table.render({
                 width: 1120,
                 elem: '#currentTableId',
-                url: '../../bussinessOppo/queryAll.do?status=10',
+                url: 'bussinessOppo/queryAll.do?status=10&bprincipal='+$("#uid").val(),
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', {
                     title: '提示',
                     layEvent: 'LAYTABLE_TIPS',
                     icon: 'layui-icon-tips'
                 }],
-                cols: [[
-                    {type: "checkbox", fixed: "left"},
-                    {
-                        field: 'bname',
-                        title: '商机名称',
-                        sort: true,
-                        templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
-                    },
-                    {field: 'status', title: '商机阶段'},
-                    {field: 'bpredictMoney', title: '预计成交金额', sort: true},
-                    {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
-                    {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
+                cols: [
+                    [
+                        {type: "checkbox", fixed: "left"},
+                        {
+                            field: 'bname',
+                            title: '商机名称',
+                            sort: true,
+                            templet: '<div><a href="bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                        },
+                        {field: 'status', title: '商机阶段'},
+                        {field: 'bpredictMoney', title: '预计成交金额', sort: true},
+                        {field: 'bprincipal', title: '商机负责人'},
+                        {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
+                        {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
-                ]],
+                    ]
+                ],
                 limits: [3, 6, 9, 12, 15, 20],
                 limit: 3,
                 page: true
@@ -494,28 +504,30 @@
             table.render({
                 width: 1120,
                 elem: '#currentTableId',
-                url: '../../bussinessOppo/queryAll.do?status=11',
+                url: 'bussinessOppo/queryAll.do?status=11&bprincipal='+$("#uid").val(),
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', {
                     title: '提示',
                     layEvent: 'LAYTABLE_TIPS',
                     icon: 'layui-icon-tips'
                 }],
-                cols: [[
-                    {type: "checkbox", fixed: "left"},
-                    {
-                        field: 'bname',
-                        title: '商机名称',
-                        sort: true,
-                        templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
-                    },
-                    {field: 'status', title: '商机阶段'},
-                    {field: 'bpredictMoney', title: '预计成交金额', sort: true},
-                    {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
-                    {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'},
+                cols: [
+                    [
+                        {type: "checkbox", fixed: "left"},
+                        {
+                            field: 'bname',
+                            title: '商机名称',
+                            sort: true,
+                            templet: '<div><a href="bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                        },
+                        {field: 'status', title: '商机阶段'},
+                        {field: 'bpredictMoney', title: '预计成交金额', sort: true},
+                        {field: 'bprincipal', title: '商机负责人'},
+                        {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
+                        {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'},
 
-                ]],
+                    ]
+                ],
                 limits: [3, 6, 9, 12, 15, 20],
                 limit: 3,
                 page: true
@@ -525,28 +537,30 @@
             table.render({
                 width: 1120,
                 elem: '#currentTableId',
-                url: '../../bussinessOppo/queryAll.do?status=6',
+                url: 'bussinessOppo/queryAll.do?status=6&bprincipal='+$("#uid").val(),
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', {
                     title: '提示',
                     layEvent: 'LAYTABLE_TIPS',
                     icon: 'layui-icon-tips'
                 }],
-                cols: [[
-                    {type: "checkbox", fixed: "left"},
-                    {
-                        field: 'bname',
-                        title: '商机名称',
-                        sort: true,
-                        templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
-                    },
-                    {field: 'status', title: '商机阶段'},
-                    {field: 'bpredictMoney', title: '预计成交金额', sort: true},
-                    {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
-                    {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
+                cols: [
+                    [
+                        {type: "checkbox", fixed: "left"},
+                        {
+                            field: 'bname',
+                            title: '商机名称',
+                            sort: true,
+                            templet: '<div><a href="bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                        },
+                        {field: 'status', title: '商机阶段'},
+                        {field: 'bpredictMoney', title: '预计成交金额', sort: true},
+                        {field: 'bprincipal', title: '商机负责人'},
+                        {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
+                        {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
-                ]],
+                    ]
+                ],
                 limits: [3, 6, 9, 12, 15, 20],
                 limit: 3,
                 page: true
@@ -556,28 +570,30 @@
             table.render({
                 width: 1120,
                 elem: '#currentTableId',
-                url: '../../bussinessOppo/queryAll.do?status=7',
+                url: 'bussinessOppo/queryAll.do?status=7&bprincipal='+$("#uid").val(),
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', {
                     title: '提示',
                     layEvent: 'LAYTABLE_TIPS',
                     icon: 'layui-icon-tips'
                 }],
-                cols: [[
-                    {type: "checkbox", fixed: "left"},
-                    {
-                        field: 'bname',
-                        title: '商机名称',
-                        sort: true,
-                        templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
-                    },
-                    {field: 'status', title: '商机阶段'},
-                    {field: 'bpredictMoney', title: '预计成交金额', sort: true},
-                    {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
-                    {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
+                cols: [
+                    [
+                        {type: "checkbox", fixed: "left"},
+                        {
+                            field: 'bname',
+                            title: '商机名称',
+                            sort: true,
+                            templet: '<div><a href="bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                        },
+                        {field: 'status', title: '商机阶段'},
+                        {field: 'bpredictMoney', title: '预计成交金额', sort: true},
+                        {field: 'bprincipal', title: '商机负责人'},
+                        {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
+                        {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
-                ]],
+                    ]
+                ],
                 limits: [3, 6, 9, 12, 15, 20],
                 limit: 3,
                 page: true
@@ -587,28 +603,30 @@
             table.render({
                 width: 1120,
                 elem: '#currentTableId',
-                url: '../../bussinessOppo/queryAll.do?status=8',
+                url: 'bussinessOppo/queryAll.do?status=8&bprincipal='+$("#uid").val(),
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', {
                     title: '提示',
                     layEvent: 'LAYTABLE_TIPS',
                     icon: 'layui-icon-tips'
                 }],
-                cols: [[
-                    {type: "checkbox", fixed: "left"},
-                    {
-                        field: 'bname',
-                        title: '商机名称',
-                        sort: true,
-                        templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
-                    },
-                    {field: 'status', title: '商机阶段'},
-                    {field: 'bpredictMoney', title: '预计成交金额', sort: true},
-                    {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
-                    {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
+                cols: [
+                    [
+                        {type: "checkbox", fixed: "left"},
+                        {
+                            field: 'bname',
+                            title: '商机名称',
+                            sort: true,
+                            templet: '<div><a href="bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                        },
+                        {field: 'status', title: '商机阶段'},
+                        {field: 'bpredictMoney', title: '预计成交金额', sort: true},
+                        {field: 'bprincipal', title: '商机负责人'},
+                        {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
+                        {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
-                ]],
+                    ]
+                ],
                 limits: [3, 6, 9, 12, 15, 20],
                 limit: 3,
                 page: true
@@ -618,28 +636,30 @@
             table.render({
                 width: 1120,
                 elem: '#currentTableId',
-                url: '../../bussinessOppo/queryAll.do?status=4',
+                url: 'bussinessOppo/queryAll.do?status=4&bprincipal='+$("#uid").val(),
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', {
                     title: '提示',
                     layEvent: 'LAYTABLE_TIPS',
                     icon: 'layui-icon-tips'
                 }],
-                cols: [[
-                    {type: "checkbox", fixed: "left"},
-                    {
-                        field: 'bname',
-                        title: '商机名称',
-                        sort: true,
-                        templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
-                    },
-                    {field: 'status', title: '商机阶段'},
-                    {field: 'bpredictMoney', title: '预计成交金额', sort: true},
-                    {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
-                    {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
+                cols: [
+                    [
+                        {type: "checkbox", fixed: "left"},
+                        {
+                            field: 'bname',
+                            title: '商机名称',
+                            sort: true,
+                            templet: '<div><a href="bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                        },
+                        {field: 'status', title: '商机阶段'},
+                        {field: 'bpredictMoney', title: '预计成交金额', sort: true},
+                        {field: 'bprincipal', title: '商机负责人'},
+                        {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
+                        {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
-                ]],
+                    ]
+                ],
                 limits: [3, 6, 9, 12, 15, 20],
                 limit: 3,
                 page: true
@@ -649,35 +669,35 @@
             table.render({
                 width: 1120,
                 elem: '#currentTableId',
-                url: '../../bussinessOppo/queryAll.do?status=5',
+                url: 'bussinessOppo/queryAll.do?status=5&bprincipal='+$("#uid").val(),
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', {
                     title: '提示',
                     layEvent: 'LAYTABLE_TIPS',
                     icon: 'layui-icon-tips'
                 }],
-                cols: [[
-                    {type: "checkbox", fixed: "left"},
-                    {
-                        field: 'bname',
-                        title: '商机名称',
-                        sort: true,
-                        templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
-                    },
-                    {field: 'status', title: '商机阶段'},
-                    {field: 'bpredictMoney', title: '预计成交金额', sort: true},
-                    {field: 'bprincipal', title: '商机负责人'},
-                    {field: 'lastTime', title: '最后跟单', templet: '#time'},
-                    {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
+                cols: [
+                    [
+                        {type: "checkbox", fixed: "left"},
+                        {
+                            field: 'bname',
+                            title: '商机名称',
+                            sort: true,
+                            templet: '<div><a href="bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
+                        },
+                        {field: 'status', title: '商机阶段'},
+                        {field: 'bpredictMoney', title: '预计成交金额', sort: true},
+                        {field: 'bprincipal', title: '商机负责人'},
+                        {field: 'lastTime', title: '最后跟单', templet: '#zuihogendan'},
+                        {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
 
-                ]],
+                    ]
+                ],
                 limits: [3, 6, 9, 12, 15, 20],
                 limit: 3,
                 page: true
             });
         });
-
-
         form.on('submit(query-submit)', function (data) {
 //执行重载
             table.reload('currentTableId', {
@@ -710,7 +730,7 @@
                 maxmin: true,
                 shadeClose: true,
                 area: ['100%', '100%'],
-                content: '../../projectPage/bussinessOppo/addBussinessOppo.html',
+                content: 'projectPage/bussinessOppo/addBussinessOppo.html',
             });
             /*     $(window).on("resize", function () {
                      layer.full(index);
@@ -742,7 +762,7 @@
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '../../page/table/edit.html',
+                    content: 'page/table/edit.html',
                 });
                 /*   $(window).on("resize", function () {
                        layer.full(index);
@@ -755,7 +775,6 @@
                 });
             }
         });
-
     });
 </script>
 </body>

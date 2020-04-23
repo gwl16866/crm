@@ -4,11 +4,15 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
+import com.hy.crmsystem.entity.bussinessOppo.ForumLunTan;
 import com.hy.crmsystem.entity.customerManager.Customer;
+import com.hy.crmsystem.mapper.customerManager.SqlProvider1;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
+
+import java.util.List;
 
 /**
  * <p>
@@ -33,11 +37,15 @@ public interface BusinessoppoMapper extends BaseMapper<Businessoppo> {
     @Select("SELECT c.cname,c.cindustry,c.ccity,c.caddress,c.csource FROM customer c,businessoppo b WHERE c.cid=b.cid and b.bid=#{value}")
     public Customer selectBusinessoppo(String bid);
 
-
+    @Select("select id from article where of_bid=#{value}")
+    public List<String> selectById2(String bid);
 /*    *//**
      * 查询新增条数
      *//*
     @SelectProvider(type = SqlProvider2.class,method = "selectNewCount")
     public Integer selectNewCount(@Param("type")String type);*/
+
+    @SelectProvider(type = SqlProvider2.class,method = "select1")
+    public List<ForumLunTan> select1(@Param("id") String[] id);
 
 }

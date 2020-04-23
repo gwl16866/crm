@@ -4,9 +4,16 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hy.crmsystem.entity.afterSell.Aftersell;
+import com.hy.crmsystem.entity.afterSell.AftersellBo;
+import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
+import com.hy.crmsystem.entity.contract.Contract;
+import com.hy.crmsystem.entity.contract.ContractCust;
+import com.hy.crmsystem.entity.customerManager.AftersellShu;
 import com.hy.crmsystem.entity.customerManager.Customer;
 import com.hy.crmsystem.entity.customerManager.Kehuiganlizonghe;
 import com.hy.crmsystem.entity.customerManager.Moneyinfor;
+import com.hy.crmsystem.entity.systemManager.Dept;
 import com.hy.crmsystem.mapper.customerManager.CustomerMapper;
 import com.hy.crmsystem.mapper.customerManager.MoneyinforMapper;
 import com.hy.crmsystem.service.customerManager.ICustomerService;
@@ -83,6 +90,33 @@ private MoneyinforMapper moneyinforMapper;
         }
         Integer c=customerMapper.selectCount(qr);
         return String.valueOf(c);
+    }
+
+    @Override
+    public List<String> select(String cid) {
+        return customerMapper.select(cid);
+    }
+
+    @Override
+    public List<String> selectBy(String cid) {
+        return customerMapper.selectBy(cid);
+    }
+    @Override
+    public List<String> selectBy1(String cid) {
+        return customerMapper.selectBy1(cid);
+    }
+
+    @Override
+    public List<Businessoppo> select1(@Param("bid")String[] bid,@Param("businessoppo") Businessoppo businessoppo) {
+        return customerMapper.select1(bid,businessoppo);
+    }
+    @Override
+    public List<Contract> select2(@Param("cid")String[] cid,@Param("contract") Contract contract) {
+        return customerMapper.select2(cid,contract);
+    }
+    @Override
+    public List<AftersellShu> select3(@Param("aid")String[] aid,@Param("aftersellBo") AftersellBo aftersellBo) {
+        return customerMapper.select3(aid,aftersellBo);
     }
 
    /* @Override

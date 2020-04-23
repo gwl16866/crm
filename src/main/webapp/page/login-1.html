@@ -36,22 +36,18 @@
 <div class="layui-container">
     <div class="admin-login-background">
         <div class="layui-form login-form">
-
-
             <form class="layui-form" action="../login/login.do" name="form1" method="post">
                 <div class="layui-form-item logo-title">
                     <h1>CRM管理系统</h1>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-username" for="username"></label>
-                    <input type="text" name="username" lay-verify="required|account" placeholder="用户名" autocomplete="off" class="layui-input">
+                    <input type="text" name="username" lay-verify="required|username" placeholder="用户名" autocomplete="off" class="layui-input">
                 </div>
-
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-password" for="password"></label>
                     <input type="password" name="password" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input">
                 </div>
-
                 <div class="layui-form-item">
                     <input class="layui-btn layui-btn-fluid"  onsubmit="isfull()" type="submit" value="登  录"></input>
                 </div>

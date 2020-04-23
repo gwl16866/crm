@@ -57,4 +57,7 @@ public interface IUserService extends IService<User> {
 
 
 
+    public List<Dept> select();
+    public String selectname(String username);
+    public void add(User user);
 }

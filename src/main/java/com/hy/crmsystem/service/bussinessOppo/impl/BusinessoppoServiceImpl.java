@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
+import com.hy.crmsystem.entity.bussinessOppo.ForumLunTan;
 import com.hy.crmsystem.entity.customerManager.Customer;
 import com.hy.crmsystem.mapper.bussinessOppo.BusinessoppoMapper;
 import com.hy.crmsystem.service.bussinessOppo.IBusinessoppoService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * <p>
@@ -67,4 +69,14 @@ public class BusinessoppoServiceImpl extends ServiceImpl<BusinessoppoMapper, Bus
     public Integer selectNewCount(String type) {
         return businessoppoMapper.selectNewCount(type);
     }*/
+
+    @Override
+    public List<String> selectById2(String bid) {
+        return businessoppoMapper.selectById2(bid);
+    }
+    @Override
+    public List<ForumLunTan> select1(@Param("id")String[] id) {
+        return businessoppoMapper.select1(id);
+    }
+
 }

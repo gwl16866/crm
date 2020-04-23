@@ -3,7 +3,7 @@
 <head>
     <base th:href="${#request.getContextPath()}+'/'">
     <meta charset="utf-8">
-    <title>汇款</title>
+    <title>我的汇款</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -25,7 +25,7 @@
     $(function () {
         //返回上一个页面
         $("body").on("click", '.data-add-btn', function () {
-            window.location.href = "projectPage/contract/allContract.html";
+            window.location.href = "contract/selectMyCont.do";
             var index = parent.layer.getFrameIndex(window.name);
             parent.layer.close(index);
         });
@@ -58,7 +58,7 @@
                 success: function (msg) {
                     if (msg == 1) {
                         //关闭当前页面并打开主页面
-                        window.location.href = "projectPage/contract/allContract.html";
+                        window.location.href = "contract/selectMyCont.do";
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     } else {
@@ -101,18 +101,18 @@
         });
     });
 </script>
-    <div class="layui-btn-container">
-        <button type="button" class="layui-btn data-add-btn">
-            <i class="layui-icon layui-icon-left"></i> 返回
-        </button>
-        <button type="button" class="layui-btn refresh-btn">
-            <i class="layui-icon layui-icon-refresh"></i> 刷新
-        </button>
-    </div>
-    <font size="4">收入登记</font>
-    <hr>
+<div class="layui-btn-container">
+    <button type="button" class="layui-btn data-add-btn">
+        <i class="layui-icon layui-icon-left"></i> 返回
+    </button>
+    <button type="button" class="layui-btn refresh-btn">
+        <i class="layui-icon layui-icon-refresh"></i> 刷新
+    </button>
+</div>
+<font size="4">收入登记</font>
+<hr>
 <form class="layui-form">
-    <input type="hidden" id="cid" th:value="${con.getCid()}">
+    <input type="hidden" id="cid" th:value="${cont.getCid()}">
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">收入日期</label>
@@ -141,7 +141,7 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <input type="hidden" name="relevanceDept" th:value="${con.getOfdept()}">
+        <input type="hidden" name="relevanceDept" th:value="${cont.getOfdept()}">
         <div class="layui-inline">
             <label class="layui-form-label">关联人员</label>
             <div class="layui-input-block" id="relevancePeople" name="relevancePeople"></div>
@@ -163,17 +163,17 @@
                    autocomplete="off" class="layui-input" style="width: 400px">
         </div>
         <div class="layui-inline">
-            <input type="hidden" name="cid" th:value="${con.getCid()}">
+            <input type="hidden" name="cid" th:value="${cont.getCid()}">
             <label class="layui-form-label">关联合同</label>
-            <input type="text" readonly="readonly" th:value="${con.getContractName()}" required lay-verify="required"
+            <input type="text" readonly="readonly" th:value="${cont.getContractName()}" required lay-verify="required"
                    autocomplete="off" class="layui-input" style="width: 400px">
         </div>
     </div>
     <div class="layui-form-item">
-        <input type="hidden" name="customerCompany" th:value="${cus.getCid()}">
+        <input type="hidden" name="customerCompany" th:value="${cust.getCid()}">
         <div class="layui-inline">
             <label class="layui-form-label">对方单位</label>
-            <input type="text" readonly="readonly" th:value="${cus.getCname()}" required lay-verify="required"
+            <input type="text" readonly="readonly" th:value="${cust.getCname()}" required lay-verify="required"
                    autocomplete="off" class="layui-input" style="width: 400px">
         </div>
     </div>

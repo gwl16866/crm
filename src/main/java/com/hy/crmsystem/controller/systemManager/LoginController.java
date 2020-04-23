@@ -27,9 +27,9 @@ public class LoginController {
     //登陆页面
     @RequestMapping("/login.do")
     public String login(@RequestParam("username") String username, @RequestParam("password") String password, Model model) {
+        System.out.println(username+password);
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         Subject subject = SecurityUtils.getSubject();
-
 //shiro框架进行登录验证
         try {
             subject.login(token);
@@ -41,41 +41,42 @@ public class LoginController {
             model.addAttribute("message", "密码错误");
             return "page/error";
         }
-        return "index";
+        return "index.html";
     }
 
     @RequestMapping("/register.do")
-    public String register(@RequestParam("username") String user, @RequestParam("password") String psw, Model model, @RequestParam("age") int age, @RequestParam("sex") int sex){
-        if("".equals(user) || null == user || "".equals(psw) || null == psw){
-            model.addAttribute("message","账号或密码不能为空");
-            return "error";
-        }else{
-            //密码
-            Object password=psw;
-            //盐值
-            ByteSource salt= ByteSource.Util.bytes(user);
-            System.out.println("注册"+salt);
-            Object simpleHash=new SimpleHash("MD5",password,salt,1024);
-            User infor=new User();
-            infor.setUsername(user);
-            infor.setPassword(String.valueOf(simpleHash));
-            infor.setAge(age);
-            infor.setSex(sex);
-            boolean a= usersService.save(infor);
-            if(a == true){
-                System.out.println("插入成功");
-            }else{
-                System.out.println("插入失败");
-            }
-            return "page/login-1";
-        }
-    }
+    public String register(Model model,User user){
 
+            String user1= usersService.selectname(user.getUsername());
+            if(user1!=null){
+                model.addAttribute("mess","账号或密码不能重复");
+                return "page/error";
+            }else{
+                //密码
+                Object password=user.getPassword();
+                //盐值
+                Object salt= ByteSource.Util.bytes(user.getUsername());
+                Object simpleHash=new SimpleHash("MD5",password,salt,1024);
+                User infor=new User();
+                infor.setDeptId(user.getDeptId());
+                infor.setUsername(user.getUsername());
+                infor.setPassword(String.valueOf(simpleHash));
+                infor.setAge(user.getAge());
+                infor.setSex(user.getSex());
+                usersService.add(infor);
+                return "page/login-1";
+            }
+
+    }
     @RequestMapping("/logout")
     public String logout(){
         SecurityUtils.getSubject().logout();
         return "page/login-1";
     }
-
+    @RequestMapping("/selectDept.do")
+    public String selectDept(Model model){
+        model.addAttribute("dept",usersService.select());
+        return "page/zhuce";
+    }
 
 }

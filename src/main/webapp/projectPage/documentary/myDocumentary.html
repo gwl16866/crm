@@ -141,7 +141,12 @@
             cols: [[
                 {type: "checkbox", fixed: "left"},
                 {field: 'documentaryTime', title: '跟单时间', sort: true},
-                {field: 'theme', title: '跟单主题',templet:'<div><a href="/crmsystem/projectPage/bussinessOppo/myBussinessOppo.html">{{d.theme}}</a></div>'},
+                {
+                    field: 'theme',
+                    title: '跟单主题',
+                    sort: true,
+                    templet: '<div><a href="../../bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.theme}}</a></div>'
+                },
                 {field: 'documentaryPeople',  title: '跟单人', sort: true},
                 {field: 'detail',  title: '详细内容'},
                 {field: 'file', title: '附件'},

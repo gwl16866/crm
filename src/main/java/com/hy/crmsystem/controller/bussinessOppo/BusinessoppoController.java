@@ -73,8 +73,6 @@ public class BusinessoppoController {
     @RequestMapping("/insert.do")
     @ResponseBody
     public String insert_emp(Customer customer, Businessoppo businessoppo) {
-        System.out.println(customer);
-        System.out.println(businessoppo.getBname() + businessoppo.getBemail() + businessoppo.getBjob() + businessoppo.getBattention() + businessoppo.getBlinkman() + businessoppo.getBofDept() + businessoppo.getBphoneno() + businessoppo.getBpredictMoney());
         String i = "0";
         Integer bid = businessoppoMapper.insert(businessoppo);
         customer.setCid(bid);
@@ -88,7 +86,14 @@ public class BusinessoppoController {
     public String selectEmpById(Integer bid, Model model) {
         model.addAttribute("bus", businessoppoService.selectByName(String.valueOf(bid)));
         model.addAttribute("cust", businessoppoService.selectBusinessoppo(String.valueOf(bid)));
-        return "/projectPage/bussinessOppo/toUpdate";
+        return "projectPage/documentary/toUpdateDocumentary";
+    }
+    //根据 id 查信息进行展示 以 修改
+    @RequestMapping("/selectEmpById1.do")
+    public String selectEmpById1(Integer bid, Model model) {
+        model.addAttribute("bus", businessoppoService.selectByName(String.valueOf(bid)));
+        model.addAttribute("cust", businessoppoService.selectBusinessoppo(String.valueOf(bid)));
+        return "projectPage/bussinessOppo/toUpdate";
     }
 
     @ResponseBody

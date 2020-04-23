@@ -41,6 +41,7 @@
     </style>
 </head>
 <body>
+<button class="layui-btn layui-btn-sm data-add-btn" id="but"> 返回</button>
 <div id="img">
     <img src="imgs/wx.png" style="height: 60px;width: 60px">
 </div>
@@ -92,6 +93,9 @@
             form = layui.form,
             table = layui.table,
             layuimini = layui.layuimini;
+        $("#but").click(function () {
+            window.parent.location.reload();
+        });
         var  noRepeat=[];
         $('input[name="id"]').each(function (index,domEle) {
             noRepeat.push($("#id").val());

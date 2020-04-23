@@ -49,21 +49,21 @@
                 <label class="layui-form-label">客户来源:</label>
                 <div class="layui-input-inline">
                     <select name="csource" lay-verify="required" lay-search="">
-                        <option value="1">直接选择或搜索选择</option>
-                        <option value="2">老客户</option>
-                        <option value="3">代理商</option>
-                        <option value="4">互联网</option>
-                        <option value="5">独立开发</option>
-                        <option value="6">客户介绍</option>
-                        <option value="7">合作伙伴</option>
-                        <option value="8">促销活动</option>
-                        <option value="9">媒体宣传</option>
-                        <option value="10">电话访问</option>
-                        <option value="11">客户来电</option>
-                        <option value="12">二次销售</option>
-                        <option value="13">公开招标</option>
-                        <option value="14">研讨会和展会</option>
-                        <option value="15">其他</option>
+                        <option value="0">直接选择或搜索选择</option>
+                        <option value="1">老客户</option>
+                        <option value="2">代理商</option>
+                        <option value="3">互联网</option>
+                        <option value="4">独立开发</option>
+                        <option value="5">客户介绍</option>
+                        <option value="6">合作伙伴</option>
+                        <option value="7">促销活动</option>
+                        <option value="8">媒体宣传</option>
+                        <option value="9">电话访问</option>
+                        <option value="10">客户来电</option>
+                        <option value="11">二次销售</option>
+                        <option value="12">公开招标</option>
+                        <option value="13">研讨会和展会</option>
+                        <option value="14">其他</option>
                     </select>
                 </div>
             </div>
@@ -76,18 +76,18 @@
                 <div class="layui-input-inline">
                     <select name="cindustry">
                         <option value="1" selected>请选择</option>
-                        <option value="IT|互联网|通信|电子">IT|互联网|通信|电子</option>
-                        <option value="金融|银行|保险">金融|银行|保险</option>
-                        <option value="房产|建筑建设|物业">房产|建筑建设|物业</option>
-                        <option value="广告|传媒|印刷出版">广告|传媒|印刷出版</option>
-                        <option value="消费零售|贸易|交通物流">消费零售|贸易|交通物流</option>
-                        <option value="加工制造|仪表设备">加工制造|仪表设备</option>
-                        <option value="管理咨询|教育科研|中介服务">管理咨询|教育科研|中介服务</option>
-                        <option value="医药生物|医疗保健">医药生物|医疗保健</option>
-                        <option value="酒店旅游">酒店旅游</option>
-                        <option value="能源矿产|石油化工">能源矿产|石油化工</option>
-                        <option value="政府|非赢利机构|科研">政府|非赢利机构|科研</option>
-                        <option value="其他">其他</option>
+                        <option value="2">IT|互联网|通信|电子</option>
+                        <option value="3">金融|银行|保险</option>
+                        <option value="4">房产|建筑建设|物业</option>
+                        <option value="5">广告|传媒|印刷出版</option>
+                        <option value="6">消费零售|贸易|交通物流</option>
+                        <option value="7">加工制造|仪表设备</option>
+                        <option value="8">管理咨询|教育科研|中介服务</option>
+                        <option value="9">医药生物|医疗保健</option>
+                        <option value="10">酒店旅游</option>
+                        <option value="11">能源矿产|石油化工</option>
+                        <option value="12">政府|非赢利机构|科研</option>
+                        <option value="13">其他</option>
                     </select>
                 </div>
             </div>
@@ -290,7 +290,7 @@
 
                         layer.closeAll();
                         layer.msg('添加成功');
-                        window.location.href = "/crmsystem/projectPage/customerManager/customer.html";
+                        window.parent.location.reload();
                         table.reload('test');
                         $("#add-user-form")[0].reset();
                     } else {

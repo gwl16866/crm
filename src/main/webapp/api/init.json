@@ -76,7 +76,7 @@
           "child": [
             {
               "title": "我的跟单",
-              "href": "../projectPage/documentary/myDocumentary.html",
+              "href": "../documentary/selectMyBus1.do",
               "icon": "fa fa-tint",
               "target": "_self"
             },

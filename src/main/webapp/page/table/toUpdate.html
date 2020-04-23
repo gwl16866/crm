@@ -40,10 +40,10 @@
                 <label class="layui-form-label">类别:</label>
                 <div class="layui-input-inline">
                     <select name="cclass">
-                        <option value="1" th:selected="${cust.cclass eq 1}">请选择</option>
-                        <option value="2" th:selected="${cust.cclass eq 2}">客户类别一</option>
-                        <option value="3" th:selected="${cust.cclass eq 3}">客户类别二</option>
-                        <option value="4" th:selected="${cust.cclass eq 4}">客户类别三</option>
+                        <option value="0" th:selected="${cust.cclass eq 0}">请选择</option>
+                        <option value="1" th:selected="${cust.cclass eq 1}">客户类别一</option>
+                        <option value="2" th:selected="${cust.cclass eq 2}">客户类别二</option>
+                        <option value="3" th:selected="${cust.cclass eq 3}">客户类别三</option>
                     </select>
                 </div>
             </div>
@@ -51,21 +51,21 @@
                 <label class="layui-form-label">客户来源:</label>
                 <div class="layui-input-inline">
                     <select name="csource" lay-verify="required" lay-search="">
-                        <option value="1" th:selected="${cust.csource eq 1}">直接选择或搜索选择</option>
-                        <option value="2" th:selected="${cust.csource eq 2}">老客户</option>
-                        <option value="3" th:selected="${cust.csource eq 3}">代理商</option>
-                        <option value="4" th:selected="${cust.csource eq 4}">互联网</option>
-                        <option value="5" th:selected="${cust.csource eq 5}">独立开发</option>
-                        <option value="6" th:selected="${cust.csource eq 6}">客户介绍</option>
-                        <option value="7" th:selected="${cust.csource eq 7}">合作伙伴</option>
-                        <option value="8" th:selected="${cust.csource eq 8}">促销活动</option>
-                        <option value="9" th:selected="${cust.csource eq 9}">媒体宣传</option>
-                        <option value="10" th:selected="${cust.csource eq 10}">电话访问</option>
-                        <option value="11" th:selected="${cust.csource eq 11}">客户来电</option>
-                        <option value="12" th:selected="${cust.csource eq 12}">二次销售</option>
-                        <option value="13" th:selected="${cust.csource eq 13}">公开招标</option>
-                        <option value="14" th:selected="${cust.csource eq 14}">研讨会和展会</option>
-                        <option value="15" th:selected="${cust.csource eq 15}">其他</option>
+                        <option value="0" th:selected="${cust.csource eq 0}">直接选择或搜索选择</option>
+                        <option value="1" th:selected="${cust.csource eq 1}">老客户</option>
+                        <option value="2" th:selected="${cust.csource eq 2}">代理商</option>
+                        <option value="3" th:selected="${cust.csource eq 3}">互联网</option>
+                        <option value="4" th:selected="${cust.csource eq 4}">独立开发</option>
+                        <option value="5" th:selected="${cust.csource eq 5}">客户介绍</option>
+                        <option value="6" th:selected="${cust.csource eq 6}">合作伙伴</option>
+                        <option value="7" th:selected="${cust.csource eq 7}">促销活动</option>
+                        <option value="8" th:selected="${cust.csource eq 8}">媒体宣传</option>
+                        <option value="9" th:selected="${cust.csource eq 9}">电话访问</option>
+                        <option value="10" th:selected="${cust.csource eq 10}">客户来电</option>
+                        <option value="11" th:selected="${cust.csource eq 11}">二次销售</option>
+                        <option value="12" th:selected="${cust.csource eq 12}">公开招标</option>
+                        <option value="13" th:selected="${cust.csource eq 13}">研讨会和展会</option>
+                        <option value="14" th:selected="${cust.csource eq 14}">其他</option>
                     </select>
                 </div>
             </div>
@@ -80,18 +80,18 @@
                 <div class="layui-input-inline">
                     <select name="cindustry">
                         <option value="1" th:selected="${cust.cindustry eq 1}">请选择</option>
-                        <option value="IT|互联网|通信|电子" th:selected="${cust.cindustry eq 'IT|互联网|通信|电子'}">IT|互联网|通信|电子</option>
-                        <option value="金融|银行|保险" th:selected="${cust.cindustry eq '金融|银行|保险'}">金融|银行|保险</option>
-                        <option value="房产|建筑建设|物业" th:selected="${cust.cindustry eq '房产|建筑建设|物业'}">房产|建筑建设|物业</option>
-                        <option value="广告|传媒|印刷出版" th:selected="${cust.cindustry eq '广告|传媒|印刷出版'}">广告|传媒|印刷出版</option>
-                        <option value="消费零售|贸易|交通物流" th:selected="${cust.cindustry eq '消费零售|贸易|交通物流'}">消费零售|贸易|交通物流</option>
-                        <option value="加工制造|仪表设备" th:selected="${cust.cindustry eq '加工制造|仪表设备'}">加工制造|仪表设备</option>
-                        <option value="管理咨询|教育科研|中介服务" th:selected="${cust.cindustry eq '管理咨询|教育科研|中介服务'}">管理咨询|教育科研|中介服务</option>
-                        <option value="医药生物|医疗保健" th:selected="${cust.cindustry eq '医药生物|医疗保健'}">医药生物|医疗保健</option>
-                        <option value="酒店旅游" th:selected="${cust.cindustry eq '酒店旅游'}">酒店旅游</option>
-                        <option value="能源矿产|石油化工" th:selected="${cust.cindustry eq '能源矿产|石油化工'}">能源矿产|石油化工</option>
-                        <option value="政府|非赢利机构|科研" th:selected="${cust.cindustry eq '政府|非赢利机构|科研'}">政府|非赢利机构|科研</option>
-                        <option value="其他" th:selected="${cust.cindustry eq '其他'}">其他</option>
+                        <option value="2" th:selected="${cust.cindustry eq '2'}">IT|互联网|通信|电子</option>
+                        <option value="3" th:selected="${cust.cindustry eq '3'}">金融|银行|保险</option>
+                        <option value="4" th:selected="${cust.cindustry eq '4'}">房产|建筑建设|物业</option>
+                        <option value="5" th:selected="${cust.cindustry eq '5'}">广告|传媒|印刷出版</option>
+                        <option value="6" th:selected="${cust.cindustry eq '6'}">消费零售|贸易|交通物流</option>
+                        <option value="7" th:selected="${cust.cindustry eq '7'}">加工制造|仪表设备</option>
+                        <option value="8" th:selected="${cust.cindustry eq '8'}">管理咨询|教育科研|中介服务</option>
+                        <option value="9" th:selected="${cust.cindustry eq '9'}">医药生物|医疗保健</option>
+                        <option value="10" th:selected="${cust.cindustry eq '10'}">酒店旅游</option>
+                        <option value="11" th:selected="${cust.cindustry eq '11'}">能源矿产|石油化工</option>
+                        <option value="12" th:selected="${cust.cindustry eq '12'}">政府|非赢利机构|科研</option>
+                        <option value="13" th:selected="${cust.cindustry eq '13'}">其他</option>
                     </select>
                 </div>
             </div>

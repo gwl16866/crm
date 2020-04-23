@@ -14,6 +14,7 @@
 <script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script src="lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
 <body>
+<button class="layui-btn layui-btn-sm data-add-btn" id="but"> 返回</button>
 <style>
     .layui-btn-container {
         position: absolute;
@@ -38,6 +39,9 @@
             $ = layui.jquery;
         var upload = layui.upload;
         var laydate = layui.laydate;
+        $("#but").click(function () {
+            window.parent.location.reload();
+        });
         form.render();
         //添加文件
         upload.render({
@@ -63,7 +67,7 @@
                 success: function (msg) {
                     if (msg == 0) {
                         layer.msg("添加成功", {icon: 6});
-                        window.location.reload();
+                        window.parent.location.reload();
                     } else {
                         layer.msg("添加失败", {icon: 6});
                     }

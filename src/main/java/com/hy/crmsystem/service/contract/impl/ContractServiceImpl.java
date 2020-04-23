@@ -49,8 +49,12 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
     }
 
     //帖子详情
-    public ContractCust contractDetails(String contractNum) {
-        return contractMapper.contractDetails(contractNum);
+    public ContractCust contractDetails(Integer cid) {
+        return contractMapper.contractDetails(cid);
+    }
+    //帖子详情
+    public ContractCust contractDetailsMy(String contractNum) {
+        return contractMapper.contractDetailsMy(contractNum);
     }
 
     //剩余钱数

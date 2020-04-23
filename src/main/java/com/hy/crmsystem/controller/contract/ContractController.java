@@ -146,7 +146,7 @@ public class ContractController {
     //合同详情
     @RequestMapping("/contractDetails.do")
     public String contractDetails(String contractNum, Model model) {
-        ContractCust contractList = contractService.contractDetails(contractNum);
+        ContractCust contractList = contractService.contractDetailsMy(contractNum);
         List<Dept> depts = userService.queryDept();
         model.addAttribute("depts", depts);
         model.addAttribute("c", contractList);
@@ -156,7 +156,7 @@ public class ContractController {
     //我的合同详情
     @RequestMapping("/myContractDetails.do")
     public String myContractDetails(String contractNum, Model model) {
-        ContractCust contractList = contractService.contractDetails(contractNum);
+        ContractCust contractList = contractService.contractDetailsMy(contractNum);
         List<Dept> depts = userService.queryDept();
         model.addAttribute("depts", depts);
         model.addAttribute("c", contractList);
@@ -166,7 +166,7 @@ public class ContractController {
     //编辑合同
     @RequestMapping("/updateContract.do")
     public String updateContract(String contractNum, Model model) {
-        ContractCust contractList = contractService.contractDetails(contractNum);
+        ContractCust contractList = contractService.contractDetailsMy(contractNum);
         List<Dept> depts = userService.queryDept();
         model.addAttribute("depts", depts);
         model.addAttribute("cont", contractList);
@@ -176,7 +176,7 @@ public class ContractController {
     //编辑我的合同
     @RequestMapping("/updateMyContract.do")
     public String updateMyContract(String contractNum, Model model) {
-        ContractCust contractList = contractService.contractDetails(contractNum);
+        ContractCust contractList = contractService.contractDetailsMy(contractNum);
         List<Dept> depts = userService.queryDept();
         model.addAttribute("depts", depts);
         model.addAttribute("cont", contractList);
@@ -200,21 +200,27 @@ public class ContractController {
 
     //汇款页
     @RequestMapping("/returnMoney.do")
-    public String returnMoney(String contractNum, Model model) {
+    public String returnMoney(String contractNum,Integer cid, Model model) {
+        //查询当前登录人
+        Object name = SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("name",name);
         //查合同id
-        ContractCust contract = contractService.contractDetails(contractNum);
-        model.addAttribute("cont", contract);
+        ContractCust cont = contractService.contractDetails(cid);
+        model.addAttribute("con", cont);
         // 查询对方单位
-        Customer customer = customerService.selectByName(String.valueOf(contract.getCustomerId()));
-        model.addAttribute("cust", customer);
+        Customer customer = customerService.selectByName(String.valueOf(cont.getCustomerId()));
+        model.addAttribute("cus", customer);
         return "projectPage/contract/returnMoney";
     }
 
     //我的汇款页
     @RequestMapping("/MyReturnMoney.do")
     public String MyReturnMoney(String contractNum, Model model) {
+        //查询当前登录人
+        Object name = SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("name",name);
         //查合同id
-        ContractCust contract = contractService.contractDetails(contractNum);
+        ContractCust contract = contractService.contractDetailsMy(contractNum);
         model.addAttribute("cont", contract);
         // 查询对方单位
         Customer customer = customerService.selectByName(String.valueOf(contract.getCustomerId()));
@@ -253,7 +259,7 @@ public class ContractController {
     @RequestMapping("/openPaper.do")
     public String openPaper(Model model, String contractNum) {
         //查合同id
-        ContractCust contract = contractService.contractDetails(contractNum);
+        ContractCust contract = contractService.contractDetailsMy(contractNum);
         model.addAttribute("cont", contract);
         // 查询对方单位
         Customer customer = customerService.selectByName(String.valueOf(contract.getCustomerId()));
@@ -270,7 +276,7 @@ public class ContractController {
     @RequestMapping("/MyOpenPaper.do")
     public String MyOpenPaper(Model model, String contractNum) {
         //查合同id
-        ContractCust contract = contractService.contractDetails(contractNum);
+        ContractCust contract = contractService.contractDetailsMy(contractNum);
         model.addAttribute("cont", contract);
         // 查询对方单位
         Customer customer = customerService.selectByName(String.valueOf(contract.getCustomerId()));

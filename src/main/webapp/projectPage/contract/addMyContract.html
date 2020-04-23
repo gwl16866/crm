@@ -35,12 +35,16 @@
     });
 </script>
 <script>
-    layui.use(['form', 'layedit', 'upload', 'laydate'], function () {
-        var form = layui.form;//只有执行了这一步，部分表单元素才会自动修饰成功
-        var layedit = layui.layedit,
-            $ = layui.jquery;
-        var upload = layui.upload;
-        var laydate = layui.laydate;
+    layui.config({}).extend({
+        selectN: '../../layui/layui_extends/selectN',
+        selectM: '../../layui/layui_extends/selectM',
+    }).use(['form', 'layedit', 'selectM','upload', 'laydate'], function () {
+        var form = layui.form,
+            layedit = layui.layedit,
+            $ = layui.jquery,
+            selectM = layui.selectM,
+            upload = layui.upload,
+            laydate = layui.laydate;
         form.render();
         //添加文件
         upload.render({
@@ -157,6 +161,19 @@
                 //重新渲染
                 layui.form.render("select");
             }
+        });
+        //多选标签-基本配置
+        selectM({
+            //元素容器【必填】
+            elem: '#ofpeople'
+            //候选数据【必填】
+            ,data: '../../afterSell/selectUser.do'
+            ,max:3//可以选几个
+            ,width:400
+            ,delimiter:','//
+            ,field:{idName:'username',titleName:'username'}
+            //添加验证
+            ,verify:'required'
         });
     });
 </script>
@@ -308,8 +325,7 @@
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">关联人员</label>
-            <input type="text" name="ofpeople" autocomplete="off" class="layui-input"
-                   style="width: 400px">
+            <div class="layui-input-block" id="ofpeople" name="ofpeople"></div>
         </div>
     </div>
     <div class="layui-form-item layui-form-text">

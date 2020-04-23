@@ -202,6 +202,23 @@
 </div>
 <script src="lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
 <script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script type="text/html" id="zuihogendan">
+    {{#  if(d.lastTime == null){ }}
+    <a href="documentary/selectMyDocByBus.do?bid="+d.bid class="layui-table-link">暂无跟单</a>
+    {{#  } else { }}
+    <a href='documentary/selectMyDocByBus.do?bid='+d.bid class="layui-table-link">{{layui.util.toDateString(d.lastTime,'yyyy-MM-dd')}}</a>
+    {{#  } }}
+</script>
+<!--<script type="text/html" id="zuihogendan1">
+    { templet:function (d) {
+    return "<a href='bussinessOppo/selectEmpById.do?bid="+d.bid+"'>"+d.bname+"</a>";
+    },
+    title: '商机名称',
+    sort: true,
+    },
+
+
+</script>-->
 <!--当前登录人ID
 <input type="hidden" th:value="${uid}" id="uid">-->
 <script>
@@ -212,16 +229,14 @@
         var layer = layui.layer;
         var form = layui.form;
         var upload = layui.upload;
-        var  noRepeat=[];
-        $('input[name="bid"]').each(function (index,domEle) {
+        var noRepeat = [];
+        $('input[name="bid"]').each(function (index, domEle) {
             noRepeat.push($(this).val());
         });
-
-
         table.render({
             width: 1120,
             elem: '#currentTableId'
-            , url: 'customerManager/select1.do?bid='+noRepeat
+            , url: 'customerManager/select1.do?bid=' + noRepeat
             , toolbar: '#toolbarDemo'
             , limits: [3, 6, 9, 12, 15, 100]
             , limit: 3
@@ -233,19 +248,36 @@
             }],
             cols: [
                 [
-                {
-                    field: 'bname',
-                    title: '商机名称',
-                    sort: true,
-                    templet: '<div><a href="bussinessOppo/selectEmpById.do?bid={{d.bid}}">{{d.bname}}</a></div>'
-                },
-                {field: 'status', title: '商机阶段'},
-                {field: 'bpredictMoney', title: '预计成交金额', sort: true},
-                {field: 'bprincipal', title: '商机负责人'},
-                {field: 'lastTime', title: '最后跟单', templet: '#time'},
-                {field: '讨论', title: '讨论版', templet: '<div><a href="">讨论</a></div>'}
+                    {
+                        templet: function (d) {
+                            return "<a href='bussinessOppo/selectEmpById.do?bid=" + d.bid + "'>" + d.bname + "</a>";
+                        },
+                        title: '商机名称',
+                        sort: true,
+                    },
+                    {field: 'status', title: '商机阶段'},
+                    {field: 'bpredictMoney', title: '预计成交金额', sort: true},
+                    {field: 'bprincipal', title: '商机负责人'},
 
-            ]
+
+                    {
+                        field: 'lastTime', title: '最后跟单', templet: function (d) {
+                            if (d.lastTime == "") {
+                                return "暂无回复!!!";
+                            } else {
+                                return "<a href='documentary/selectMyDocByBus.do?bid=" + d.bid + "'>" + layui.util.toDateString(d.lastTime, 'yyyy-MM-dd') + "</a>";
+                            }
+                        }
+                    },
+                    {
+                        templet: function (d) {
+                            return "<a href='bussinessOppo/selectById2.do?bid=" + d.bid + "'>讨论</a>";
+                        },
+                        title: '讨论版',
+                        sort: true,
+                    }
+
+                ]
             ]
 
         });
@@ -257,20 +289,19 @@
             return false;
             /*  });*/
 
-            //执行搜索重载
-            table.reload('currentTableId', {
-                page: {
-                    curr: 1
-                }
-                , where: {
-                    searchParams: result
-                }
-            }, 'data');
+            // 监听搜索操作
+            form.on('submit(query-submit)', function (data) {
+                //var result = JSON.stringify(data.field);
+                //执行重载
+                table.reload('currentTableId', {
+                    where: data.field
+                });
+                return false;
+            });
 
-            return false;
         });
-
     });
+
 </script>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.hy.crmsystem.controller.bussinessOppo;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
+import com.hy.crmsystem.entity.bussinessOppo.ForumLunTan;
 import com.hy.crmsystem.entity.customerManager.Customer;
 import com.hy.crmsystem.entity.systemManager.LayuiData;
 import com.hy.crmsystem.entity.systemManager.User;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * <p>
@@ -109,4 +111,35 @@ public class BusinessoppoController {
         return businessoppoService.selectNewCount(type);
     }
 */
+   //根据 id 查信息进行展示 以 修改
+   @RequestMapping("/selectById2.do")
+   public String selectById2(String bid,Model model){
+       List<String> list1=businessoppoService.selectById2(bid);
+       model.addAttribute("list1",list1);
+       return "/projectPage/bussinessOppo/forumLunTan";
+   }
+
+    //根据 id 查信息进行展示 以 修改
+    @RequestMapping("/select1.do")
+    @ResponseBody
+    public LayuiData select1(String[] id,Model model){
+        List<ForumLunTan> list=businessoppoService.select1(id);
+        LayuiData layUiData=new LayuiData();
+        layUiData.setCode(0);
+        layUiData.setMsg("");
+        layUiData.setCount(Integer.parseInt(String.valueOf(list.size())));
+        layUiData.setData(list);
+        return layUiData;
+    }
+
+
+
+
+
+
+
+
+
+
+
 }

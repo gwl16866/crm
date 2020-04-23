@@ -2,11 +2,14 @@ package com.hy.crmsystem.controller.customerManager;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hy.crmsystem.entity.afterSell.Aftersell;
+import com.hy.crmsystem.entity.afterSell.AftersellBo;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
 import com.hy.crmsystem.entity.contract.Contract;
+import com.hy.crmsystem.entity.contract.ContractCust;
 import com.hy.crmsystem.entity.customerManager.AftersellShu;
 import com.hy.crmsystem.entity.customerManager.Customer;
 import com.hy.crmsystem.entity.customerManager.Kehuiganlizonghe;
+import com.hy.crmsystem.entity.systemManager.Dept;
 import com.hy.crmsystem.entity.systemManager.LayuiData;
 import com.hy.crmsystem.entity.customerManager.Moneyinfor;
 import com.hy.crmsystem.mapper.customerManager.MoneyinforMapper;
@@ -108,8 +111,8 @@ private MoneyinforMapper moneyinforMapper;
     //根据 id 查信息进行展示 以 修改
     @RequestMapping("/select1.do")
     @ResponseBody
-    public LayuiData select1(String[] bid,Model model){
-       List<Businessoppo> list=customerService.select1(bid);
+    public LayuiData select1(String[] bid,Model model,Businessoppo businessoppo){
+       List<Businessoppo> list=customerService.select1(bid,businessoppo);
         LayuiData layUiData=new LayuiData();
         layUiData.setCode(0);
         layUiData.setMsg("");
@@ -129,8 +132,8 @@ private MoneyinforMapper moneyinforMapper;
     //根据 id 查信息进行展示 以 修改
     @RequestMapping("/select2.do")
     @ResponseBody
-    public LayuiData select2(String[] cid,Model model){
-        List<Contract> list=customerService.select2(cid);
+    public LayuiData select2(String[] cid,Model model,Contract contract){
+        List<Contract> list=customerService.select2(cid,contract);
         LayuiData layUiData=new LayuiData();
         layUiData.setCode(0);
         layUiData.setMsg("");
@@ -148,8 +151,8 @@ private MoneyinforMapper moneyinforMapper;
     //根据 id 查信息进行展示 以 修改
     @RequestMapping("/select3.do")
     @ResponseBody
-    public LayuiData select3(String[] aid,Model model){
-        List<AftersellShu> list=customerService.select3(aid);
+    public LayuiData select3(String[] aid, Model model,AftersellBo aftersellBo){
+        List<AftersellShu> list=customerService.select3(aid,aftersellBo);
         LayuiData layUiData=new LayuiData();
         layUiData.setCode(0);
         layUiData.setMsg("");
@@ -157,6 +160,17 @@ private MoneyinforMapper moneyinforMapper;
         layUiData.setData(list);
         return layUiData;
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

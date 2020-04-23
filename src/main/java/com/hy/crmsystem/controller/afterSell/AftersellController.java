@@ -176,13 +176,13 @@ public class AftersellController {
     }
 
     /**
-     * 根据售后主题查询
+     * 根据售后id查询
      */
     @RequestMapping("/selectOneAfterSell.do")
-    public String selectOneAfterSell(String theme, Model model){
-        System.out.println(theme+"-----------------------");
-        AfterSellThree afterSellThree=aftersellService.selectAfterSell(theme);
+    public String selectOneAfterSell(Integer aid, Model model){
+        AfterSellThree afterSellThree=aftersellService.selectAfterSell(aid);
         model.addAttribute("a",afterSellThree);
+        System.out.println(afterSellThree);
         return "/projectPage/afterSell/showAfterSell";
     }
 

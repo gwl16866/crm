@@ -547,7 +547,7 @@
                 }],
                 cols: [[
                     {type: "checkbox", fixed: "left"},
-                    {field: 'id', title: 'ID',templet:'#xuhao'},
+                    {title: 'ID',templet:'#xuhao'},
                     {field: 'theme', title: '主题'},
                     {field: 'serviceType', title: '服务类型', sort: true},
                     {title: '开始时间',templet:'#times'},
@@ -582,7 +582,7 @@
                 maxmin:true,
                 shadeClose: true,
                 area: ['100%', '100%'],
-                content: '../../afterSell/selectOneAfterSell.do?theme='+data.theme,
+                content: '../../afterSell/selectOneAfterSell.do?aid='+data.aid,
             });
 
             //标注选中样式

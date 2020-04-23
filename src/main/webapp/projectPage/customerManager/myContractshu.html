@@ -128,7 +128,13 @@
             }],
             cols: [
                 [
-                    {field: 'contractName', title: '合同全称',templet:'<div><a href="contract/myContractDetails.do?contractNum={{d.contractNum}}" style="color: #1E9FFF">{{d.contractName}}</a></div> '},
+                    { templet:function (d) {
+                            return "<a href='contract/myContractDetails.do?contractNum="+d.contractNum+"'>"+d.contractName+"</a>";
+                        },
+                        title: '合同全称',
+                        sort: true,
+                    },
+
                     {field: 'contractNum', title: '合同编号'},
                     {field: 'contractMoney', title: '合同金额', sort: true},
                     {field: 'returnMoney', title: '汇款额',templet:'#rM'},
@@ -140,12 +146,14 @@
             limit: 6,
             page: true
         });
-        //   监听submit并改同步提交为异步提交并重新渲染表格
+        // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
-            table.reload("currentTable", {
-                where: data.field
+            //var result = JSON.stringify(data.field);
+            //执行重载
+            table.reload('currentTable', {
+                where:data.field
             });
-            return false; //阻止表单跳转。
+            return false;
         });
 
         //刷新页面

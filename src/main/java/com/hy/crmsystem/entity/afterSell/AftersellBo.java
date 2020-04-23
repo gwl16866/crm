@@ -14,6 +14,8 @@ import java.io.Serializable;
  */
 public class AftersellBo implements Serializable {
 
+    private Integer aid;
+
     private String theme;
 
     private Integer status;
@@ -29,6 +31,14 @@ public class AftersellBo implements Serializable {
     @TableField("service_score")
     private String serviceScore;
 
+
+    public Integer getAid() {
+        return aid;
+    }
+
+    public void setAid(Integer aid) {
+        this.aid = aid;
+    }
 
     public Integer getStatus() {
         return status;

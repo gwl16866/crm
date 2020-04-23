@@ -12,7 +12,7 @@ public class SqlProvider {
     * 查询售后bo
     * */
     public String selectAfterSellBo(@Param("aftersellBo") AftersellBo aftersellBo,@Param("types") int types){
-        StringBuffer buffer = new StringBuffer("SELECT t.theme,ase.service_type,ase.starttime,ase.service_people,ase.service_score  FROM theme t,aftersell ase WHERE t.id=ase.theme");
+        StringBuffer buffer = new StringBuffer("SELECT ase.aid,t.theme,ase.service_type,ase.starttime,ase.service_people,ase.service_score  FROM theme t,aftersell ase WHERE t.id=ase.theme");
         if (types == 1 && !StringUtils.isNullOrEmpty(aftersellBo.getTheme())) {
             buffer.append(" and t.id = " + aftersellBo.getTheme() + "");
         }else if (types == 2 && !StringUtils.isNullOrEmpty(aftersellBo.getServiceType())) {

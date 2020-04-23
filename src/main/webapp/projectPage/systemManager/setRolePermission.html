@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath()}+'/'">
+    <meta charset="utf-8">
+    <title>设置角色权限</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="css/public.css" media="all">
+</head>
+<script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+
+<body>
+<style>
+    .layui-btn-container {
+        position: absolute;
+        top: 15px;
+        left: 1200px
+    }
+    #two{
+        position: absolute;
+        left: 500px;
+    }
+
+
+</style>
+
+<script type="text/javascript">
+    $(function () {
+        //返回上一个页面
+        $("body").on("click", '.data-add-btn', function () {
+            window.location.href = "projectPage/systemManager/userManager.html";
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        });
+
+    });
+
+</script>
+<script>
+    layui.use(['form', 'layedit', 'upload', 'laydate'], function () {
+        var form = layui.form;//只有执行了这一步，部分表单元素才会自动修饰成功
+        var layedit = layui.layedit,
+            $ = layui.jquery;
+        var upload = layui.upload;
+        var laydate = layui.laydate;
+        form.render();
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            //获取checkbox数据,组装成数组!!!!!!
+            var noRepeatUploadBanks =[];
+            $('input[name="pid"]:checked').each(function(index, domEle){
+                noRepeatUploadBanks.push($(this).val());
+            });
+
+            $.ajax({
+                url: 'systemManager/updatePermissionRid.do',
+                type: 'POST',
+                dataType: 'json',
+                data: {pids: noRepeatUploadBanks,rid:$("#rid").val()},
+                traditional: true,
+                success: function (msg) {
+                    if (msg == 1) {
+                        layer.msg("修改成功", {icon: 1,time:1000},function () {
+                            //关闭当前页面并打开主页面
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                            parent.location.reload();
+                        });
+                    } else {
+                        layer.msg("修改失败", {icon: 2});
+                    }
+                }
+            });
+            return false;
+        });
+
+        //监听指定开关
+        form.on('switch(switchTest)', function(data){
+            var arr = document.getElementsByTagName('input');
+            if(this.checked){//全选
+                var arrValue = [];
+                for(var n=0;n <arr.length;n++) {
+                    if (arr[n].type == 'checkbox') {
+                        $(arr[n]).prop("checked",true);
+                        form.render("checkbox");
+                    }
+                }
+            }else{//取消全选
+                var arrValue = [];
+                for(var n=0;n <arr.length;n++) {
+                    if (arr[n].type == 'checkbox') {
+                        $(arr[n]).prop("checked",false);
+                        form.render("checkbox");
+                    }
+                }
+            }
+            layer.msg( (this.checked ? '全选' : '取消全选'), {
+                offset: '6px'
+            });
+
+        });
+
+
+        //一级选中 二级 自动选中
+        form.on('checkbox(first)', function(data){
+            var fid = data.elem.id;
+            if(data.elem.checked) {
+                $("#" + fid + '_role').each(function () {
+                    $(this).prop("checked", true);
+                    form.render("checkbox");
+                });
+            }else {
+                $("#" + fid + '_role').each(function () {
+                    $(this).prop("checked", false);
+                    form.render("checkbox");
+                });
+            }
+
+        });
+
+        //二级选中 一级自动选中
+        form.on('checkbox(second)', function(data){
+            var secondPid = data.elem.id;
+            var parentPid = secondPid.split("_")[0];//父级id
+
+            if(data.elem.checked){
+
+                if(document.getElementById(parentPid).checked==false){
+                    $("#"+parentPid).prop("checked",true);
+                    form.render("checkbox");
+                }else {//如果父级已选中 啥也不干
+
+                }
+            }else{
+                var flag =1;
+                //取消选中
+                $("#"+secondPid).each(function () {
+                    if(this.checked){
+                        flag=2;
+                        return false;
+                    }
+                });
+
+                if(flag == 1){
+                    $("#"+parentPid).prop("checked",false);
+                    form.render("checkbox");
+                }
+
+
+            }
+
+        });
+
+
+    });
+
+
+
+</script>
+
+<h2 align="center">权限</h2>
+<br>
+<form class="layui-form">
+<div class="layui-form-item">
+    <label class="layui-form-label">全选</label>
+    <div class="layui-input-block">
+        <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF" lay-filter="switchTest">
+    </div>
+</div>
+
+    <input type="hidden"  id="rid" th:value="${rid}">
+
+    <div id="checks1">
+
+        <div th:each="first:${allPermission}">
+<hr color="blue">
+           <input type="checkbox" th:name="pid" th:id="${first.permissionName}"  th:value="${first.pid}"  th:title="${first.permissionName}" th:checked="${#lists.contains(roleHaveHand,first.pid)}" lay-filter="first"/>
+            <br>
+             <span th:each="second:${first.menuPermission}">
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 &nbsp;&nbsp;&nbsp;&nbsp;
+             <input type="checkbox" th:name="pid" th:id="${first.permissionName}+'_role'" th:value="${second.pid}"  th:title="${second.getPermissionName()}" th:checked="${#lists.contains(roleHaveHand,second.pid)}" lay-filter="second"/>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             </span>
+
+        </div>
+
+
+
+
+    </div>
+
+    <div id="two">
+
+
+ <span>
+                 <button type="button" class="layui-btn data-add-btn"> 返回</button>
+                 <button type="submit" class="layui-btn" lay-submit="" lay-filter="formDemo">提交</button>
+
+ </span>
+
+
+
+    </div>
+
+
+</form>
+</body>
+</html>

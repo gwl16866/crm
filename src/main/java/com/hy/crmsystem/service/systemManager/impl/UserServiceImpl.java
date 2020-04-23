@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -49,9 +50,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public User selectUserByUid(Integer uid) {
         return userMapper.selectUserByUid(uid);
     }
-
-
-
 
 
     //不修改密码
@@ -455,9 +453,32 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
+    public void updateUserHandByUid(String[] pid, Integer uid) {
+        userMapper.updateUserHandByUid(pid,uid);
+    }
+
+    @Override
+    public void updateRoleHandByRid(String[] pid, Integer rid) {
+        userMapper.updateRoleHandByRid(pid,rid);
+
+    }
+
+    @Override
     public void deleteUserRoleByUid(Integer uid) {
         userMapper.deleteUserRoleByUid(uid);
     }
+
+    @Override
+    public void deleteUserPermissionByUid(Integer uid) {
+        userMapper.deleteUserPermissionByUid(uid);
+
+    }
+
+    @Override
+    public void deleteRolePermissionByRid(Integer rid) {
+        userMapper.deleteRolePermissionByRid(rid);
+    }
+
 
     @Override
     public List<Permission> queryFirstPermission() {
@@ -465,9 +486,50 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public List<Userhand> userHaveHand(Integer uid) {
+    public List<Integer> userHaveHand(Integer uid) {
         return userMapper.userHaveHand(uid);
     }
 
+    @Override
+    public List<Integer> roleHaveHand(Integer rid) {
+        return userMapper.roleHaveHand(rid);
+    }
 
+    @Override
+    public List<Permission> secondThirdHand(Integer parentId) {
+        return userMapper.secondThirdHand(parentId);
+    }
+
+    @Override
+    public List<Permission> recursionHands(List<Permission> list){
+
+        if(null != list && !list.isEmpty()){
+            for(Permission firstHands:list){
+                List<Permission> secondList=secondThirdHand(firstHands.getPid());
+                firstHands.setMenuPermission(secondList);
+                recursionHands(secondList);
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public HashSet<String> selectRoleByUid(Integer uid) {
+        return userMapper.selectRoleByUid(uid);
+    }
+
+    @Override
+    public HashSet<String> selectHandNameByUid(Integer uid) {
+        return userMapper.selectHandNameByUid(uid);
+    }
+
+    @Override
+    public HashSet<String> selectRoleHandNameByUid(Integer uid) {
+        return userMapper.selectRoleHandNameByName(uid);
+    }
+
+    @Override
+    public String[] selectThirdPerms(String[] pids) {
+        return userMapper.selectThirdPerms(pids);
+    }
 }

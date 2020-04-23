@@ -40,7 +40,7 @@
         <property name="securityManager" ref="securityManager"></property>
         <!-- 如果没有认证 访问其他需要认证的连接   则跳转到的页面 -->
         <property name="loginUrl" value="/page/login-1.html"></property>
-        <!--<property name="unauthorizedUrl" value="/noperms.html"></property>-->
+        <property name="unauthorizedUrl" value="/page/noperms.html"></property>
         <!--xml授权-->
         <property name="filterChainDefinitions">
             <value>
@@ -53,6 +53,27 @@
                 /login/**=anon
                 /login.html=anon
                 /page/zhuce.html=anon
+                /page/welcome-2.html=perms["page:welcome-2.html"]
+                /projectPage/customerManager/customer.html=perms["projectPage:customerManager:customer.html"]
+                /projectPage/systemManager/forum.html=perms["projectPage:systemManager:forum.html"]
+                /projectPage/afterSell/afterSell.html=perms["projectPage:afterSell:afterSell.html"]
+                /projectPage/statistics/statistics1.html=perms["projectPage:statistics:statistics1.html"]
+                /projectPage/systemManager/userManager.html=perms["projectPage:systemManager:userManager.html"]
+                /projectPage/systemManager/role.html=perms["projectPage:systemManager:role.html"]
+                /bussinessOppo/selectMyBus.do=perms["bussinessOppo:selectMyBus.do"]
+                /projectPage/bussinessOppo/allBussinessOppo.html=perms["projectPage:bussinessOppo:allBussinessOppo.html"]
+                /projectPage/documentary/myDocumentary.html=perms["projectPage:documentary:myDocumentary.html"]
+                /projectPage/documentary/allDocumentary.html=perms["projectPage:documentary:allDocumentary.html"]
+                /contract/selectMyCont.do=perms["contract:selectMyCont.do"]
+                /projectPage/contract/allContract.html=perms["projectPage:contract:allContract.html"]
+                /systemManager/setUserPerms.do=perms["systemManager:setUserPerms.do"]
+                /systemManager/selectUserByUid.do=perms["systemManager:selectUserByUid.do"]
+                /systemManager/deleteUser.do=perms["systemManager:deleteUser.do"]
+                /systemManager/updateRole.do=perms["systemManager:updateRole.do"]
+                /systemManager/setRole.do=perms["systemManager:setRole.do"]
+                /systemManager/updateRoleUid.do=perms["systemManager:updateRoleUid.do"]
+                /systemManager/updatePermissionUid.do=perms["systemManager:updatePermissionUid.do"]
+                /systemManager/updateUser.do=perms["systemManager:updateUser.do"]
                 /**=authc
             </value>
         </property>

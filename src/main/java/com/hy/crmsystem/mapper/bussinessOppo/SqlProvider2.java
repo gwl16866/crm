@@ -58,4 +58,29 @@ public class SqlProvider2 {
         }
         return buffer.toString();
     }
+
+    public String select1(@Param("id") String[] id) {
+        StringBuffer buffer = new StringBuffer("SELECT a.id,a.title,u.user_name,b.bname,a.click_count,COUNT(a.id) AS COUNT FROM article a,businessoppo b,USER u WHERE a.uid=u.uid AND b.bid=a.of_bid ");
+        buffer.append(" AND a.id IN ");
+        buffer.append("(");
+        for(int i=0;i<id.length;i++){
+            buffer.append(id[i]);
+            if(i<id.length-1){
+                buffer.append(",");
+            }
+        }
+        buffer.append(")");
+        return buffer.toString();
+    }
+
+
+
+
+
+
+
+
+
+
+
 }

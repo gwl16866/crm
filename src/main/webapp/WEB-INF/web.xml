@@ -19,7 +19,7 @@
 
   <!-- 配置Spring框架提供的用于整合Shiro框架的过滤器   shiro 过滤器一定要保证 要先进入！！
         这个过滤器的名字必须与Spring配置文件中的bean配置id相同-->
- <filter>
+  <filter>
     <filter-name>shiroFilter</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
   </filter>

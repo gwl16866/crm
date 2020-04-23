@@ -200,23 +200,22 @@
     <br>
     <br>
     <br>
-    <div class="layui-form-item" id="sub">
-
-        <input type="hidden" th:value="${a.aid}" id="js">
-
-        <a th:if="${a.status ==1}">
-            <button  class="layui-btn layui-btn-danger" id="over">结束</button>
-            <button   class="layui-btn layui-btn-danger" id="chechu">撤除</button>
-        </a>
-
-
-    </div>
-    <br>
-    <br>
-    <br>
 
 </form>
+<div class="layui-form-item" id="sub">
 
+    <input type="hidden" th:value="${a.aid}" id="two">
+
+    <a th:if="${a.status ==1}">
+        <button  class="layui-btn layui-btn-danger" id="over">结束</button>
+        <button   class="layui-btn layui-btn-danger" id="chechu">撤除</button>
+    </a>
+
+
+</div>
+<br>
+<br>
+<br>
 
 <script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 
@@ -236,15 +235,15 @@
               $("#over").click(function(){
                             $.ajax({
                                 type:"post",
-                                url:"afterSell/updateStatus.do?type=2&aid="+$("#js").val(),
+                                url:"afterSell/updateStatus.do?type=2&aid="+$("#two").val(),
                                 contentType:"application/json",
                                 success:function (data) {
                                     if(data =='0'){
                                         layer.msg("已结束",{
                                             icon:1,
-                                            time:600
+                                            time:1000
                                         },function() {
-                                            window.parent.location.reload();
+                                           // window.parent.location.reload();
                                         });
                                     }
 
@@ -257,15 +256,15 @@
         $("#chechu").click(function(){
             $.ajax({
                 type:"post",
-                url:"afterSell/updateStatus.do?type=3&aid="+$("#js").val(),
+                url:"afterSell/updateStatus.do?type=3&aid="+$("#two").val(),
                 contentType:"application/json",
                 success:function (data) {
                     if(data =='0'){
                         layer.msg("已撤除",{
                             icon:1,
-                            time:600
+                            time:1000
                         },function() {
-                            window.parent.location.reload();
+                            //window.parent.location.reload();
                         });
                     }
 

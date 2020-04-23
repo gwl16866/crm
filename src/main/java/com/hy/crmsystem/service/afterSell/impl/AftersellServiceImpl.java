@@ -96,8 +96,8 @@ public class AftersellServiceImpl extends ServiceImpl<AftersellMapper, Aftersell
     }
 
     @Override
-    public AfterSellThree selectAfterSell(String theme) {
-        return aftersellMapper.selectOneAfterSell(theme);
+    public AfterSellThree selectAfterSell(Integer aid) {
+        return aftersellMapper.selectOneAfterSell(aid);
     }
 
     @Override

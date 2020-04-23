@@ -124,7 +124,12 @@
             }],
             cols: [
                 [
-                {field: 'theme', title: '主题'},
+                    { templet:function (d) {
+                            return "<a href='afterSell/selectOneAfterSell.do?theme="+d.theme+"'>"+d.theme+"</a>";
+                        },
+                        title: '主题',
+                        sort: true,
+                    },
                 {field: 'serviceType', title: '服务类型'},
                 {field: 'starttime',title: '服务人员'},
                 {field: 'servicePeople', title: '服务人员'},
@@ -161,15 +166,6 @@
             //obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
         });
 
-        // 监听搜索操作
-        form.on('submit(data-search-btn)', function (data) {
-            //var result = JSON.stringify(data.field);
-            //执行重载
-            table.reload('currentTableId', {
-                where:data.field
-            });
-            return false;
-        });
         //监听form复选框选择
         form.on('select(selectId)', function (obj) {
             $("#mains").empty();

@@ -4,6 +4,7 @@ import com.hy.crmsystem.entity.systemManager.*;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -37,10 +38,22 @@ public interface IUserService extends IService<User> {
     public Integer selectCountRolePermission(Integer rid);
     public void addRole(String name);
     public void updateRoleIdByUid(String rid[],Integer uid);
+    public void updateUserHandByUid(String pid[],Integer uid);
+    public void updateRoleHandByRid(String pid[],Integer rid);
     public void deleteUserRoleByUid(Integer uid);
+    public void deleteUserPermissionByUid(Integer uid);
+    public void deleteRolePermissionByRid(Integer rid);
     public List<Permission> queryFirstPermission();
-    public List<Userhand> userHaveHand(Integer uid);
+    public List<Integer> userHaveHand(Integer uid);
+    public List<Integer> roleHaveHand(Integer rid);
 
+    public List<Permission> secondThirdHand(Integer parentId);
+    public List<Permission> recursionHands(List<Permission> list);
+
+    public HashSet<String> selectRoleByUid(Integer uid);
+    public HashSet<String> selectHandNameByUid(Integer uid);
+    public HashSet<String> selectRoleHandNameByUid(Integer uid);
+    public String[] selectThirdPerms(String[] pids);
 
 
 

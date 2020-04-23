@@ -47,7 +47,7 @@ public interface IAftersellService extends IService<Aftersell> {
 
     public void saveAfterSell(AfterSellBoTwo afterSellBoTwo);
 
-    public AfterSellThree selectAfterSell(String theme);
+    public AfterSellThree selectAfterSell(Integer aid);
 
     public String selectCount(String type);
 

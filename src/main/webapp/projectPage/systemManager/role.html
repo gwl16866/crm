@@ -80,6 +80,7 @@
         <script type="text/html" id="currentTableBar">
             <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+            <a class="layui-btn layui-btn-xs data-count-edit" lay-event="perms">授权</a>
         </script>
     </div>
 </div>
@@ -151,6 +152,17 @@
                         }
                     })
                 })
+            } else  if(obj.event === 'perms'){
+                var index = layer.open({
+                    title: "角色-"+data.roleName+"-授权",
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['100%', '100%'],
+                    content: '../../systemManager/setRolePerms.do?rid='+data.rid,
+                });
+
             }
         });
 

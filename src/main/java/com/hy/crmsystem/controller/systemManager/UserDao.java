@@ -39,6 +39,50 @@ public class UserDao {
         return sql.toString();
     }
 
+    public String updateUserHandByUid(@Param("pids") String[] pids, @Param("uid") Integer uid) {
+        StringBuffer sql = new StringBuffer("insert into userhand (uid,pid) values");
+        for(int i=0;i<pids.length;i++){
+            sql.append("(");
+            sql.append(uid+",");
+            sql.append(pids[i]+")");
+            if(i<pids.length-1){
+                sql.append(",");
+            }
+        }
+        return sql.toString();
+    }
+
+    public String updateRoleHandByRid(@Param("pids") String[] pids, @Param("rid") Integer rid) {
+        StringBuffer sql = new StringBuffer("insert into rolepermission (rid,pid) values");
+        for(int i=0;i<pids.length;i++){
+            sql.append("(");
+            sql.append(rid+",");
+            sql.append(pids[i]+")");
+            if(i<pids.length-1){
+                sql.append(",");
+            }
+        }
+        return sql.toString();
+    }
+
+
+    public String selectThirdPerms(@Param("pids") String[] pids) {
+
+
+        StringBuffer sql = new StringBuffer("SELECT pid FROM permission WHERE parent_id IN (SELECT pid FROM permission WHERE pid IN ");
+        sql.append("(");
+        for(int i=0;i<pids.length;i++){
+            sql.append(pids[i]);
+            if(i<pids.length-1){
+                sql.append(",");
+            }
+        }
+        sql.append(") AND parent_id IS NOT NULL)");
+        return sql.toString();
+    }
+
+
+
 
 
 }

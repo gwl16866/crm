@@ -2,18 +2,27 @@ package com.hy.crmsystem.shiroRealm;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.hy.crmsystem.entity.systemManager.User;
+import com.hy.crmsystem.mapper.systemManager.UserMapper;
 import com.hy.crmsystem.service.systemManager.IUserService;
+import com.hy.crmsystem.service.systemManager.impl.UserServiceImpl;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
+import java.util.Iterator;
 
 public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
-    private IUserService UserService;
+    private UserServiceImpl userService;
 
     /**
      * 授权
@@ -22,20 +31,23 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
- /*       // 先拿到用户名
-       String userName = (String) principalCollection.getPrimaryPrincipal();
+        // 先拿到用户名
+        String userName = (String) principalCollection.getPrimaryPrincipal();
+        User u = userService.selectDengLuRen(userName);
+        Integer uid = u.getUid();
 
-       // 根据用户名查询 角色 和 权限
+       // 根据用户uid查询 角色 和 权限
 
         // 用户角色
-        HashSet<String> userRoleList = iInforService.selectRoleByUid(userName);
+        HashSet<String> userRoleList = userService.selectRoleByUid(uid);
 
         // 用户权限
-        HashSet<String> userHandList = iInforService.selectHandNameByName(userName);
+        HashSet<String> userHandList = userService.selectHandNameByUid(uid);
 
         // 角色权限
-        HashSet<String> userRoleHandList = iInforService.selectRoleHandNameByName(userName);
+        HashSet<String> userRoleHandList = userService.selectRoleHandNameByUid(uid);
 
+        //把角色权限放入用户权限
         Iterator roleHand=userRoleHandList.iterator();
         while (roleHand.hasNext()){
            userHandList.add((String) roleHand.next());
@@ -43,14 +55,13 @@ public class ShiroRealm extends AuthorizingRealm {
 
         Iterator it=userHandList.iterator();
         while (it.hasNext()){
-            System.out.println("全部权限"+it.next());
+            System.out.println("全部权限---------------"+it.next());
         }
 
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.setRoles(userRoleList);
         authorizationInfo.addStringPermissions(userHandList);
-        return authorizationInfo;*/
-        return null;
+        return authorizationInfo;
     }
 
 
@@ -70,7 +81,7 @@ public class ShiroRealm extends AuthorizingRealm {
        QueryWrapper<User> queryWrapper=new QueryWrapper();
         queryWrapper.eq("user_name",username);
         queryWrapper.eq("status",1);
-        User user=UserService.getOne(queryWrapper);
+        User user=userService.getOne(queryWrapper);
 
         if(user == null){
             throw new UnknownAccountException("此用户不存在");
@@ -82,4 +93,6 @@ public class ShiroRealm extends AuthorizingRealm {
         // 返回校验
         return authenticationInfo;
     }
+
+
 }

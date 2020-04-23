@@ -6,6 +6,7 @@ import com.hy.crmsystem.entity.systemManager.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -89,8 +90,21 @@ public interface UserMapper extends BaseMapper<User> {
     @UpdateProvider(type = UserDao.class,method = "updateRoleIdByUid")
     public void updateRoleIdByUid(@Param("rids") String[] rids,@Param("uid") Integer uid);
 
+    @UpdateProvider(type = UserDao.class,method = "updateUserHandByUid")
+    public void updateUserHandByUid(@Param("pids") String[] pids,@Param("uid") Integer uid);
+
+    @UpdateProvider(type = UserDao.class,method = "updateRoleHandByRid")
+    public void updateRoleHandByRid(@Param("pids") String[] pids,@Param("rid") Integer rid);
+
+
     @Delete("delete from userrole where uid=#{uid}")
     public void deleteUserRoleByUid(Integer uid);
+
+    @Delete("delete from userhand where uid=#{uid}")
+    public void deleteUserPermissionByUid(Integer uid);
+
+    @Delete("delete from rolepermission where rid=#{rid}")
+    public void deleteRolePermissionByRid(Integer rid);
 
 
     /**
@@ -103,8 +117,29 @@ public interface UserMapper extends BaseMapper<User> {
     /**
      * uid 查询用户权限
      */
-    @Select("select uid,pid from userhand where uid =#{uid}")
-    public List<Userhand> userHaveHand(Integer uid);
+    @Select("select pid from userhand where uid =#{uid}")
+    public List<Integer> userHaveHand(Integer uid);
 
+    /**
+     * rid 查询角色权限
+     */
+    @Select("select pid from rolepermission where rid =#{rid}")
+    public List<Integer> roleHaveHand(Integer rid);
+
+    @Select(" select * from permission where parent_id=#{parentId}")
+    public List<Permission> secondThirdHand(Integer parentId);
+
+    @Select("SELECT role_name FROM role r,userrole ur,USER u WHERE u.uid = ur.uid AND r.rid = ur.rid AND u.uid = #{uid}")
+    public HashSet<String> selectRoleByUid(Integer uid);
+
+    @Select("SELECT permission_name FROM permission p,userhand uh,USER u WHERE p.pid = uh.pid AND uh.uid = u.uid AND u.uid = #{uid}")
+    public HashSet<String> selectHandNameByUid(Integer uid);
+
+    // 角色权限
+    @Select("SELECT h.permission_name FROM permission h,role r,rolepermission rh,USER u,userrole ur WHERE h.pid=rh.pid AND r.rid=rh.rid AND u.uid = ur.uid AND ur.rid=r.rid AND u.uid = #{uid}")
+    public HashSet<String> selectRoleHandNameByName(Integer uid);
+
+    @SelectProvider(type = UserDao.class, method = "selectThirdPerms")
+    public String[] selectThirdPerms(@Param("pids") String[] pids);
 
 }

@@ -43,19 +43,7 @@
 </head>
 <script type="text/javascript">
     $(function () {
-        $.ajax({
-            type:"post",
-            url:"../../systemManager/queryDept.do",
-            contentType:"application/json",
-            success:function (datas) {
-                var s="<option value='0'>请选择</option>";
-                for (var j=0;j<datas.length;j++){
-                    s+="<option value='"+datas[j].deptId+"'>"+datas[j].deptName+"</option>";
-                }
-                $("#depts").append(s);
-                layui.form.render();
-            }
-        });
+
 
     });
 </script>
@@ -152,6 +140,22 @@
             limit: 3,
             page: true
         });
+
+        $.ajax({
+            type:"post",
+            url:"../../systemManager/queryDept.do",
+            contentType:"application/json",
+            success:function (datas) {
+                var s="<option value='0'>请选择</option>";
+                for (var j=0;j<datas.length;j++){
+                    s+="<option value='"+datas[j].deptId+"'>"+datas[j].deptName+"</option>";
+                }
+                $("#depts").append(s);
+                layui.form.render();
+            }
+        });
+
+
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             //执行重载
@@ -190,7 +194,7 @@
                 })
             }else if (obj.event === 'role') {
                 var index = layer.open({
-                    title: '设置角色',
+                    title: '设置-'+data.username+'-角色',
                     type: 2,
                     shade: 0.2,
                     maxmin: true,
@@ -201,19 +205,14 @@
 
             }else if (obj.event === 'permiss') {
                 var index = layer.open({
-                    title: '用户权限',
+                    title: '设置-'+data.username+'-权限',
                     type: 2,
                     shade: 0.2,
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '../../systemManager/setUserRole.do?uid='+data.uid,
+                    content: '../../systemManager/setUserPerms.do?uid='+data.uid,
                 });
-
-
-
-
-
 
             }
         });

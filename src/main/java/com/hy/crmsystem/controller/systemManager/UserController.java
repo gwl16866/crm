@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hy.crmsystem.entity.systemManager.*;
 import com.hy.crmsystem.service.systemManager.impl.UserServiceImpl;
+import com.mysql.jdbc.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
@@ -148,12 +149,19 @@ public class UserController {
     //修改用户角色
     @ResponseBody
     @RequestMapping("/updateRoleUid.do")
-    public String updateRoleUid(@RequestParam("rids") String[] rids,@RequestParam("uid") Integer uid) {
-           //先删除
-           userService.deleteUserRoleByUid(uid);
-           //再添加角色
-           userService.updateRoleIdByUid(rids,uid);
-           return "1";
+    public String updateRoleUid(String[] rids,@RequestParam("uid") Integer uid) {
+        if(rids != null && rids.length>=0){
+            //先删除
+            userService.deleteUserRoleByUid(uid);
+            //再添加角色
+            userService.updateRoleIdByUid(rids,uid);
+            return "1";
+        }else{
+            //只删除
+            userService.deleteUserRoleByUid(uid);
+            return "1";
+        }
+
     }
 
     //新增角色
@@ -188,32 +196,46 @@ public class UserController {
     //给用户设置新权限
     @ResponseBody
     @RequestMapping("/updatePermissionUid.do")
-    public String updatePermissionUid(@RequestParam("pids") String[] pids,@RequestParam("uid") Integer uid) {
-        //先删除
-        userService.deleteUserPermissionByUid(uid);
+    public String updatePermissionUid(@RequestParam(value = "pids",required = false) String[] pids,@RequestParam("uid") Integer uid) {
+        if(pids != null && pids.length>=0){
+            //先删除
+            userService.deleteUserPermissionByUid(uid);
 
-        //再添加一二级权限
-        userService.updateUserHandByUid(pids,uid);
-        //查询三级权限
-        String[] thirdPerms = userService.selectThirdPerms(pids);
-        //再添加三级权限
-        userService.updateUserHandByUid(thirdPerms,uid);
-        return "1";
+            //再添加一二级权限
+            userService.updateUserHandByUid(pids,uid);
+            //查询三级权限
+            String[] thirdPerms = userService.selectThirdPerms(pids);
+            //再添加三级权限
+            userService.updateUserHandByUid(thirdPerms,uid);
+            return "1";
+      }else{
+            //只删除
+            userService.deleteUserPermissionByUid(uid);
+            return "1";
+      }
+
     }
 
     //给角色设置新权限
     @ResponseBody
     @RequestMapping("/updatePermissionRid.do")
-    public String updatePermissionRid(@RequestParam("pids") String[] pids,@RequestParam("rid") Integer rid) {
-        //先删除
-        userService.deleteRolePermissionByRid(rid);
-        //再添加一二级权限
-        userService.updateRoleHandByRid(pids,rid);
-        //查询三级权限
-        String[] thirdPerms = userService.selectThirdPerms(pids);
-        //再添加三级权限
-        userService.updateRoleHandByRid(thirdPerms,rid);
-        return "1";
+    public String updatePermissionRid(@RequestParam(value = "pids",required = false) String[] pids,@RequestParam("rid") Integer rid) {
+        if(pids != null && pids.length>=0){
+            //先删除
+            userService.deleteRolePermissionByRid(rid);
+            //再添加一二级权限
+            userService.updateRoleHandByRid(pids,rid);
+            //查询三级权限
+            String[] thirdPerms = userService.selectThirdPerms(pids);
+            //再添加三级权限
+            userService.updateRoleHandByRid(thirdPerms,rid);
+            return "1";
+       }else{
+            //只删除
+            userService.deleteRolePermissionByRid(rid);
+            return "1";
+       }
+
     }
 
 

@@ -287,10 +287,9 @@
 
                 success: function (data) {
                     if (data == 0) {
-
                         layer.closeAll();
                         layer.msg('添加成功');
-                        window.parent.location.reload();
+                        parent.location.reload();
                         table.reload('test');
                         $("#add-user-form")[0].reset();
                     } else {

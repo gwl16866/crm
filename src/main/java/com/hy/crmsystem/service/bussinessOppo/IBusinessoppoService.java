@@ -3,10 +3,12 @@ package com.hy.crmsystem.service.bussinessOppo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
+import com.hy.crmsystem.entity.bussinessOppo.ForumLunTan;
 import com.hy.crmsystem.entity.customerManager.Customer;
 import org.apache.ibatis.annotations.Param;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * <p>
@@ -26,5 +28,7 @@ public interface IBusinessoppoService extends IService<Businessoppo> {
 
     public String selectCount(String type);
 
+    public List<String> selectById2(String bid);
    /* public Integer selectNewCount(String type);*/
+   public List<ForumLunTan> select1(@Param("id")String [] id);
 }

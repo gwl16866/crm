@@ -5,12 +5,15 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hy.crmsystem.entity.afterSell.Aftersell;
+import com.hy.crmsystem.entity.afterSell.AftersellBo;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
 import com.hy.crmsystem.entity.contract.Contract;
+import com.hy.crmsystem.entity.contract.ContractCust;
 import com.hy.crmsystem.entity.customerManager.AftersellShu;
 import com.hy.crmsystem.entity.customerManager.Customer;
 import com.hy.crmsystem.entity.customerManager.Kehuiganlizonghe;
 import com.hy.crmsystem.entity.customerManager.Moneyinfor;
+import com.hy.crmsystem.entity.systemManager.Dept;
 import com.hy.crmsystem.mapper.customerManager.CustomerMapper;
 import com.hy.crmsystem.mapper.customerManager.MoneyinforMapper;
 import com.hy.crmsystem.service.customerManager.ICustomerService;
@@ -104,16 +107,16 @@ private MoneyinforMapper moneyinforMapper;
     }
 
     @Override
-    public List<Businessoppo> select1(@Param("bid")String[] bid) {
-        return customerMapper.select1(bid);
+    public List<Businessoppo> select1(@Param("bid")String[] bid,@Param("businessoppo") Businessoppo businessoppo) {
+        return customerMapper.select1(bid,businessoppo);
     }
     @Override
-    public List<Contract> select2(@Param("cid")String[] cid) {
-        return customerMapper.select2(cid);
+    public List<Contract> select2(@Param("cid")String[] cid,@Param("contract") Contract contract) {
+        return customerMapper.select2(cid,contract);
     }
     @Override
-    public List<AftersellShu> select3(@Param("aid")String[] aid) {
-        return customerMapper.select3(aid);
+    public List<AftersellShu> select3(@Param("aid")String[] aid,@Param("aftersellBo") AftersellBo aftersellBo) {
+        return customerMapper.select3(aid,aftersellBo);
     }
 
    /* @Override

@@ -26,7 +26,7 @@ public class Permission implements Serializable {
     private String permissionName;
 
     @TableField("parent_id")
-    private String parentId;
+    private Integer parentId;
 
     private String url;
 
@@ -56,11 +56,11 @@ public class Permission implements Serializable {
         this.permissionName = permissionName;
     }
 
-    public String getParentId() {
+    public Integer getParentId() {
         return parentId;
     }
 
-    public void setParentId(String parentId) {
+    public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
 

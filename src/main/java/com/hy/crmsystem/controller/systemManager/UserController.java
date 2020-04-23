@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hy.crmsystem.entity.systemManager.*;
 import com.hy.crmsystem.service.systemManager.impl.UserServiceImpl;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,9 +61,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/updateUser.do")
     public String updateUser(User user) {
-        System.out.println("+++++++++++++++++++++++++++++++++++" + user.getPassword());
         if (user.getPassword() == null || user.getPassword().equals("")) {
-            System.out.println("++++++++++++++++++++++++++++++++++++++==========" + user.getPassword());
             userService.NoupdateUserPassword(user);
         } else {
             //密码加盐
@@ -164,17 +164,87 @@ public class UserController {
         return "1";
     }
 
-    //给用户设置权限
-    @ResponseBody
-    @RequestMapping("/setUserRole.do")
-    public String setUserRole(Integer uid) {
+    //给用户查询权限
+    @RequestMapping("/setUserPerms.do")
+    public String setUserPerms(Integer uid,Model model) {
+        //装全部权限
+        List<Permission> list = new ArrayList<>();
         //查询一级权限
         List<Permission> first = userService.queryFirstPermission();
         //根据uid查他的用户权限
-        List<Userhand> userHaveHand = userService.userHaveHand(uid);
+        List<Integer> userHaveHand = userService.userHaveHand(uid);
+        //递归查询 二三级 权限
+        if(first.size()>0 && !first.isEmpty()){
+          list =  userService.recursionHands(first);
+        }
 
 
+        model.addAttribute("allPermission",list);
+        model.addAttribute("havePermission",userHaveHand);
+        model.addAttribute("uid",uid);
+        return "/projectPage/systemManager/setUserPermission";
+    }
+
+    //给用户设置新权限
+    @ResponseBody
+    @RequestMapping("/updatePermissionUid.do")
+    public String updatePermissionUid(@RequestParam("pids") String[] pids,@RequestParam("uid") Integer uid) {
+        //先删除
+        userService.deleteUserPermissionByUid(uid);
+
+        //再添加一二级权限
+        userService.updateUserHandByUid(pids,uid);
+        //查询三级权限
+        String[] thirdPerms = userService.selectThirdPerms(pids);
+        //再添加三级权限
+        userService.updateUserHandByUid(thirdPerms,uid);
         return "1";
     }
+
+    //给角色设置新权限
+    @ResponseBody
+    @RequestMapping("/updatePermissionRid.do")
+    public String updatePermissionRid(@RequestParam("pids") String[] pids,@RequestParam("rid") Integer rid) {
+        //先删除
+        userService.deleteRolePermissionByRid(rid);
+        //再添加一二级权限
+        userService.updateRoleHandByRid(pids,rid);
+        //查询三级权限
+        String[] thirdPerms = userService.selectThirdPerms(pids);
+        //再添加三级权限
+        userService.updateRoleHandByRid(thirdPerms,rid);
+        return "1";
+    }
+
+
+
+
+
+
+    //给角色查询权限
+    @RequestMapping("/setRolePerms.do")
+    public String setRolePerms(Integer rid,Model model) {
+        //装全部权限
+        List<Permission> list = new ArrayList<>();
+        //查询一级权限
+        List<Permission> first = userService.queryFirstPermission();
+        //根据rid查他的角色权限
+        List<Integer> roleHaveHand = userService.roleHaveHand(rid);
+        //递归查询 二三级 权限
+        if(first.size()>0 && !first.isEmpty()){
+            list =  userService.recursionHands(first);
+        }
+
+
+        model.addAttribute("allPermission",list);
+        model.addAttribute("roleHaveHand",roleHaveHand);
+        model.addAttribute("rid",rid);
+        return "/projectPage/systemManager/setRolePermission";
+    }
+
+
+
+
+
 
 }

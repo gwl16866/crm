@@ -71,7 +71,7 @@ public class LoginController {
     @RequestMapping("/logout")
     public String logout(){
         SecurityUtils.getSubject().logout();
-        return "login";
+        return "page/login-1";
     }
     @RequestMapping("/selectDept.do")
     public String selectDept(Model model){

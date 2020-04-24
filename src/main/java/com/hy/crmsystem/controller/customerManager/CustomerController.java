@@ -85,7 +85,6 @@ private MoneyinforMapper moneyinforMapper;
         String i="0";
         try{
             moneyinforMapper.updateById(moneyinfor);
-            /* moneyinforService.saveOrUpdate(moneyinfor);*/
             customerService.saveOrUpdate(customer);
         }catch (Exception e){
             i="1";

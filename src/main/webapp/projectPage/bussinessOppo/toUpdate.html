@@ -237,12 +237,38 @@
             var index = parent.layer.getFrameIndex(window.name);
             parent.layer.close(index);
         });
+        form.on('submit(demo2)', function (data) {
+            $.ajax({
+                url: '/crmsystem/bussinessOppo/update.do',
+                type: 'POST',
+                dataType: 'json',
+                data: data.field,
+                success: function (msg) {
+                    if (msg == 0) {
+                        layer.msg("修改成功", {icon: 1, time: 1000}, function () {
+                            //关闭当前页面并打开主页面
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                            parent.location.reload();
+                        });
+                    } else {
+                        layer.msg("修改失败", {icon: 6});
+                    }
+                }
+            });
+            return false;
+        });
 
-        form.on('submit(demo2)', function(data){
+
+
+
+
+
+       /* form.on('submit(demo2)', function(data){
             var da=data.field;
             $.ajax({
                 type:'post',
-                url:'/crmsystem/bussinessOppo/update.do',
+                url:'',
                 data:da,
                 success:function (data) {
                     if(data == 0){
@@ -250,12 +276,12 @@
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     }else {
-                        layer.msg("添加失败", {icon: 6});
+                        layer.msg("修改失败", {icon: 6});
                     }
                 }
             });
            return false;
-        });
+        });*/
 
         //指定允许上传的文件类型
         upload.render({

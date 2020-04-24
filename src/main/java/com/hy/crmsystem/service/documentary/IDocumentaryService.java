@@ -26,4 +26,5 @@ public interface IDocumentaryService extends IService<Documentary> {
     public List<Documentary> selectTheme(String theme);
     public List<Documentary> selectDocByBus(Integer bid);
     public void updateBusTime(Integer bid);
+    public void insert_documentary(Documentary documentary);
 }

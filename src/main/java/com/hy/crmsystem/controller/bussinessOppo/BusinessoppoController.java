@@ -98,7 +98,7 @@ public class BusinessoppoController {
 
     @ResponseBody
     @RequestMapping("/update.do")
-    public String update(Customer customer, Businessoppo businessoppo) {
+    public String update(Businessoppo businessoppo,Customer customer) {
         businessoppoService.updateById(businessoppo);
         customerService.saveOrUpdate(customer);
         return "0";

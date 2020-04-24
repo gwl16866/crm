@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
 import com.hy.crmsystem.entity.documentary.Documentary;
+
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -38,4 +39,10 @@ public interface DocumentaryMapper extends BaseMapper<Documentary> {
     //添加跟单时修改最后时间
     @Update("update businessoppo set last_time=now() where bid=#{bid}")
     public void updateBusTime(Integer bid);
+
+
+    @Insert("insert into documentary(bid,documentary_time,documentary_class,documentary_people,detail,file,uid,theme) values (#{theme},#{documentaryTime},#{documentaryClass},#{documentaryPeople},#{detail},#{file},#{uid},#{theme})")
+    public void insert_documentary(Documentary documentary);
+
+
 }

@@ -42,7 +42,7 @@ public class DocumentaryController {
 
     @RequestMapping(value = "/queryAll.do")
     @ResponseBody
-    public LayuiData queryAll(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "3") Integer limit, Documentary documentary, HttpSession session) {
+    public LayuiData queryAll(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "3") Integer limit, Documentary documentary, HttpSession session,Integer uid) {
 
         IPage list1 = documentaryService.pages(page, limit, documentary, session);
         LayuiData layUiData = new LayuiData();
@@ -101,9 +101,9 @@ public class DocumentaryController {
         model.addAttribute("name",name);
         return "projectPage/documentary/documentaryDetails";
     }
-    //我的商机
+    //我的跟单
     @RequestMapping("/selectMyBus1.do")
-    public String selectMyCont1(Model model) {
+    public String selectMyBus1(Model model) {
         //查询登录人
         Object name = SecurityUtils.getSubject().getPrincipal();
         User u = userService.selectDengLuRen(name);

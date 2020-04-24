@@ -46,6 +46,11 @@ public class Documentary implements Serializable {
 
     private Integer status;
 
+    @TableField("user_name")
+    private String username;
+
+    private Integer uid;
+
     public Integer getDid() {
         return did;
     }
@@ -129,19 +134,38 @@ public class Documentary implements Serializable {
         this.status = status;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+
     @Override
     public String toString() {
         return "Documentary{" +
-        "did=" + did +
-        ", cid=" + cid +
-        ", bid=" + bid +
-        ", documentary_time=" + documentaryTime +
-        ", documentary_class=" + documentaryClass +
-        ", documentary_people=" + documentaryPeople +
-        ", detail=" + detail +
-        ", file=" + file +
-        ", theme=" + theme +
-        ", status=" + status +
-        "}";
+                "id=" + id +
+                ", did=" + did +
+                ", cid=" + cid +
+                ", bid=" + bid +
+                ", documentaryTime=" + documentaryTime +
+                ", documentaryClass='" + documentaryClass + '\'' +
+                ", documentaryPeople='" + documentaryPeople + '\'' +
+                ", detail='" + detail + '\'' +
+                ", file='" + file + '\'' +
+                ", theme=" + theme +
+                ", status=" + status +
+                ", username='" + username + '\'' +
+                ", uid=" + uid +
+                '}';
     }
 }

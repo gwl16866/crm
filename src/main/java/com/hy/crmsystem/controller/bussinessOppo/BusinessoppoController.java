@@ -62,7 +62,7 @@ public class BusinessoppoController {
 
     //我的商机
     @RequestMapping("/selectMyBus.do")
-    public String selectMyCont(Model model) {
+    public String selectMyBus(Model model) {
         //查询登录人
         Object name = SecurityUtils.getSubject().getPrincipal();
         User u = userService.selectDengLuRen(name);

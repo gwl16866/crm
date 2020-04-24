@@ -132,11 +132,11 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("SELECT role_name FROM role r,userrole ur,USER u WHERE u.uid = ur.uid AND r.rid = ur.rid AND u.uid = #{uid}")
     public HashSet<String> selectRoleByUid(Integer uid);
 
-    @Select("SELECT permission_name FROM permission p,userhand uh,USER u WHERE p.pid = uh.pid AND uh.uid = u.uid AND u.uid = #{uid}")
+    @Select("SELECT p.url FROM permission p,userhand uh,USER u WHERE p.pid = uh.pid AND uh.uid = u.uid AND u.uid = #{uid}")
     public HashSet<String> selectHandNameByUid(Integer uid);
 
     // 角色权限
-    @Select("SELECT h.permission_name FROM permission h,role r,rolepermission rh,USER u,userrole ur WHERE h.pid=rh.pid AND r.rid=rh.rid AND u.uid = ur.uid AND ur.rid=r.rid AND u.uid = #{uid}")
+    @Select("SELECT h.url FROM permission h,role r,rolepermission rh,USER u,userrole ur WHERE h.pid=rh.pid AND r.rid=rh.rid AND u.uid = ur.uid AND ur.rid=r.rid AND u.uid = #{uid}")
     public HashSet<String> selectRoleHandNameByName(Integer uid);
 
     @SelectProvider(type = UserDao.class, method = "selectThirdPerms")

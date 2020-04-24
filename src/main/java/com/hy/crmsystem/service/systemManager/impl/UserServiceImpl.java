@@ -69,14 +69,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public User selectDengLuRen(Object name){
         return userMapper.selectDengLuRen(name);
     }
+    @Override
     public String selectname(String username){
         return userMapper.selectname(username);
     }
 
+    @Override
     public void add(User user){
          userMapper.Add(user);
     }
 
+    @Override
     public List<Dept> select(){
       return deptMapper.selectdept();
     }

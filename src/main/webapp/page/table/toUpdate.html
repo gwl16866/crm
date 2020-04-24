@@ -260,19 +260,16 @@
             window.parent.location.reload();
 
         });
-        form.on('submit(demo2)', function(data){
+   /*     form.on('submit()', function(data){
             var da=data.field;
             $.ajax({
                 type:'post',
-                url:'/crmsystem/customerManager/update.do',
+                url:'',
                 data:da,
                 success:function (data) {
-                    if(data == 0){
+                    if(data == '0'){
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        setTimeout(function () {
                             parent.layer.close(index);
-                        },1100);
-
                         layer.msg("修改成功，1秒关闭",{
                             icon:1,
                             time:1000
@@ -280,12 +277,59 @@
                             //do...
                             parent.location.reload();
                         });
-                        window.location.href="/crmsystem/projectPage/customerManager/customer.html";
                     }
                 }
             });
-           /* return true;*/ //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+           /!* return true;*!/ //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });*/
+        form.on('submit(demo2)', function (data) {
+            $.ajax({
+                url: '/crmsystem/customerManager/update.do',
+                type: 'POST',
+                dataType: 'json',
+                data: data.field,
+                success: function (msg) {
+                    if (msg == 0) {
+                        layer.msg("修改成功", {icon: 1, time: 1000}, function () {
+                            //关闭当前页面并打开主页面
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                            parent.location.reload();
+                        });
+                    } else {
+                        layer.msg("修改失败", {icon: 6});
+                    }
+                }
+            });
+            return false;
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     });
 </script>
 

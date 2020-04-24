@@ -59,4 +59,9 @@ public class DocumentaryServiceImpl extends ServiceImpl<DocumentaryMapper, Docum
          documentaryMapper.updateBusTime(bid);
     }
 
+    @Override
+    public void insert_documentary(Documentary documentary) {
+         documentaryMapper.insert_documentary(documentary);
+    }
+
 }

@@ -183,13 +183,13 @@
                 maxmin:true,
                 shadeClose: true,
                 area: ['100%', '100%'],
-                content: 'projectPage/documentary/addDocumentary.html',
+                content: 'documentary/toAdd.do',
             });
             $(window).on("resize", function () {
                 layer.full(index);
             });
 
-            return false;
+            return true;
         });
 
 

@@ -72,7 +72,7 @@ public class DocumentaryController {
     /*查询主题*/
     @RequestMapping("/selectTheme.do")
     @ResponseBody
-    public LayuiData selectTheme(Documentary documentary, String theme) {
+    public LayuiData selectTheme(Documentary documentary, String theme,Model model) {
         List<Documentary> list = documentaryService.selectTheme(theme);
         LayuiData layUiData = new LayuiData();
         layUiData.setCode(0);
@@ -81,12 +81,20 @@ public class DocumentaryController {
         layUiData.setData(list);
         return layUiData;
     }
-
+    //我的跟单
+    @RequestMapping("/toAdd.do")
+    public String toAdd(Model model) {
+        //查询登录人
+        Object name = SecurityUtils.getSubject().getPrincipal();
+        User u = userService.selectDengLuRen(name);
+        model.addAttribute("uid", u.getUid());
+        return "projectPage/documentary/addDocumentary";
+    }
     @RequestMapping("/insert.do")
     @ResponseBody
     public String insert_emp(Documentary documentary) {
         String i = "0";
-        documentaryMapper.insert(documentary);
+        documentaryService.insert_documentary(documentary);
         documentaryService.updateBusTime(documentary.getBid());
         return i;
     }
@@ -110,6 +118,7 @@ public class DocumentaryController {
         model.addAttribute("uid", u.getUid());
         return "projectPage/documentary/myDocumentary";
     }
+
 
 
     //根据我的商机查询跟单

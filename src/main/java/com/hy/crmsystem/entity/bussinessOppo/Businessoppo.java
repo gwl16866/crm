@@ -50,9 +50,9 @@ public class Businessoppo implements Serializable {
 
     @TableField("bof_dept")
     private String bofDept;
-
+/*00000000000000000000000000*/
     //商机负责人
-    private Integer bprincipal;
+    private String bprincipal;
 
     @TableField("user_name")
     private String username;
@@ -195,11 +195,11 @@ public class Businessoppo implements Serializable {
         return serialVersionUID;
     }
 
-    public Integer getBprincipal() {
+    public String getBprincipal() {
         return bprincipal;
     }
 
-    public void setBprincipal(Integer bprincipal) {
+    public void setBprincipal(String bprincipal) {
         this.bprincipal = bprincipal;
     }
 

@@ -180,6 +180,7 @@
         <label class="layui-form-label">附件:</label>
         <div class="layui-input-block">
             <input type="text" disabled="disabled"  th:value="${a.file}" autocomplete="off" class="layui-input">
+            <a th:href="@{'/imgs/'+${a.file}}">查看</a>
         </div>
     </div>
 
@@ -233,6 +234,7 @@
         });
 
               $("#over").click(function(){
+                  alert("jin1");
                             $.ajax({
                                 type:"post",
                                 url:"afterSell/updateStatus.do?type=2&aid="+$("#two").val(),
@@ -241,19 +243,19 @@
                                     if(data =='0'){
                                         layer.msg("已结束",{
                                             icon:1,
-                                            time:1000
+                                            time:2000
                                         },function() {
-                                           // window.parent.location.reload();
+                                           parent.location.reload();
                                         });
                                     }
 
                                 }
                             });
 
-                  window.parent.location.reload();
               });
 
         $("#chechu").click(function(){
+            alert("jin2");
             $.ajax({
                 type:"post",
                 url:"afterSell/updateStatus.do?type=3&aid="+$("#two").val(),
@@ -262,16 +264,15 @@
                     if(data =='0'){
                         layer.msg("已撤除",{
                             icon:1,
-                            time:1000
+                            time:2000
                         },function() {
-                            //window.parent.location.reload();
+                            parent.location.reload();
                         });
                     }
 
                 }
             });
 
-            window.parent.location.reload();
         });
 
 

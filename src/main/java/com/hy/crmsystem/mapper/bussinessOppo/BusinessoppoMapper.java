@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
 import com.hy.crmsystem.entity.bussinessOppo.ForumLunTan;
 import com.hy.crmsystem.entity.customerManager.Customer;
+import com.hy.crmsystem.entity.systemManager.User;
 import com.hy.crmsystem.mapper.customerManager.SqlProvider1;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -31,10 +32,10 @@ public interface BusinessoppoMapper extends BaseMapper<Businessoppo> {
     /*@SelectProvider(type = SqlProvider2.class,method = "select_businessoppo_like")
     public List<Businessoppo> listQueryAll(@Param("businessoppo") Businessoppo businessoppo);*/
 
-    @Select("select * from businessoppo where bid=#{value}")
+    @Select("select b.*,u.* from businessoppo b,user u where b.bprincipal=u.uid and bid=#{value}")
     public Businessoppo selectByName(String bid);
 
-    @Select("SELECT c.cname,c.cindustry,c.ccity,c.caddress,c.csource FROM customer c,businessoppo b WHERE c.cid=b.cid and b.bid=#{value}")
+    @Select("SELECT c.cid,c.cname,c.cindustry,c.ccity,c.caddress,c.csource FROM customer c,businessoppo b WHERE c.cid=b.cid and b.bid=#{value}")
     public Customer selectBusinessoppo(String bid);
 
     @Select("select id from article where of_bid=#{value}")
@@ -47,5 +48,12 @@ public interface BusinessoppoMapper extends BaseMapper<Businessoppo> {
 
     @SelectProvider(type = SqlProvider2.class,method = "select1")
     public List<ForumLunTan> select1(@Param("id") String[] id);
+
+    /*查询customer*/
+    @Select("select * from user")
+    public List<User> selectUser();
+    @Select("SELECT MAX(cid) FROM customer")
+    public Integer select_customer();
+
 
 }

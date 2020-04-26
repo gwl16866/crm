@@ -49,7 +49,7 @@ public class LoginController {
 
             String user1= usersService.selectname(user.getUsername());
             if(user1!=null){
-                model.addAttribute("mess","账号或密码不能重复");
+                model.addAttribute("message","用户名不能重复");
                 return "page/error";
             }else{
                 //密码

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
 import com.hy.crmsystem.entity.bussinessOppo.ForumLunTan;
 import com.hy.crmsystem.entity.customerManager.Customer;
+import com.hy.crmsystem.entity.systemManager.User;
 import org.apache.ibatis.annotations.Param;
 
 import javax.servlet.http.HttpSession;
@@ -31,4 +32,5 @@ public interface IBusinessoppoService extends IService<Businessoppo> {
     public List<String> selectById2(String bid);
    /* public Integer selectNewCount(String type);*/
    public List<ForumLunTan> select1(@Param("id")String [] id);
+    public List<User> selectUser();
 }

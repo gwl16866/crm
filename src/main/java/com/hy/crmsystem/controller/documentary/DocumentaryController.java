@@ -93,10 +93,9 @@ public class DocumentaryController {
     @RequestMapping("/insert.do")
     @ResponseBody
     public String insert_emp(Documentary documentary) {
-        String i = "0";
         documentaryService.insert_documentary(documentary);
-        documentaryService.updateBusTime(documentary.getBid());
-        return i;
+        documentaryService.updateBusTime(documentary.getTheme());
+        return "0";
     }
 
     //根据商机查询跟单

@@ -27,7 +27,7 @@
           "target": "_self",
           "child": [
             {
-              "title": "用户管理",
+              "title": " 用户管理",
               "href": "../projectPage/systemManager/userManager.html",
               "icon": "fa fa-male",
               "target": "_self"

@@ -11,9 +11,7 @@ public class SqlProvider2 {
 
         StringBuffer buffer = new StringBuffer("select b.*,u.* from businessoppo b,user u where b.bprincipal=u.uid and 1=1 ");
         //我的商机
-        if (businessoppo.getBprincipal() != null) {
-            buffer.append(" and b.bprincipal = " + businessoppo.getBprincipal()+" ");
-        }
+
 //商机名称
         if (!StringUtils.isNullOrEmpty(businessoppo.getBname())) {
             buffer.append(" and b.bname like '%" + businessoppo.getBname() + "%'");

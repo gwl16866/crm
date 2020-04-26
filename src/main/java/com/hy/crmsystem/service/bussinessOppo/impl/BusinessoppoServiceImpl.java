@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hy.crmsystem.entity.bussinessOppo.Businessoppo;
 import com.hy.crmsystem.entity.bussinessOppo.ForumLunTan;
 import com.hy.crmsystem.entity.customerManager.Customer;
+import com.hy.crmsystem.entity.systemManager.User;
 import com.hy.crmsystem.mapper.bussinessOppo.BusinessoppoMapper;
 import com.hy.crmsystem.service.bussinessOppo.IBusinessoppoService;
 import org.apache.ibatis.annotations.Param;
@@ -77,6 +78,11 @@ public class BusinessoppoServiceImpl extends ServiceImpl<BusinessoppoMapper, Bus
     @Override
     public List<ForumLunTan> select1(@Param("id")String[] id) {
         return businessoppoMapper.select1(id);
+    }
+
+    @Override
+    public List<User> selectUser() {
+        return businessoppoMapper.selectUser();
     }
 
 }

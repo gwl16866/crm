@@ -50,9 +50,6 @@ public class SqlProvider1 {
            }
        }
        buffer.append(")");
-       if (businessoppo.getBprincipal() != null) {
-           buffer.append(" and bprincipal = " + businessoppo.getBprincipal()+" ");
-       }
 //商机名称
        if (!StringUtils.isNullOrEmpty(businessoppo.getBname())) {
            buffer.append(" and bname like '%" + businessoppo.getBname() + "%'");

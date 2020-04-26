@@ -195,9 +195,9 @@
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">商机负责人:</label>
-                <div class="layui-input-block">
-                    <input type="text" name="bprincipal" lay-verify="required|bprincipal" autocomplete="off" placeholder="请输入" class="layui-input">
-                </div>
+                    <div class="layui-input-inline">
+                        <select class="layui-form-select" lay-verify="required" id="customerId" name="bprincipal" ></select>
+                    </div>
             </div>
         </div>
         <div class="layui-form-item">
@@ -233,6 +233,22 @@
             ,laydate = layui.laydate
             ,upload = layui.upload
             , $ = layui.$;
+
+
+        $.ajax({
+            type:"post",
+            url:"../../bussinessOppo/selectUser.do",
+            contentType:"application/json",
+            success:function (datas) {
+                s="<option value='0'>请选择</option>";
+                for (var j=0;j<datas.length;j++){
+                    s+="<option value='"+datas[j].uid+"'>"+datas[j].username+"</option>";
+                }
+                $("#customerId").append(s);
+                layui.form.render();
+            }
+        });
+
         //创建一个编辑器
         var editIndex = layedit.build('LAY_demo_editor');
         $("#but").click(function(){

@@ -188,11 +188,14 @@
     <div id="checks1">
 
         <div th:each="first:${allPermission}">
+            <br>
 <hr color="blue">
            <input type="checkbox" th:name="pid" th:id="${first.permissionName}"  th:value="${first.pid}"  th:title="${first.permissionName}" th:checked="${#lists.contains(havePermission,first.pid)}" lay-filter="first"/>
             <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
              <span th:each="second:${first.menuPermission}">
-                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                  &nbsp;&nbsp;&nbsp;&nbsp;
              <input type="checkbox" th:name="pid" th:id="${first.permissionName}+'_role'" th:value="${second.pid}"  th:title="${second.getPermissionName()}" th:checked="${#lists.contains(havePermission,second.pid)}" lay-filter="second"/>

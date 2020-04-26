@@ -18,6 +18,7 @@
 <div id="add-user-layer" style="display: block; padding: 20px">
     <form class="layui-form" action="" method="post" id="add-user-form">
         <input type="hidden" name="bid" th:value="${bus.bid}">
+        <input type="hidden" name="cid" th:value="${cust.cid}"/>
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">商机名称:</label>
@@ -199,7 +200,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">商机负责人:</label>
                 <div class="layui-input-block">
-                    <input type="text" name="bprincipal" lay-verify="required|bprincipal" autocomplete="off" placeholder="请输入" class="layui-input"  th:value="${bus.bprincipal}">
+                    <input type="text"  lay-verify="required|bprincipal" disabled="disabled" autocomplete="off" placeholder="请输入" class="layui-input"  th:value="${bus.username}">
+               <input type="hidden" name="bprincipal" th:value="${bus.bprincipal}">
                 </div>
             </div>
         </div>
@@ -239,7 +241,7 @@
         });
         form.on('submit(demo2)', function (data) {
             $.ajax({
-                url: '/crmsystem/bussinessOppo/update.do',
+                url: 'bussinessOppo/update.do',
                 type: 'POST',
                 dataType: 'json',
                 data: data.field,

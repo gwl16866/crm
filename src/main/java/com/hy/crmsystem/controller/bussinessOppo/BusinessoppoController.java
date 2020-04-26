@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.security.provider.certpath.CertId;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -74,9 +75,10 @@ public class BusinessoppoController {
     @ResponseBody
     public String insert_emp(Customer customer, Businessoppo businessoppo) {
         String i = "0";
-        Integer bid = businessoppoMapper.insert(businessoppo);
-        customer.setCid(bid);
         customerService.save(customer);
+       Integer cid= businessoppoMapper.select_customer();
+         businessoppo.setCid(cid);
+        businessoppoMapper.insert(businessoppo);
         return i;
 
     }
@@ -100,7 +102,7 @@ public class BusinessoppoController {
     @RequestMapping("/update.do")
     public String update(Businessoppo businessoppo,Customer customer) {
         businessoppoService.updateById(businessoppo);
-        customerService.saveOrUpdate(customer);
+        customerService.updateById(customer);
         return "0";
     }
 
@@ -135,6 +137,12 @@ public class BusinessoppoController {
         layUiData.setCount(Integer.parseInt(String.valueOf(list.size())));
         layUiData.setData(list);
         return layUiData;
+    }
+
+    @ResponseBody
+    @RequestMapping("selectUser.do")
+    public List selectUser(){
+        return businessoppoService.selectUser();
     }
 
 

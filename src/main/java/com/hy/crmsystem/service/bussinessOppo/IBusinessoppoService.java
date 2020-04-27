@@ -33,4 +33,8 @@ public interface IBusinessoppoService extends IService<Businessoppo> {
    /* public Integer selectNewCount(String type);*/
    public List<ForumLunTan> select1(@Param("id")String [] id);
     public List<User> selectUser();
+
+    //查询客户
+    public Customer selectCustomer(String cname);
+    public Customer selectMaxCustomer();
 }

@@ -55,5 +55,11 @@ public interface BusinessoppoMapper extends BaseMapper<Businessoppo> {
     @Select("SELECT MAX(cid) FROM customer")
     public Integer select_customer();
 
+    //查询客户
+    @Select("select * from customer where cname=#{cname}")
+    public Customer selectCustomer(String cname);
 
+
+    @Select("select max(cid) cid from customer")
+    public Customer selectMaxCustomer();
 }

@@ -15,6 +15,7 @@
 <button class="layui-btn layui-btn-sm data-add-btn" id="but"> 返回 </button>
 <div id="add-user-layer" style="display: block; padding: 20px">
     <form class="layui-form" action="" method="post" id="add-user-form">
+        <input type="hidden" id="custId" name="custId"/>
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">商机名称:</label>
@@ -41,13 +42,13 @@
             <div class="layui-inline">
                 <label class="layui-form-label">客户名称:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="cname" lay-verify="required|cname" autocomplete="off" class="layui-input">
+                    <input type="text" name="cname" id="keyup" lay-verify="required|cname" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">所属行业:</label>
                 <div class="layui-input-inline">
-                    <select name="cindustry">
+                    <select name="cindustry" id="cindustry" class="layui-form-select">
                         <option value="1" selected>请选择</option>
                         <option value="2">IT|互联网|通信|电子</option>
                         <option value="3">金融|银行|保险</option>
@@ -70,13 +71,13 @@
             <div class="layui-inline">
                 <label class="layui-form-label">所在城市:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="ccity" lay-verify="required|ccity" autocomplete="off" class="layui-input">
+                    <input type="text" name="ccity" id="ccity" lay-verify="required|ccity" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">详细地址:</label>
                 <div class="layui-input-block">
-                    <input type="text" name="caddress" lay-verify="required|caddress" autocomplete="off" placeholder="请输入详细地址" class="layui-input">
+                    <input type="text" name="caddress" id="caddress" lay-verify="required|caddress" autocomplete="off" placeholder="请输入详细地址" class="layui-input">
                 </div>
             </div>
         </div>
@@ -97,7 +98,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">客户来源:</label>
                 <div class="layui-input-inline">
-                    <select name="csource" lay-verify="required" lay-search="">
+                    <select name="csource" id="csource" lay-verify="required" lay-search="">
                         <option value="1">直接选择或搜索选择</option>
                         <option value="2">老客户</option>
                         <option value="3">代理商</option>
@@ -233,7 +234,23 @@
             ,laydate = layui.laydate
             ,upload = layui.upload
             , $ = layui.$;
+        //客户是否存在
+        $("#keyup").keyup(function (e) {
+            $.ajax({
+                type: 'post',
+                url: '../../contract/selectCustomer.do?cname=' + $("#keyup").val(),
+                contentType: 'application/json',
+                success: function (data) {
+                    $("#cindustry").find("option[value=" + data.cindustry + "]").prop("selected", true);
+                    layui.form.render();
+                    $("#ccity").val(data.ccity);
+                    $("#caddress").val(data.caddress);
+                    $("#csource").val(data.cid);
+                    $("#custId").val(data.cid);
 
+                }
+            });
+        });
 
         $.ajax({
             type:"post",

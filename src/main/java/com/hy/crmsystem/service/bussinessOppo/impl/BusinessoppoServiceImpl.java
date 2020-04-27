@@ -11,6 +11,7 @@ import com.hy.crmsystem.entity.systemManager.User;
 import com.hy.crmsystem.mapper.bussinessOppo.BusinessoppoMapper;
 import com.hy.crmsystem.service.bussinessOppo.IBusinessoppoService;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,6 +84,17 @@ public class BusinessoppoServiceImpl extends ServiceImpl<BusinessoppoMapper, Bus
     @Override
     public List<User> selectUser() {
         return businessoppoMapper.selectUser();
+    }
+
+     @Override
+    //查询客户
+    public Customer selectCustomer(String cname) {
+        return businessoppoMapper.selectCustomer(cname);
+    }
+    @Override
+    //查询客户
+    public Customer selectMaxCustomer(){
+        return businessoppoMapper.selectMaxCustomer();
     }
 
 }

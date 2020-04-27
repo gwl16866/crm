@@ -71,16 +71,31 @@ public class BusinessoppoController {
         return "projectPage/bussinessOppo/myBussinessOppo";
     }
 
+    //查询客户
+    @ResponseBody
+    @RequestMapping("/selectCustomer.do")
+    public Customer selectCustomer(String cname) {
+        return businessoppoService.selectCustomer(cname);
+    }
+
+
     @RequestMapping("/insert.do")
     @ResponseBody
     public String insert_emp(Customer customer, Businessoppo businessoppo) {
         String i = "0";
-        customerService.save(customer);
-       Integer cid= businessoppoMapper.select_customer();
-         businessoppo.setCid(cid);
+        Customer cus = businessoppoService.selectCustomer(customer.getCname());
+        if(cus==null){
+            customer.setCname(customer.getCname());
+            customer.setCindustry(customer.getCindustry());
+            customer.setCcity(customer.getCcity());
+            customer.setCaddress(customer.getCaddress());
+            customer.setCsource(customer.getCsource());
+            customerService.save(customer);
+        }
+        Customer c = businessoppoService.selectMaxCustomer();
+        businessoppo.setCid(c.getCid());
         businessoppoMapper.insert(businessoppo);
         return i;
-
     }
 
     //根据 id 查信息进行展示 以 修改

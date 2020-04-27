@@ -7,15 +7,18 @@ import com.hy.crmsystem.entity.contract.ContractCust;
 import com.hy.crmsystem.entity.contract.Openpaper;
 import com.hy.crmsystem.entity.contract.Returnmoneydetails;
 import com.hy.crmsystem.entity.customerManager.Customer;
+import com.hy.crmsystem.entity.systemManager.Approve;
 import com.hy.crmsystem.entity.systemManager.Dept;
 import com.hy.crmsystem.entity.systemManager.LayuiData;
 import com.hy.crmsystem.entity.systemManager.User;
+import com.hy.crmsystem.flowable.Sysout;
 import com.hy.crmsystem.service.contract.impl.ContractServiceImpl;
 import com.hy.crmsystem.service.contract.impl.OpenpaperServiceImpl;
 import com.hy.crmsystem.service.customerManager.impl.CustomerServiceImpl;
 import com.hy.crmsystem.service.statistics.impl.ReturnmoneydetailsServiceImpl;
 import com.hy.crmsystem.service.systemManager.impl.UserServiceImpl;
 import org.apache.shiro.SecurityUtils;
+import org.flowable.engine.ProcessEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -95,27 +98,68 @@ public class ContractController {
     //添加合同
     @ResponseBody
     @RequestMapping("/addContract.do")
-    public String addContract(Contract contract, Customer customer)  {
-        //判断客户是否存在
+    public String addContract(Contract contract, Customer customer,Integer approve,String firstApprove)  {
         Customer cus = contractService.selectCustomer(customer.getCname());
-        if (cus == null) {
-            customer.setClinkman(contract.getLinkman());
-            customer.setCofficeno(contract.getOfficeno());
-            customer.setCphonrno(contract.getPhoneno());
-            customer.setCemail(contract.getEmail());
-            customerService.save(customer);
+
+        //1审核
+        if(approve ==1){
+
+            //判断客户是否存在
+            if (cus == null) {
+                customer.setClinkman(contract.getLinkman());
+                customer.setCofficeno(contract.getOfficeno());
+                customer.setCphonrno(contract.getPhoneno());
+                customer.setCemail(contract.getEmail());
+                customerService.save(customer);
+            }
+            Customer c = customerService.selectMaxCustomer();
+            contract.setCustomerId(c.getCid());
+            //查询当前登录人ID
+            Object name = SecurityUtils.getSubject().getPrincipal();
+            User u = userService.selectDengLuRen(name);
+            contract.setUid(u.getUid());
+            //添加状态
+            contract.setContractStatus(100);
+            //添加合同
+            contractService.save(contract);
+
+            ProcessEngine processEngine = userService.init();
+            Approve approve1 = new Approve();
+            approve1.setApprovePeople(firstApprove);
+            approve1.setContractName(contract.getContractName());
+            approve1.setContractId(customerService.selectMaxContract());
+            approve1.setApplyPeople((String)name);
+            userService.start(processEngine,approve1);
+            return "1";
+
+
+        }else if(approve==2){
+            //判断客户是否存在
+            if (cus == null) {
+                customer.setClinkman(contract.getLinkman());
+                customer.setCofficeno(contract.getOfficeno());
+                customer.setCphonrno(contract.getPhoneno());
+                customer.setCemail(contract.getEmail());
+                customerService.save(customer);
+            }
+            Customer c = customerService.selectMaxCustomer();
+            contract.setCustomerId(c.getCid());
+            //查询当前登录人ID
+            Object name = SecurityUtils.getSubject().getPrincipal();
+            User u = userService.selectDengLuRen(name);
+            contract.setUid(u.getUid());
+            //添加状态
+            contract.setContractStatus(1);
+            //添加合同
+            contractService.save(contract);
+            return "1";
+
+        }else{
+            System.out.println("没选择是否审核");
+            return "0";
         }
-        Customer c = customerService.selectMaxCustomer();
-        contract.setCustomerId(c.getCid());
-        //查询当前登录人ID
-        Object name = SecurityUtils.getSubject().getPrincipal();
-        User u = userService.selectDengLuRen(name);
-        contract.setUid(u.getUid());
-        //添加状态
-        contract.setContractStatus(1);
-        //添加合同
-        contractService.save(contract);
-        return "1";
+
+
     }
 
    //下载文件

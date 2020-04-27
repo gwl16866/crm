@@ -134,4 +134,8 @@ private MoneyinforMapper moneyinforMapper;
        return customerMapper.selectMaxCustomer();
     }
 
+    public Integer selectMaxContract(){
+        return customerMapper.selectMaxContract();
+    }
+
 }

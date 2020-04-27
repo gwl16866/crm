@@ -37,6 +37,12 @@
               "href": "../projectPage/systemManager/role.html",
               "icon": "fa fa-gears",
               "target": "_self"
+            },
+            {
+              "title": "审批管理",
+              "href": "../projectPage/systemManager/approve.html",
+              "icon": "fa fa-gears",
+              "target": "_self"
             }
           ]
         },

@@ -179,6 +179,40 @@
             //添加验证
             ,verify:'required'
         });
+        form.on('checkbox(checks)', function(data){
+            if(data.elem.checked){
+                $.ajax({
+                    type:"post",
+                    url:"../../afterSell/selectUser.do",
+                    contentType:"application/json",
+                    success:function (datas) {
+                        var s="<option value='0'>请选择</option>";
+                        for (var j=0;j<datas.length;j++){
+                            s+="<option value='"+datas[j].username+"'>"+datas[j].username+"</option>";
+                        }
+                        $("#firstApprove").append(s);
+                        layui.form.render();
+                    }
+                });
+                document.getElementById("first").style.display="block";
+                $("#no").prop("checked",false);
+                form.render("checkbox");
+            }else{
+                document.getElementById("first").style.display="none";
+            }
+
+        });
+        form.on('checkbox(checks2)', function(data){
+            if(data.elem.checked){
+                document.getElementById("first").style.display="none";
+                $("#yes").prop("checked",false);
+                form.render("checkbox");
+            }
+
+
+        });
+
+
     });
 </script>
 <form class="layui-form">
@@ -349,6 +383,23 @@
                       lay-verify="content"></textarea>
         </div>
     </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">是否进行审批</label>
+        <div class="layui-input-block">
+            <input type="checkbox" id="yes" name="approve" value="1" title="是" lay-filter="checks">
+            <input type="checkbox" id="no" name="approve" value="2" title="否"  lay-filter="checks2">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text" style="display:none" id="first">
+        <label class="layui-form-label">上级</label>
+        <div class="layui-input-block">
+            <select id='firstApprove' name='firstApprove' class='layui-form-select'></select>
+        </div>
+    </div>
+
+
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button type="submit" class="layui-btn" lay-submit="" lay-filter="formDemo">提交</button>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:flowable="http://flowable.org/bpmn"
+             typeLanguage="http://www.w3.org/2001/XMLSchema"
+             expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.flowable.org/processdef">
+
+    <process id="contract" name="Holiday Request" isExecutable="true">
+
+        <!--开始-->
+        <startEvent id="startEvent"/>
+
+        <!--连线-->
+        <sequenceFlow sourceRef="startEvent" targetRef="approveTask1"/>
+
+        <!--第一个用户审批  firstManager -->
+        <userTask id="approveTask1" name="用户一" flowable:assignee="${firstManager}"/>
+
+        <!--连线-->
+        <sequenceFlow sourceRef="approveTask1" targetRef="decision1"/>
+
+        <!--第一个 判断-->
+        <exclusiveGateway id="decision1" name="审核"/>
+
+        <!--连线-->
+        <sequenceFlow sourceRef="decision1" targetRef="approveTask2">
+            <!--同意的话 走 第二个用户审批 -->
+            <conditionExpression xsi:type="tFormalExpression">
+                <![CDATA[
+                  ${approved}
+                ]]>
+            </conditionExpression>
+        </sequenceFlow>
+
+
+        <!--一级审核失败-->
+        <sequenceFlow  sourceRef="decision1" targetRef="defailed1">
+            <!--不同意的话 走机器  失败-->
+            <conditionExpression xsi:type="tFormalExpression">
+                <![CDATA[
+                   ${!approved}
+                ]]>
+            </conditionExpression>
+        </sequenceFlow>
+
+
+
+
+        <!--第二个用户审批  secondManager -->
+        <userTask id="approveTask2" name="用户二" flowable:assignee="${secondManager}"/>
+
+
+        <!--连线-->
+        <sequenceFlow sourceRef="approveTask2" targetRef="decision2"/>
+
+        <!--第二个 判断-->
+        <exclusiveGateway id="decision2"/>
+
+        <!--连线-->
+        <sequenceFlow sourceRef="decision2" targetRef="approveTask3">
+            <!--同意的话 走 第三个用户审批 -->
+            <conditionExpression xsi:type="tFormalExpression">
+                <![CDATA[
+                  ${approved}
+                ]]>
+            </conditionExpression>
+        </sequenceFlow>
+
+
+        <sequenceFlow  sourceRef="decision2" targetRef="defailed2">
+
+            <!--不同意的话 走机器  失败-->
+            <conditionExpression xsi:type="tFormalExpression">
+                <![CDATA[
+                   ${!approved}
+                ]]>
+            </conditionExpression>
+
+        </sequenceFlow>
+
+
+
+
+        <!--第三个用户审批  thirdManager -->
+        <userTask id="approveTask3" name="用户三" flowable:assignee="${thirdManager}"/>
+
+        <!--连线-->
+        <sequenceFlow sourceRef="approveTask3" targetRef="decision3"/>
+
+        <!--第三个 判断-->
+        <exclusiveGateway id="decision3"/>
+
+        <!--连线-->
+        <sequenceFlow sourceRef="decision3" targetRef="marcher">
+            <!--同意的话 走 机器成功 -->
+            <conditionExpression xsi:type="tFormalExpression">
+                <![CDATA[
+                  ${approved}
+                ]]>
+            </conditionExpression>
+        </sequenceFlow>
+
+
+        <sequenceFlow  sourceRef="decision3" targetRef="defailed3">
+
+            <!--不同意的话 走机器  失败-->
+            <conditionExpression xsi:type="tFormalExpression">
+                <![CDATA[
+                   ${!approved}
+                ]]>
+            </conditionExpression>
+
+        </sequenceFlow>
+
+
+
+
+
+
+        <!--第一个用户审批 失败 后 的机器  -->
+        <serviceTask id="defailed1" name="第一个审批失败 机器打印"
+                     flowable:class="com.hy.crmsystem.flowable.Sysout"/>
+
+        <!--连线 结束-->
+        <sequenceFlow sourceRef="defailed1" targetRef="approveEnd" />
+
+        <!--第二个用户审批 失败 后 的机器  -->
+        <serviceTask id="defailed2" name="第二个审批失败 机器打印"
+                     flowable:class="com.hy.crmsystem.flowable.Sysout"/>
+
+        <!--连线 结束-->
+        <sequenceFlow sourceRef="defailed2" targetRef="approveEnd" />
+
+        <!--第三个用户审批 失败 后 的机器  -->
+        <serviceTask id="defailed3" name="第三个审批失败 机器打印"
+                     flowable:class="com.hy.crmsystem.flowable.Sysout"/>
+
+        <!--连线 结束-->
+        <sequenceFlow sourceRef="defailed3" targetRef="approveEnd" />
+
+        <!--第三个用户审批 成功 后 的机器  -->
+        <serviceTask id="marcher" name="第三个审批成功 机器打印"
+                     flowable:class="com.hy.crmsystem.flowable.Sysout"/>
+
+        <!--连线 结束-->
+        <sequenceFlow sourceRef="marcher" targetRef="approveEnd" />
+
+
+
+        <endEvent id="approveEnd"/>
+
+    </process>
+
+</definitions>

@@ -54,7 +54,7 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">合同要点:</label>
+        <label class="layui-form-label">售后要点:</label>
         <div class="layui-input-block">
             <input type="text" disabled="disabled" name="contractInfor" th:value="${a.contractInfor}"   autocomplete="off" class="layui-input">
         </div>
@@ -233,39 +233,40 @@
 
         });
 
-              $("#over").click(function(){
-                  alert("jin1");
-                            $.ajax({
-                                type:"post",
-                                url:"afterSell/updateStatus.do?type=2&aid="+$("#two").val(),
-                                contentType:"application/json",
-                                success:function (data) {
-                                    if(data =='0'){
-                                        layer.msg("已结束",{
-                                            icon:1,
-                                            time:2000
-                                        },function() {
-                                           parent.location.reload();
-                                        });
-                                    }
+              $("#over").click(function() {
+                  layer.confirm('真的结束此售后么??',function () {
+                  $.ajax({
+                      type: "post",
+                      url: "afterSell/updateStatus.do?type=2&aid=" + $("#two").val(),
+                      contentType: "application/json",
+                      success: function (data) {
+                          if (data == '0') {
+                              layer.msg("已结束", {
+                                  icon: 1,
+                                  time: 2000
+                              }, function () {
+                                  parent.location.reload();
+                              });
+                          }
 
-                                }
-                            });
+                      }
+                  });
+              });
 
               });
 
-        $("#chechu").click(function(){
-            alert("jin2");
+        $("#chechu").click(function() {
+            layer.confirm('真的撤除此售后么??',function () {
             $.ajax({
-                type:"post",
-                url:"afterSell/updateStatus.do?type=3&aid="+$("#two").val(),
-                contentType:"application/json",
-                success:function (data) {
-                    if(data =='0'){
-                        layer.msg("已撤除",{
-                            icon:1,
-                            time:2000
-                        },function() {
+                type: "post",
+                url: "afterSell/updateStatus.do?type=3&aid=" + $("#two").val(),
+                contentType: "application/json",
+                success: function (data) {
+                    if (data == '0') {
+                        layer.msg("已撤除", {
+                            icon: 1,
+                            time: 2000
+                        }, function () {
                             parent.location.reload();
                         });
                     }
@@ -273,6 +274,7 @@
                 }
             });
 
+        });
         });
 
 

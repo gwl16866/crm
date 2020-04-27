@@ -3,11 +3,14 @@ package com.hy.crmsystem.controller.systemManager;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hy.crmsystem.entity.systemManager.*;
+import com.hy.crmsystem.flowable.Sysout;
 import com.hy.crmsystem.service.systemManager.impl.UserServiceImpl;
 import com.mysql.jdbc.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
+import org.flowable.engine.ProcessEngine;
+import org.flowable.engine.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -257,12 +262,46 @@ public class UserController {
             list =  userService.recursionHands(first);
         }
 
-
         model.addAttribute("allPermission",list);
         model.addAttribute("roleHaveHand",roleHaveHand);
         model.addAttribute("rid",rid);
         return "/projectPage/systemManager/setRolePermission";
     }
+
+    @ResponseBody
+    @RequestMapping("/approve.do")
+    public LayuiData approve(@RequestParam(value = "page", required = true, defaultValue = "1") int page
+            , @RequestParam(value = "limit", required = true, defaultValue = "3") int pageSize){
+        String userName = (String) SecurityUtils.getSubject().getPrincipal();
+        Page pageHelper = PageHelper.startPage(page, pageSize, true);
+        ProcessEngine processEngine = userService.initQuery();
+        List<Approve> list = userService.queryWaitDo(processEngine,userName);
+        LayuiData layuiData = new LayuiData();
+        layuiData.setData(list);
+        layuiData.setCount(list.size());
+        layuiData.setCode(0);
+        layuiData.setMsg("");
+        return layuiData;
+    }
+
+    @ResponseBody
+    @RequestMapping("/firstApprove.do")
+    public String firstApprove(String taskId,String cid){
+        String userName = (String)SecurityUtils.getSubject().getPrincipal();
+        if(userName.equals("老二")){
+            userService.CheckSecondApprove(taskId);
+        }else if(userName.equals("老大")){
+            userService.CheckThirdApprove(taskId);
+            userService.updateContractByCid(cid);
+
+        }else{
+            userService.CheckFirstApprove(taskId);
+        }
+
+        return "1";
+    }
+
+
 
 
 

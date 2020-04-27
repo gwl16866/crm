@@ -58,6 +58,9 @@ public interface CustomerMapper extends BaseMapper<Customer> {
     @Select("select max(cid) cid from customer")
     public Customer selectMaxCustomer();
 
+    @Select("select max(cid) from contract")
+    public Integer selectMaxContract();
+
     @Select("select bid from businessoppo where cid=#{value}")
     public List<String> select(String cid);
 

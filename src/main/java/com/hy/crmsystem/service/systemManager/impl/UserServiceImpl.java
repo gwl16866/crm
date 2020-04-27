@@ -10,13 +10,17 @@ import com.hy.crmsystem.mapper.systemManager.DeptMapper;
 import com.hy.crmsystem.mapper.systemManager.LoginMapper;
 import com.hy.crmsystem.mapper.systemManager.UserMapper;
 import com.hy.crmsystem.service.systemManager.IUserService;
+import org.flowable.engine.*;
+import org.flowable.engine.impl.cfg.StandaloneProcessEngineConfiguration;
+import org.flowable.engine.repository.Deployment;
+import org.flowable.engine.repository.ProcessDefinition;
+import org.flowable.engine.runtime.ProcessInstance;
+import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -535,4 +539,133 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public String[] selectThirdPerms(String[] pids) {
         return userMapper.selectThirdPerms(pids);
     }
+
+    public ProcessEngine init(){
+        //创建流程引擎对象
+        ProcessEngineConfiguration cfg = new StandaloneProcessEngineConfiguration()
+                .setJdbcUrl("jdbc:mysql://127.0.0.1:3306/flowable")
+                .setJdbcUsername("root")
+                .setJdbcPassword("root")
+                .setJdbcDriver("com.mysql.jdbc.Driver")
+                .setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
+
+        ProcessEngine processEngine = cfg.buildProcessEngine();
+
+        //发布流程
+        RepositoryService repositoryService = processEngine.getRepositoryService();
+        Deployment deployment = repositoryService.createDeployment()
+                .addClasspathResource("Contract.bpmn20.xml")
+                .deploy();
+
+        //测试流程是不是成功
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+                .deploymentId(deployment.getId())
+                .singleResult();
+        System.out.println("Found process definition : " + processDefinition.getName());
+        return processEngine;
+
+    }
+
+    public ProcessEngine initQuery(){
+        //创建流程引擎对象
+        ProcessEngineConfiguration cfg = new StandaloneProcessEngineConfiguration()
+                .setJdbcUrl("jdbc:mysql://127.0.0.1:3306/flowable")
+                .setJdbcUsername("root")
+                .setJdbcPassword("root")
+                .setJdbcDriver("com.mysql.jdbc.Driver")
+                .setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
+
+        ProcessEngine processEngine = cfg.buildProcessEngine();
+
+        //发布流程
+        RepositoryService repositoryService = processEngine.getRepositoryService();
+        Deployment deployment = repositoryService.createDeployment()
+                .addClasspathResource("Contract.bpmn20.xml")
+                .deploy();
+
+
+        return processEngine;
+    }
+
+
+
+    public void start(ProcessEngine processEngine,Approve approve){
+        //启动流程实例
+        RuntimeService runtimeService = processEngine.getRuntimeService();
+
+        Map<String, Object> variables = new HashMap<String, Object>();
+        variables.put("employee", approve.getApplyPeople());
+        variables.put("cid", approve.getContractId());
+        variables.put("cname", approve.getContractName());
+        variables.put("firstManager",approve.getApprovePeople());
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("contract", variables);
+    }
+
+    public List<Approve> queryWaitDo(ProcessEngine processEngine,String approvePeople){
+        TaskService taskService = processEngine.getTaskService();
+        List<Task> list=taskService.createTaskQuery().taskCandidateOrAssigned(approvePeople).list();
+        System.out.println(list.size());
+
+        List<Approve> approveList = new ArrayList<>();
+        for(Task tas : list){
+            Map<String, Object> processVariables = taskService.getVariables(tas.getId());
+            Approve approve = new Approve();
+            approve.setApplyPeople((String)processVariables.get("employee"));
+            approve.setContractId(Integer.valueOf(processVariables.get("cid").toString()));
+            approve.setContractName((String)processVariables.get("cname"));
+            approve.setTaskId(tas.getId());
+            if(processVariables.get("firstManager") != null && !processVariables.get("firstManager").equals("")){
+                approve.setApprovePeople((String)processVariables.get("firstManager"));
+            }else if(processVariables.get("secondManager") != null && !processVariables.get("secondManager").equals("")){
+                approve.setApprovePeople((String)processVariables.get("secondManager"));
+            }else if(processVariables.get("thirdManager") != null && !processVariables.get("thirdManager").equals("")){
+                approve.setApprovePeople((String)processVariables.get("thirdManager"));
+            }
+
+            approveList.add(approve);
+        }
+        return approveList;
+
+    }
+
+    public void CheckFirstApprove(String task){
+        ProcessEngine processEngine=initQuery();
+        Map<String, Object> variables1 = new HashMap<String, Object>();
+        variables1.put("approved",true);
+        variables1.put("secondManager","老二");
+        TaskService taskService = processEngine.getTaskService();
+        taskService.complete(task, variables1);
+    }
+    public void CheckSecondApprove(String task){
+        ProcessEngine processEngine=initQuery();
+        Map<String, Object> variables1 = new HashMap<String, Object>();
+        variables1.put("approved",true);
+        variables1.put("thirdManager","老大");
+        TaskService taskService = processEngine.getTaskService();
+        taskService.complete(task, variables1);
+    }
+
+    public void CheckThirdApprove(String task){
+        ProcessEngine processEngine=initQuery();
+        Map<String, Object> variables1 = new HashMap<String, Object>();
+        TaskService taskService = processEngine.getTaskService();
+        taskService.complete(task, variables1);
+    }
+
+    public void updateContractByCid(String cid){
+        userMapper.updateContractByCid(cid);
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 }

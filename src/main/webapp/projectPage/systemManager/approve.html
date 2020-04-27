@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>首页二</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <script type="text/javascript" src="../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+    <style>
+        .layuimini-qiuck-module a i {
+            display: inline-block;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            border-radius: 2px;
+            font-size: 30px;
+            background-color: #F8F8F8;
+            color: #333;
+            transition: all .3s;
+            -webkit-transition: all .3s;
+        }
+
+        .layuimini-qiuck-module a cite {
+            position: relative;
+            top: 2px;
+            display: block;
+            color: #666;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .main_btn > p {
+            height: 40px;
+        }
+    </style>
+</head>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button type="button" class="layui-btn refresh-btn">
+            <i class="layui-icon layui-icon-refresh"></i> 刷新
+        </button>
+    </div>
+</script>
+<body>
+
+<div id="add-user-layer" style="display: none; padding: 20px">
+<form form class="layui-form">
+
+
+            <h2>确认后 将会转交给下一位领导进行审批</h2>
+            <input type="hidden" id="taskId" name="taskId">
+            <button class="layui-btn" lay-submit lay-filter="ok">立即提交</button>
+
+</form>
+
+    </div>
+
+
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+
+        <div id="tab">
+            <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+        </div>
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-xs data-count-edit" lay-event="perms" id="shenpi">审批</a>
+        </script>
+
+    </div>
+</div>
+<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script type="text/html" id="xuhao">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
+
+
+
+
+<script>
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table,
+            layuimini = layui.layuimini;
+
+        table.render({
+            width:1320,
+            elem: '#currentTableId',
+            url: '../../systemManager/approve.do',
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            cols: [[
+                { title: 'ID', sort: true,templet: "#xuhao"},
+                {field: 'applyPeople',  title: '申请人'},
+                {field: 'contractId',  title: '合同ID'},
+                {field: 'contractName',  title: '合同名称'},
+                {title: '操作',  templet: '#currentTableBar', fixed: "right", align: "center"}
+            ]],
+            limits: [3, 5, 15, 20, 50, 100],
+            limit: 3,
+            page: true
+        });
+
+        $("#shenpi").click(function () {
+
+
+        });
+
+
+
+
+
+
+        table.on('tool(currentTableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'perms') {
+                $.ajax({
+                    url: "../../systemManager/firstApprove.do?taskId="+data.taskId+"&cid="+data.contractId,
+                    type: "post",
+                    data: data.field,
+                    dataType: 'json',
+
+                    success: function(data) {
+                        if (data == 1) {
+                            layer.closeAll();
+                            layer.msg('审批成功');
+                            table.reload('currentTableId');
+                        } else {
+                            layer.msg('审批失败');
+                        }
+                    },
+
+                });
+            }
+        });
+
+        //刷新页面
+        $("body").on("click",'.refresh-btn', function () {
+            window.location.reload();
+        });
+
+
+    });
+</script>
+</body>
+</html>

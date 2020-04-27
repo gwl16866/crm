@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>首页二</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <script type="text/javascript" src="../../lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+
+<form class="layui-form layui-form-pane">
+
+            <h2>确认后 将会转交给下一位领导进行审批</h2>
+            <input type="hidden" id="taskId" name="taskId">
+            <button class="layui-btn" lay-submit lay-filter="ok">立即提交</button>
+
+</form>
+
+
+
+
+
+
+
+<script src="../../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+
+
+
+
+
+<script>
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table,
+            layuimini = layui.layuimini;
+
+
+        form.on('submit(ok)', function(data){
+            $.ajax({
+                url: "../../systemManager/firstApprove.do",
+                type: "post",
+                data: data.field,
+                dataType: 'json',
+
+                success: function(data) {
+                    if (data == 1) {
+                        layer.closeAll();
+                        layer.msg('审批成功');
+                        table.reload('currentTableId');
+                    } else {
+                        layer.msg('审批失败');
+                    }
+                },
+
+            });
+
+
+
+        });
+
+
+
+    });
+</script>
+</body>
+</html>

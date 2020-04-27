@@ -31,7 +31,7 @@ public class SqlProvider {
             buffer.append(" and YEARWEEK( DATE_FORMAT(starttime,'%Y-%m-%d'),1) = YEARWEEK(NOW(),1)");
         }else if(null != aftersellBo.getStatus() && aftersellBo.getStatus() == 12){
             //12代表上周
-            buffer.append(" and YEARWEEK(date_format(starttime,'%Y-%m-%d'),1) = YEARWEEK(now())");
+            buffer.append(" and YEARWEEK(DATE_FORMAT(starttime,'%Y-%m-%d'),1) = YEARWEEK(NOW(),1)-1");
 
         }else if(null != aftersellBo.getStatus() && aftersellBo.getStatus() == 13){
             //13代表本月
@@ -57,7 +57,7 @@ public class SqlProvider {
         StringBuffer buffer = new StringBuffer("select count(*) from aftersell where 1=1");
         if (type.equals("12")) {
             //12代表上周
-            buffer.append(" AND YEARWEEK(DATE_FORMAT(starttime,'%Y-%m-%d'),1) = YEARWEEK(NOW())");
+            buffer.append(" AND YEARWEEK(DATE_FORMAT(starttime,'%Y-%m-%d'),1) = YEARWEEK(NOW(),1)-1");
         }else if(type.equals("11")){
             //11代表本周
             buffer.append(" and YEARWEEK( DATE_FORMAT(starttime,'%Y-%m-%d'),1) = YEARWEEK(NOW(),1)");

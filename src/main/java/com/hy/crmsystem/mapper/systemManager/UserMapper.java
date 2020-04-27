@@ -142,4 +142,7 @@ public interface UserMapper extends BaseMapper<User> {
     @SelectProvider(type = UserDao.class, method = "selectThirdPerms")
     public String[] selectThirdPerms(@Param("pids") String[] pids);
 
+    @Update("update contract set contract_status='1' where cid =#{cid}")
+    public void updateContractByCid(String cid);
+
 }
